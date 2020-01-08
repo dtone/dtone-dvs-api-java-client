@@ -28,7 +28,13 @@
 		<sonar.binaries>target/classes</sonar.binaries>
 		<sonar.exclusions>src/main/java/com/dvs/apiclient/dto/*.java</sonar.exclusions>
 	</properties>
-
+	<distributionManagement>
+	     	<repository>
+		   	<id>github</id>
+		   	<name>GitHub DTOne Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/dtone/dtone-dvs-api-java-client</url>
+	     	</repository>
+	</distributionManagement>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>

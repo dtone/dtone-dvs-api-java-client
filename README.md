@@ -35,16 +35,25 @@ This library deals with the following list of domain objects from the DVS API:
 
 - Requires Java 1.8 or later
 
-- Ensure that DT One maven repository is included in your `pom.xml`
+Github packages (where we've hosted our library's package) requires authentication
+(https://help.github.com/en/github/managing-packages-with-github-packages/about-github-packages#about-tokens)
 
-    ```
-    <repositories>
-        <repository>
-            <id>github</id>
-            <name>Github DTOne Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/dtone/dtone-dvs-api-java-client</url>
-        </repository>
-    </repositories>
+If you go that route, the following instructions show how to install the package: 
+
+- Ensure that you have generated an access token from [github](https://github.com/settings/tokens)
+
+- Add your username and access token to `~/.m2/settings.xml`
+
+    ```xml
+    <settings>
+      <servers>
+          <server>
+              <id>github</id>
+              <username>{GithubUsername}</username>
+              <password>{GithubToken}</password>
+          </server>
+      </servers>
+    </settings>
     ```
 
 - Add the following dependency in your `pom.xml`
@@ -57,6 +66,21 @@ This library deals with the following list of domain objects from the DVS API:
     </dependency>
     ```
 
+- Ensure that DT One maven repository is included in your `pom.xml`
+
+    ```
+    <repositories>
+        <repository>
+            <id>github</id>
+            <name>Github DTOne Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/dtone/dtone-dvs-api-java-client</url>
+        </repository>
+    </repositories>
+    ```
+
+Otherwise, feel free to download the latest JAR with the dependencies directly from the repository [here](https://github.com/dtone/dtone-dvs-api-java-client/tree/master/jars)
+and add the jar to the classpath of your project.
+  
 - Create an instance from DtoneHttpClient with your basic auth keys.
   
       ```
@@ -66,9 +90,11 @@ This library deals with the following list of domain objects from the DVS API:
               String apiKey, String apiSecret)
       ```
 
-## Available APIs
+- Start calling the DVS API!
 
-- Service APIs (Only GET operations)
+## Available endpoints
+
+- Service (Only GET operations)
 
     `Page<ApiResponse<List<Service>>> getServices() throws DvsApiException`
 
@@ -76,7 +102,7 @@ This library deals with the following list of domain objects from the DVS API:
 
     `ApiResponse<Service> getService(Long serviceId) throws DvsApiException`
 
-- Country APIs (Only GET operations)
+- Country (Only GET operations)
 
     `Page<ApiResponse<List<Country>>> getCountries() throws DvsApiException`
 
@@ -84,7 +110,7 @@ This library deals with the following list of domain objects from the DVS API:
     
     `ApiResponse<Country> getCountry(String countryIsoCode) throws DvsApiException`
     
-- Operator APIs (Only GET operations)
+- Operator (Only GET operations)
 
     `Page<ApiResponse<List<Operator>>> getOperators() throws DvsApiException`
 
@@ -100,13 +126,13 @@ This library deals with the following list of domain objects from the DVS API:
     
     `ApiResponse<List<Operator>> lookupOperators(String mobileNumber, int pageNumber, int recordsPerPage) throws DvsApiException`
 
-- Benefit Type APIs (Only GET operations)
+- Benefit Type (Only GET operations)
 
     `Page<ApiResponse<List<BenefitType>>> getBenefitTypes() throws DvsApiException`
 
     `ApiResponse<List<BenefitType>> getBenefitTypes(int pageNumber, int recordsPerPage) throws DvsApiException`
     
-- Promotion APIs (Only GET operations)
+- Promotion (Only GET operations)
 
     `Page<ApiResponse<List<Promotion>>> getPromotions() throws DvsApiException`
     
@@ -118,7 +144,7 @@ This library deals with the following list of domain objects from the DVS API:
 
     `ApiResponse<Promotion> getPromotion(Long promotionId) throws DvsApiException`
     
-- Product APIs (Only GET operations)
+- Product (Only GET operations)
 
     `Page<ApiResponse<List<Product>>> getProducts() throws DvsApiException`
     
@@ -130,7 +156,7 @@ This library deals with the following list of domain objects from the DVS API:
     
     `ApiResponse<Product> getProduct(Long productId) throws DvsApiException`
     
-- Transaction APIs (Only GET & POST operations)
+- Transaction (Only GET & POST operations)
 
     `ApiResponse<TransactionResponse> createTransaction(TransactionRequest transactionRequest, boolean synchronous) throws DvsApiException`
     
@@ -145,41 +171,13 @@ This library deals with the following list of domain objects from the DVS API:
     
     `ApiResponse<List<TransactionResponse>> getTransactions(TransactionFilter transactionFilter, int pageNumber, int recordsPerPage) throws DvsApiException`
     
-- Balance APIs (Only GET operations)
+- Balance (Only GET operations)
 
     `Page<ApiResponse<List<Balance>>> getBalances() throws DvsApiException`
     
     `ApiResponse<List<Balance>> getBalances(int pageNumber, int recordsPerPage) throws DvsApiException`
     
     `ApiResponse<List<Balance>> getBalances(BalanceFilter balanceFilter) throws DvsApiException`
-    
-## Prerequisites
-
-- Java 1.8
-
-## Checkout SDK from Github
-`ssh://git@git.transferto.com:10022/java/dtone-dvs-api-java-client.git`
-
-`cd dtone-dvs-api-java-client/`
-
-## Production Java applications
-
-For Java applications use the latest released version of the SDK releases:
-
-1. Download the jar from the [here]("https://dtoe.com/dtone-dvs-api-java-client.jar")
-2. Add the jar to the classpath of your project
-
-## Using the SDK
-
-1. Create an instance from DvsApiClient with your basic auth keys.
-
-    ```
-    DvsApiClient dvsApiClient = new DvsApiClient(String baseUrl, String apiKey, String apiSecret)
-    ```
-        
-2. Call the available methods in the dvsApiClient instance.
-
-## HTTP GET operation Examples:
 
 - List of products with inbuilt pagination:
 
@@ -231,7 +229,6 @@ For Java applications use the latest released version of the SDK releases:
         int nextPage = pagedProductsResponse.getNextPage();
         int previousPage = pagedProductsResponse.getPreviousPage();
         ```
-
 
 - List of products with custom pagination
 
