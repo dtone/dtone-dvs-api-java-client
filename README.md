@@ -42,7 +42,7 @@ This library deals with the following list of domain objects from the DVS API:
         <repository>
             <id>github</id>
             <name>Github DTOne Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/dtone/dvs</url>
+            <url>https://maven.pkg.github.com/dtone/dtone-dvs-api-java-client</url>
         </repository>
     </repositories>
     ```
