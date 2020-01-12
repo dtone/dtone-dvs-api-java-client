@@ -35,7 +35,7 @@ This library deals with the following list of domain objects from the DVS API:
 
 - Requires Java 1.8 or later
 
-- The library is available to be used as a maven dependency or standalone java archive.
+- The library is available to be installed as a Maven Dependency or Standalone Java ARchive. Please [contact us](https://www.dtone.com/contact-us) if you are looking for a different option.
 
     1. Maven Dependency
 
@@ -43,8 +43,6 @@ This library deals with the following list of domain objects from the DVS API:
 
             Github packages (where we've hosted our library's package) requires authentication
             (https://help.github.com/en/github/managing-packages-with-github-packages/about-github-packages#about-tokens)
-
-        - Ensure that you have generated an access token from [github](https://github.com/settings/tokens)
 
         - Add your username and access token to `~/.m2/settings.xml`
 
