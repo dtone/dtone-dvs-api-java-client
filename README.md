@@ -35,51 +35,55 @@ This library deals with the following list of domain objects from the DVS API:
 
 - Requires Java 1.8 or later
 
-Github packages (where we've hosted our library's package) requires authentication
-(https://help.github.com/en/github/managing-packages-with-github-packages/about-github-packages#about-tokens)
+- The library is available to be used as a maven dependency or standalone java archive.
 
-If you go that route, the following instructions show how to install the package: 
+    1. Maven Dependency
 
-- Ensure that you have generated an access token from [github](https://github.com/settings/tokens)
+        - Ensure that you have generated an access token from [github](https://github.com/settings/tokens)
 
-- Add your username and access token to `~/.m2/settings.xml`
+            Github packages (where we've hosted our library's package) requires authentication
+            (https://help.github.com/en/github/managing-packages-with-github-packages/about-github-packages#about-tokens)
 
-    ```xml
-    <settings>
-      <servers>
-          <server>
-              <id>github</id>
-              <username>{GithubUsername}</username>
-              <password>{GithubToken}</password>
-          </server>
-      </servers>
-    </settings>
-    ```
+        - Ensure that you have generated an access token from [github](https://github.com/settings/tokens)
 
-- Add the following dependency in your `pom.xml`
+        - Add your username and access token to `~/.m2/settings.xml`
 
-    ```
-    <dependency>
-        <groupId>com.dtone.dvs</groupId>
-        <artifactId>dvs-apiclient</artifactId>
-        <version>1.0</version>
-    </dependency>
-    ```
+         ```xml
+         <settings>
+           <servers>
+               <server>
+                   <id>github</id>
+                   <username>{GithubUsername}</username>
+                   <password>{GithubToken}</password>
+               </server>
+           </servers>
+         </settings>
+         ```
 
-- Ensure that DT One maven repository is included in your `pom.xml`
+       - Add the following dependency in your `pom.xml`
 
-    ```
-    <repositories>
-        <repository>
-            <id>github</id>
-            <name>Github DTOne Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/dtone/dtone-dvs-api-java-client</url>
-        </repository>
-    </repositories>
-    ```
+           ```
+           <dependency>
+               <groupId>com.dtone.dvs</groupId>
+               <artifactId>dvs-apiclient</artifactId>
+               <version>1.0</version>
+           </dependency>
+           ```
 
-Otherwise, feel free to download the latest JAR with the dependencies directly from the repository [here](https://github.com/dtone/dtone-dvs-api-java-client/tree/master/jars)
-and add the jar to the classpath of your project.
+       - Ensure that DT One maven repository is included in your `pom.xml`
+
+           ```
+           <repositories>
+               <repository>
+                   <id>github</id>
+                   <name>Github DTOne Apache Maven Packages</name>
+                   <url>https://maven.pkg.github.com/dtone/dtone-dvs-api-java-client</url>
+               </repository>
+           </repositories>
+           ```
+    2. Standalone JAR
+        - Feel free to download the latest JAR with the dependencies directly from the repository [here](https://github.com/dtone/dtone-dvs-api-java-client/tree/master/jars)
+        and add the jar to the classpath of your project.
   
 - Create an instance from DtoneHttpClient with your basic auth keys.
   
