@@ -1,9 +1,11 @@
 package com.dtone.dvs.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PartyIdentifier {
-	
+
 	@JsonProperty(value = "mobile_number")
 	private String mobileNumber;
 

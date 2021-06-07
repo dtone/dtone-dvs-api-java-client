@@ -3,7 +3,9 @@ package com.dtone.dvs.dto;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Promotion {
 
 	@JsonProperty(value = "id")
@@ -11,22 +13,22 @@ public class Promotion {
 
 	@JsonProperty(value = "title")
 	private String title;
-	
+
 	@JsonProperty(value = "description")
 	private String description;
-	
+
 	@JsonProperty(value = "terms")
 	private String terms;
-	
+
 	@JsonProperty(value = "start_date")
 	private String startDate;
-	
+
 	@JsonProperty(value = "end_date")
 	private String endDate;
-	
+
 	@JsonProperty(value = "operator")
 	private Operator operator;
-	
+
 	@JsonProperty(value = "products")
 	private List<Product> products;
 

@@ -1,13 +1,15 @@
 package com.dtone.dvs.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Country {
 	@JsonProperty(value = "iso_code")
 	private String isoCode;
-	
+
 	private String name;
-	
+
 	private String regions;
 
 	public String getIsoCode() {

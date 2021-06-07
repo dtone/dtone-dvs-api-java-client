@@ -1,7 +1,9 @@
 package com.dtone.dvs.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Party {
 
 	@JsonProperty(value = "last_name")

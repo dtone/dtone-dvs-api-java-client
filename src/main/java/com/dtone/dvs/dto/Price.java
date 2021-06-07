@@ -1,7 +1,9 @@
 package com.dtone.dvs.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Price {
 
 	@JsonProperty(value = "unit_type")
@@ -12,7 +14,7 @@ public class Price {
 
 	@JsonProperty(value = "amount")
 	private Double amount;
-	
+
 	@JsonProperty(value = "fee")
 	private Double fee;
 

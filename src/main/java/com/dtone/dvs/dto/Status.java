@@ -1,7 +1,9 @@
 package com.dtone.dvs.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Status {
 
 	@JsonProperty(value = "id")
@@ -9,7 +11,7 @@ public class Status {
 
 	@JsonProperty(value = "message")
 	private String message;
-	
+
 	@JsonProperty(value = "class")
 	private StatusClass statusClass;
 

@@ -3,7 +3,9 @@ package com.dtone.dvs.dto;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Product {
 
 	@JsonProperty(value = "id")

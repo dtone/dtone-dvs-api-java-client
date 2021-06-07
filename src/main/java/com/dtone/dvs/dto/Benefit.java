@@ -1,7 +1,9 @@
 package com.dtone.dvs.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Benefit {
 
 	@JsonProperty(value = "type")
@@ -9,13 +11,13 @@ public class Benefit {
 
 	@JsonProperty(value = "unit_type")
 	private String unitType;
-	
+
 	@JsonProperty(value = "unit")
 	private String unit;
 
 	@JsonProperty(value = "amount")
 	private Amount amount;
-	
+
 	@JsonProperty(value = "additional_information")
 	private String additionalInformation;
 
