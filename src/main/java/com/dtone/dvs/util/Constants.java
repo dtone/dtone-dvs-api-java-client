@@ -39,6 +39,7 @@ public class Constants {
 	public static final String CANCEL_TRANSACTION = CONTEXT_ROOT + "transactions/{}/cancel";
 	public static final String BALANCES = CONTEXT_ROOT + "balances";
 	public static final String OPERATOR_LOOKUP = CONTEXT_ROOT + "lookup/mobile-number";
+	public static final String STATEMENT_INQUIRY = CONTEXT_ROOT + "lookup/statement-inquiry/{}";
 
 	//Path Param
 	public static final String PATH_PARAM_PLACEHOLDER = "{}";
@@ -58,4 +59,5 @@ public class Constants {
 	public static final String UNIT_TYPE = "unit_type";
 	public static final String UNIT = "unit";
 	public static final String EXTERNAL_ID = "external_id";
+	public static final String ACCOUNT_QUALIFIER = "account_qualifier";
 }
