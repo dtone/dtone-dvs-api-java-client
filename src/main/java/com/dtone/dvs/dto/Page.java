@@ -69,6 +69,9 @@ public class Page<T> {
 		case Constants.BALANCES:
 			t = (T) dvsClient.getBalances(getCurrentPage(), getRecordsPerPage());
 			break;
+		case Constants.COUNTRIES:
+			t = (T) dvsClient.getCountries(getCurrentPage(), getRecordsPerPage());
+			break;
 		default:
 			
 		}
