@@ -32,7 +32,7 @@ public class PromotionFilter {
 		}
 
 		if (null != productId && productId > 0L) {
-			queryParameterMap.put(Constants.PRODUCT_ID, String.valueOf(operatorId));
+			queryParameterMap.put(Constants.PRODUCT_ID, String.valueOf(productId));
 		}
 
 		if (queryParameterMap.isEmpty()) {

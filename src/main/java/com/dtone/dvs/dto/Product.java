@@ -39,6 +39,9 @@ public class Product {
 	@JsonProperty(value = "required_beneficiary_fields")
 	private List<List<String>> requiredBeneficiaryFields;
 
+	@JsonProperty(value = "required_statement_identifier_fields")
+	private List<List<String>> requiredStatementIdentifierFields;
+
 	@JsonProperty(value = "availability_zones")
 	private List<String> availabilityZones;
 
@@ -59,6 +62,9 @@ public class Product {
 
 	@JsonProperty(value = "promotions")
 	private List<Promotion> promotions;
+
+	@JsonProperty(value = "validity", required = false)
+	private Validity validity;
 
 	public Long getId() {
 		return id;
@@ -148,6 +154,14 @@ public class Product {
 		this.requiredBeneficiaryFields = requiredBeneficiaryFields;
 	}
 
+	public List<List<String>> getRequiredStatementIdentifierFields() {
+		return requiredStatementIdentifierFields;
+	}
+
+	public void setRequiredStatementIdentifierFields(List<List<String>> requiredStatementIdentifierFields) {
+		this.requiredStatementIdentifierFields = requiredStatementIdentifierFields;
+	}
+
 	public List<String> getAvailabilityZones() {
 		return availabilityZones;
 	}
@@ -202,6 +216,14 @@ public class Product {
 
 	public void setPromotions(List<Promotion> promotions) {
 		this.promotions = promotions;
+	}
+	
+	public Validity getValidity() {
+		return validity;
+	}
+
+	public void setValidity(Validity validity) {
+		this.validity = validity;
 	}
 
 	@Override

@@ -10,8 +10,8 @@ public class Rates {
 	@JsonProperty(value = "wholesale")
 	private Double wholesale;
 
-	@JsonProperty(value = "discount_from_base")
-	private Double discountFromBase;
+	@JsonProperty(value = "retail", required = false)
+	private Double retail;
 
 	public Double getBase() {
 		return base;
@@ -29,17 +29,17 @@ public class Rates {
 		this.wholesale = wholesale;
 	}
 
-	public Double getDiscountFromBase() {
-		return discountFromBase;
+	public Double getRetail() {
+		return retail;
 	}
 
-	public void setDiscountFromBase(Double discountFromBase) {
-		this.discountFromBase = discountFromBase;
+	public void setRetail(Double retail) {
+		this.retail = retail;
 	}
 
 	@Override
 	public String toString() {
-		return "Rates [base=" + base + ", wholesale=" + wholesale + ", discountFromBase=" + discountFromBase + "]";
+		return "Rates [base=" + base + ", wholesale=" + wholesale + ", retail=" + retail + "]";
 	}
 
 }

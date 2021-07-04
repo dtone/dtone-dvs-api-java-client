@@ -14,6 +14,8 @@ import com.dtone.dvs.dto.ProductFilter;
 import com.dtone.dvs.dto.Promotion;
 import com.dtone.dvs.dto.PromotionFilter;
 import com.dtone.dvs.dto.Service;
+import com.dtone.dvs.dto.StatementDetail;
+import com.dtone.dvs.dto.StatementFilter;
 import com.dtone.dvs.dto.TransactionFilter;
 import com.dtone.dvs.dto.TransactionRequest;
 import com.dtone.dvs.dto.TransactionResponse;
@@ -418,5 +420,18 @@ public class DvsApiClient {
 
 	
 	// Balances - End
+	
+	// Statement Inquiry - Begin
+	
+	/**
+	 * Get statement for an account number
+	 * 
+	 * @return statement details
+	 */
+	public ApiResponse<List<StatementDetail>> getStatement(StatementFilter statementFilter) throws DvsApiException {
+		return this.dvsApiClientHelper.getStatement(statementFilter);
+	}
+	
+	// Statement Inquiry - End
 	
 }
