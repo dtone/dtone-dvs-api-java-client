@@ -428,7 +428,7 @@ public class DvsApiClient {
 	 * 
 	 * @return statement details
 	 */
-	public ApiResponse<List<StatementDetail>> getStatement(StatementFilter statementFilter) throws DvsApiException {
+	private ApiResponse<List<StatementDetail>> getStatement(StatementFilter statementFilter) throws DvsApiException {
 		return this.dvsApiClientHelper.getStatement(statementFilter);
 	}
 	
