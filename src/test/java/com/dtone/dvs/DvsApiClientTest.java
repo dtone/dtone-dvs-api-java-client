@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.apache.http.HttpStatus;
@@ -12,7 +13,6 @@ import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.dtone.dvs.DvsApiClient;
 import com.dtone.dvs.dto.ApiResponse;
 import com.dtone.dvs.dto.Balance;
 import com.dtone.dvs.dto.BenefitType;
@@ -20,6 +20,7 @@ import com.dtone.dvs.dto.BenefitTypes;
 import com.dtone.dvs.dto.Country;
 import com.dtone.dvs.dto.Operator;
 import com.dtone.dvs.dto.Page;
+import com.dtone.dvs.dto.PartyIdentifier;
 import com.dtone.dvs.dto.Product;
 import com.dtone.dvs.dto.ProductFilter;
 import com.dtone.dvs.dto.Promotion;
@@ -30,25 +31,22 @@ import com.dtone.dvs.dto.TransactionRequest;
 import com.dtone.dvs.dto.TransactionResponse;
 import com.dtone.dvs.exception.DvsApiException;
 import com.dtone.dvs.util.ErrorCodes;
-import com.dtone.dvs.util.MockTestUtils;
 
 @Ignore
 public class DvsApiClientTest {
 
 	private static final String BASE_URL = "<Base URL>";
-	
+
 	private static final String API_KEY = "<API Key>";
-	
+
 	private static final String API_SECRET = "<API Secret>";
 
-	private static final DvsApiClient dvApiClient = new DvsApiClient(BASE_URL,
-			API_KEY, API_SECRET);
+	private static final DvsApiClient dvApiClient = new DvsApiClient(BASE_URL, API_KEY, API_SECRET);
 
-	private static final DvsApiClient dvsApiClientUnAuthorized = new DvsApiClient(
-			BASE_URL, "invalidapikey", "invalidapisecret");
+	private static final DvsApiClient dvsApiClientUnAuthorized = new DvsApiClient(BASE_URL, "invalidapikey",
+			"invalidapisecret");
 
-	private static final DvsApiClient dvsApiClient404 = new DvsApiClient(
-			BASE_URL + "/unavailable/", API_KEY,
+	private static final DvsApiClient dvsApiClient404 = new DvsApiClient(BASE_URL + "/unavailable/", API_KEY,
 			API_SECRET);
 
 	@After
@@ -313,26 +311,26 @@ public class DvsApiClientTest {
 
 			Promotion promotion = pagedPromotionsResponse.first().getResult().get(0);
 
-			ApiResponse<List<Promotion>> promotionsFiltersResponse = dvApiClient.getPromotions(new PromotionFilter(null, null,
-					promotion.getProducts().get(0).getId()));
-			assertEquals(HttpStatus.SC_OK, promotionsFiltersResponse.getCode());
-			assertTrue(promotionsFiltersResponse.getResult().size() > 0);
+			ApiResponse<List<Promotion>> promotionsFiltersResponse = dvApiClient
+					.getPromotions(new PromotionFilter(null, null, promotion.getProducts().get(0).getId()));
+			assertTrue(promotionsFiltersResponse.getCode() == HttpStatus.SC_OK
+					|| promotionsFiltersResponse.getCode() == HttpStatus.SC_NOT_FOUND);
 
 			ApiResponse<List<Promotion>> promotionsFiltersResponse2 = dvApiClient
 					.getPromotions(new PromotionFilter(promotion.getOperator().getCountry().getIsoCode(), null, null));
 			assertEquals(HttpStatus.SC_OK, promotionsFiltersResponse2.getCode());
 			assertTrue(promotionsFiltersResponse2.getResult().size() > 0);
 
-			ApiResponse<List<Promotion>> promotionsFiltersResponse3 = dvApiClient.getPromotions(new PromotionFilter(null,
-					promotion.getOperator().getId(), null));
+			ApiResponse<List<Promotion>> promotionsFiltersResponse3 = dvApiClient
+					.getPromotions(new PromotionFilter(null, promotion.getOperator().getId(), null));
 			assertEquals(HttpStatus.SC_OK, promotionsFiltersResponse3.getCode());
 			assertTrue(promotionsFiltersResponse3.getResult().size() > 0);
 
-			ApiResponse<List<Promotion>> promotionsFiltersResponse4 = dvApiClient.getPromotions(new PromotionFilter(
-					promotion.getOperator().getCountry().getIsoCode(), promotion.getOperator().getId(),
-					promotion.getProducts().get(0).getId()));
-			assertEquals(HttpStatus.SC_OK, promotionsFiltersResponse4.getCode());
-			assertTrue(promotionsFiltersResponse4.getResult().size() > 0);
+			ApiResponse<List<Promotion>> promotionsFiltersResponse4 = dvApiClient
+					.getPromotions(new PromotionFilter(promotion.getOperator().getCountry().getIsoCode(),
+							promotion.getOperator().getId(), promotion.getProducts().get(0).getId()));
+			assertTrue(promotionsFiltersResponse4.getCode() == HttpStatus.SC_OK
+					|| promotionsFiltersResponse4.getCode() == HttpStatus.SC_NOT_FOUND);
 		} else {
 			assertEquals(HttpStatus.SC_NOT_FOUND, pagedPromotionsResponse.first().getCode());
 			assertNotNull(pagedPromotionsResponse.first().getErrors());
@@ -351,125 +349,139 @@ public class DvsApiClientTest {
 	public void testTransactionAPIs() throws DvsApiException {
 		System.out.println("Transactions\n");
 
-		// Transaction Sync
-		TransactionRequest txnRequest = MockTestUtils.getTransactionRequest();
-		ApiResponse<TransactionResponse> transactionSyncResponse = dvApiClient.createTransaction(txnRequest, true);
+		Page<ApiResponse<List<Product>>> pagedProductsResponse = dvApiClient.getProducts();
 
-		if (HttpStatus.SC_CREATED == transactionSyncResponse.getCode()) {
-			// External Id already used
-			ApiResponse<TransactionResponse> transactionSyncResponse2 = dvApiClient.createTransaction(txnRequest, true);
-			txnRequest.setExternalId(transactionSyncResponse.getResult().getExternalId());
-			assertEquals(HttpStatus.SC_BAD_REQUEST, transactionSyncResponse2.getCode());
-			assertEquals(ErrorCodes.TXN_EXTERNAL_ID_ALREADY_USED.getCode(),
-					transactionSyncResponse2.getErrors().get(0).getCode());
+		if (pagedProductsResponse.first().getCode() == HttpStatus.SC_OK) {
+			List<Product> products = pagedProductsResponse.first().getResult();
 
-			// Confirm Transaction
-			ApiResponse<TransactionResponse> confirmTransactionSyncResponse = dvApiClient
-					.confirmTransaction(transactionSyncResponse.getResult().getId(), true);
-			assertEquals(HttpStatus.SC_ACCEPTED, confirmTransactionSyncResponse.getCode());
+			Product product = products.get(0);
+			Long productId = product.getId();
 
-			// Transaction already confirmed
-			ApiResponse<TransactionResponse> confirmTransactionSyncResponse2 = dvApiClient
-					.confirmTransaction(transactionSyncResponse.getResult().getId(), true);
-			assertEquals(HttpStatus.SC_BAD_REQUEST, confirmTransactionSyncResponse2.getCode());
-			assertEquals(ErrorCodes.TXN_ALREADY_CONFIRMED.getCode(),
-					confirmTransactionSyncResponse2.getErrors().get(0).getCode());
+			// Transaction Sync
+			TransactionRequest txnRequest = getTransactionRequest(productId);
+			ApiResponse<TransactionResponse> transactionSyncResponse = dvApiClient.createTransaction(txnRequest, true);
 
-			// Transaction cannot be cancelled
-			ApiResponse<TransactionResponse> cancelTransactionResponse = dvApiClient
-					.cancelTransaction(transactionSyncResponse.getResult().getId());
-			assertEquals(HttpStatus.SC_BAD_REQUEST, cancelTransactionResponse.getCode());
-			assertEquals(ErrorCodes.TXN_CANNOT_BE_CANCELLED.getCode(),
-					cancelTransactionResponse.getErrors().get(0).getCode());
+			if (HttpStatus.SC_CREATED == transactionSyncResponse.getCode()) {
+				// External Id already used
+				ApiResponse<TransactionResponse> transactionSyncResponse2 = dvApiClient.createTransaction(txnRequest,
+						true);
+				txnRequest.setExternalId(transactionSyncResponse.getResult().getExternalId());
+				assertEquals(HttpStatus.SC_BAD_REQUEST, transactionSyncResponse2.getCode());
+				assertEquals(ErrorCodes.TXN_EXTERNAL_ID_ALREADY_USED.getCode(),
+						transactionSyncResponse2.getErrors().get(0).getCode());
 
-			ApiResponse<List<TransactionResponse>> transactionSyncResponses = dvApiClient
-					.getTransactions(new TransactionFilter(transactionSyncResponse.getResult().getExternalId()));
-			assertEquals(HttpStatus.SC_OK, transactionSyncResponses.getCode());
-			assertTrue(transactionSyncResponses.getResult().size() > 0);
+				// Confirm Transaction
+				ApiResponse<TransactionResponse> confirmTransactionSyncResponse = dvApiClient
+						.confirmTransaction(transactionSyncResponse.getResult().getId(), true);
+				assertEquals(HttpStatus.SC_ACCEPTED, confirmTransactionSyncResponse.getCode());
 
-			if (transactionSyncResponses.getResult().size() > 50) {
-				ApiResponse<List<TransactionResponse>> transactionSyncResponses2 = dvApiClient
-						.getTransactions(new TransactionFilter(transactionSyncResponse.getResult().getExternalId()), 1, 100);
-				assertEquals(HttpStatus.SC_OK, transactionSyncResponses2.getCode());
-				assertTrue(transactionSyncResponses2.getResult().size() > 50);
+				// Transaction already confirmed
+				ApiResponse<TransactionResponse> confirmTransactionSyncResponse2 = dvApiClient
+						.confirmTransaction(transactionSyncResponse.getResult().getId(), true);
+				assertEquals(HttpStatus.SC_BAD_REQUEST, confirmTransactionSyncResponse2.getCode());
+				assertTrue(ErrorCodes.TXN_ALREADY_CONFIRMED.getCode()
+						.equals(confirmTransactionSyncResponse2.getErrors().get(0).getCode())
+						|| ErrorCodes.TXN_CANNOT_BE_CONFIRMED.getCode()
+								.equals(confirmTransactionSyncResponse2.getErrors().get(0).getCode()));
+
+				// Transaction cannot be cancelled
+				ApiResponse<TransactionResponse> cancelTransactionResponse = dvApiClient
+						.cancelTransaction(transactionSyncResponse.getResult().getId());
+				assertEquals(HttpStatus.SC_BAD_REQUEST, cancelTransactionResponse.getCode());
+				assertEquals(ErrorCodes.TXN_CANNOT_BE_CANCELLED.getCode(),
+						cancelTransactionResponse.getErrors().get(0).getCode());
+
+				ApiResponse<List<TransactionResponse>> transactionSyncResponses = dvApiClient
+						.getTransactions(new TransactionFilter(transactionSyncResponse.getResult().getExternalId()));
+				assertEquals(HttpStatus.SC_OK, transactionSyncResponses.getCode());
+				assertTrue(transactionSyncResponses.getResult().size() > 0);
+
+				if (transactionSyncResponses.getResult().size() > 50) {
+					ApiResponse<List<TransactionResponse>> transactionSyncResponses2 = dvApiClient.getTransactions(
+							new TransactionFilter(transactionSyncResponse.getResult().getExternalId()), 1, 100);
+					assertEquals(HttpStatus.SC_OK, transactionSyncResponses2.getCode());
+					assertTrue(transactionSyncResponses2.getResult().size() > 50);
+				}
+
+				// Get Transactions Sync
+				ApiResponse<List<TransactionResponse>> transactionsResponse = dvApiClient
+						.getTransactions(new TransactionFilter(transactionSyncResponse.getResult().getExternalId()));
+				assertEquals(HttpStatus.SC_OK, transactionsResponse.getCode());
+				assertTrue(transactionsResponse.getResult().size() > 0);
+
+				// Get Transaction By Id
+				ApiResponse<TransactionResponse> transactionByIdResponse = dvApiClient
+						.getTransaction(transactionsResponse.getResult().get(0).getId());
+				assertEquals(HttpStatus.SC_OK, transactionByIdResponse.getCode());
+
+				// Transaction Not Found
+				ApiResponse<TransactionResponse> transactionByIdResponse2 = dvApiClient.getTransaction(100000000L);
+				assertEquals(HttpStatus.SC_NOT_FOUND, transactionByIdResponse2.getCode());
+				assertEquals(ErrorCodes.TXN_NOT_FOUND.getCode(), transactionByIdResponse2.getErrors().get(0).getCode());
+			} else {
+				System.out.println("transactionSyncResponse=" + transactionSyncResponse);
+				assertEquals(HttpStatus.SC_BAD_REQUEST, transactionSyncResponse.getCode());
+				assertEquals(ErrorCodes.INSUFFICIENT_BALANCE.getCode(),
+						transactionSyncResponse.getErrors().get(0).getCode());
+			}
+			// Transaction Async
+			ApiResponse<TransactionResponse> transactionAsyncResponse = dvApiClient
+					.createTransaction(getTransactionRequest(productId), false);
+			assertEquals(HttpStatus.SC_CREATED, transactionAsyncResponse.getCode());
+
+			if (HttpStatus.SC_CREATED == transactionAsyncResponse.getCode()) {
+				// Confirm Transaction Async
+				ApiResponse<TransactionResponse> confirmTransactionAsyncResponse = dvApiClient
+						.confirmTransaction(transactionAsyncResponse.getResult().getId(), false);
+				assertEquals(HttpStatus.SC_ACCEPTED, confirmTransactionAsyncResponse.getCode());
+
+				// Get Transactions Async
+				ApiResponse<List<TransactionResponse>> transactionAsyncResponses = dvApiClient
+						.getTransactions(new TransactionFilter(transactionAsyncResponse.getResult().getExternalId()));
+				assertEquals(HttpStatus.SC_OK, transactionAsyncResponses.getCode());
+				assertTrue(transactionAsyncResponses.getResult().size() > 0);
+
+				if (transactionAsyncResponses.getResult().size() > 50) {
+					ApiResponse<List<TransactionResponse>> transactionAsyncResponses2 = dvApiClient.getTransactions(
+							new TransactionFilter(transactionAsyncResponse.getResult().getExternalId()), 1, 100);
+					assertEquals(HttpStatus.SC_OK, transactionAsyncResponses2.getCode());
+					assertTrue(transactionAsyncResponses2.getResult().size() > 50);
+				}
+			} else {
+				assertEquals(HttpStatus.SC_BAD_REQUEST, transactionSyncResponse.getCode());
+				assertEquals(ErrorCodes.INSUFFICIENT_BALANCE.getCode(),
+						transactionSyncResponse.getErrors().get(0).getCode());
 			}
 
-			// Get Transactions Sync
-			ApiResponse<List<TransactionResponse>> transactionsResponse = dvApiClient
-					.getTransactions(new TransactionFilter(transactionSyncResponse.getResult().getExternalId()));
-			assertEquals(HttpStatus.SC_OK, transactionsResponse.getCode());
-			assertTrue(transactionsResponse.getResult().size() > 0);
+			// Cancel Transaction
+			ApiResponse<TransactionResponse> transactionSyncResponseToCancel = dvApiClient
+					.createTransaction(getTransactionRequest(productId), true);
 
-			// Get Transaction By Id
-			ApiResponse<TransactionResponse> transactionByIdResponse = dvApiClient
-					.getTransaction(transactionsResponse.getResult().get(0).getId());
-			assertEquals(HttpStatus.SC_OK, transactionByIdResponse.getCode());
+			if (HttpStatus.SC_CREATED == transactionSyncResponseToCancel.getCode()) {
+				ApiResponse<TransactionResponse> cancelTransactionResponse = dvApiClient
+						.cancelTransaction(transactionSyncResponseToCancel.getResult().getId());
+				assertEquals(HttpStatus.SC_ACCEPTED, cancelTransactionResponse.getCode());
 
-			// Transaction Not Found
-			ApiResponse<TransactionResponse> transactionByIdResponse2 = dvApiClient.getTransaction(100000000L);
-			assertEquals(HttpStatus.SC_NOT_FOUND, transactionByIdResponse2.getCode());
-			assertEquals(ErrorCodes.TXN_NOT_FOUND.getCode(), transactionByIdResponse2.getErrors().get(0).getCode());
-		} else {
-			assertEquals(HttpStatus.SC_BAD_REQUEST, transactionSyncResponse.getCode());
-			assertEquals(ErrorCodes.INSUFFICIENT_BALANCE.getCode(),
-					transactionSyncResponse.getErrors().get(0).getCode());
-		}
-		// Transaction Async
-		ApiResponse<TransactionResponse> transactionAsyncResponse = dvApiClient
-				.createTransaction(MockTestUtils.getTransactionRequest(), false);
-		assertEquals(HttpStatus.SC_CREATED, transactionAsyncResponse.getCode());
+				ApiResponse<TransactionResponse> cancelTransactionResponse2 = dvApiClient
+						.cancelTransaction(transactionSyncResponseToCancel.getResult().getId());
+				assertEquals(HttpStatus.SC_BAD_REQUEST, cancelTransactionResponse2.getCode());
+				assertEquals(ErrorCodes.TXN_ALREADY_CANCELLED.getCode(),
+						cancelTransactionResponse2.getErrors().get(0).getCode());
 
-		if (HttpStatus.SC_CREATED == transactionAsyncResponse.getCode()) {
-			// Confirm Transaction Async
-			ApiResponse<TransactionResponse> confirmTransactionAsyncResponse = dvApiClient
-					.confirmTransaction(transactionAsyncResponse.getResult().getId(), false);
-			assertEquals(HttpStatus.SC_ACCEPTED, confirmTransactionAsyncResponse.getCode());
+				ApiResponse<TransactionResponse> confirmTransactionSyncResponse = dvApiClient
+						.confirmTransaction(transactionSyncResponseToCancel.getResult().getId(), true);
+				assertEquals(HttpStatus.SC_BAD_REQUEST, confirmTransactionSyncResponse.getCode());
 
-			// Get Transactions Async
-			ApiResponse<List<TransactionResponse>> transactionAsyncResponses = dvApiClient
-					.getTransactions(new TransactionFilter(transactionAsyncResponse.getResult().getExternalId()));
-			assertEquals(HttpStatus.SC_OK, transactionAsyncResponses.getCode());
-			assertTrue(transactionAsyncResponses.getResult().size() > 0);
+				// To be enabled once the defect is fixed
+				// assertEquals(ErrorCodes.TXN_CANNOT_BE_CONFIRMED.getCode(),
+				// confirmTransactionSyncResponse.getErrors().get(0).getCode());
 
-			if (transactionAsyncResponses.getResult().size() > 50) {
-				ApiResponse<List<TransactionResponse>> transactionAsyncResponses2 = dvApiClient
-						.getTransactions(new TransactionFilter(transactionAsyncResponse.getResult().getExternalId()), 1, 100);
-				assertEquals(HttpStatus.SC_OK, transactionAsyncResponses2.getCode());
-				assertTrue(transactionAsyncResponses2.getResult().size() > 50);
+				TransactionRequest txnRequest2 = getTransactionRequest(productId);
+				txnRequest2.setExternalId(" ");
+				ApiResponse<TransactionResponse> transactionSyncResponse2 = dvApiClient.createTransaction(txnRequest2,
+						true);
+				assertEquals(HttpStatus.SC_BAD_REQUEST, transactionSyncResponse2.getCode());
 			}
-		} else {
-			assertEquals(HttpStatus.SC_BAD_REQUEST, transactionSyncResponse.getCode());
-			assertEquals(ErrorCodes.INSUFFICIENT_BALANCE.getCode(),
-					transactionSyncResponse.getErrors().get(0).getCode());
-		}
-
-		// Cancel Transaction
-		ApiResponse<TransactionResponse> transactionSyncResponseToCancel = dvApiClient
-				.createTransaction(MockTestUtils.getTransactionRequest(), true);
-
-		if (HttpStatus.SC_CREATED == transactionSyncResponseToCancel.getCode()) {
-			ApiResponse<TransactionResponse> cancelTransactionResponse = dvApiClient
-					.cancelTransaction(transactionSyncResponseToCancel.getResult().getId());
-			assertEquals(HttpStatus.SC_ACCEPTED, cancelTransactionResponse.getCode());
-
-			ApiResponse<TransactionResponse> cancelTransactionResponse2 = dvApiClient
-					.cancelTransaction(transactionSyncResponseToCancel.getResult().getId());
-			assertEquals(HttpStatus.SC_BAD_REQUEST, cancelTransactionResponse2.getCode());
-			assertEquals(ErrorCodes.TXN_ALREADY_CANCELLED.getCode(),
-					cancelTransactionResponse2.getErrors().get(0).getCode());
-
-			ApiResponse<TransactionResponse> confirmTransactionSyncResponse = dvApiClient
-					.confirmTransaction(transactionSyncResponseToCancel.getResult().getId(), true);
-			assertEquals(HttpStatus.SC_BAD_REQUEST, confirmTransactionSyncResponse.getCode());
-
-			// To be enabled once the defect is fixed
-			// assertEquals(ErrorCodes.TXN_CANNOT_BE_CONFIRMED.getCode(),
-			// confirmTransactionSyncResponse.getErrors().get(0).getCode());
-			
-			TransactionRequest txnRequest2 = MockTestUtils.getTransactionRequest();
-			txnRequest2.setExternalId(" ");
-			ApiResponse<TransactionResponse> transactionSyncResponse2 = dvApiClient.createTransaction(txnRequest2, true);
-			assertEquals(HttpStatus.SC_BAD_REQUEST,transactionSyncResponse2.getCode());
 		}
 
 	}
@@ -494,6 +506,19 @@ public class DvsApiClientTest {
 			assertEquals(HttpStatus.SC_OK, balancesResponse2.getCode());
 			assertTrue(balancesResponse2.getResult().size() > 50);
 		}
+	}
+
+	private TransactionRequest getTransactionRequest(Long productId) {
+		TransactionRequest transactionRequest = new TransactionRequest();
+		transactionRequest.setProductId(productId);
+		transactionRequest.setExternalId(String.valueOf(Calendar.getInstance().getTimeInMillis()));
+		transactionRequest.setAutoConfirm(false);
+
+		PartyIdentifier creditPartyIdentifier = new PartyIdentifier();
+		creditPartyIdentifier.setMobileNumber("+971501817077");
+		creditPartyIdentifier.setAccountNumber("628123456100");
+		transactionRequest.setCreditPartyIdentifier(creditPartyIdentifier);
+		return transactionRequest;
 	}
 
 }

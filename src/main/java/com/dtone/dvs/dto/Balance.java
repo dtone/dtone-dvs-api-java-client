@@ -1,5 +1,7 @@
 package com.dtone.dvs.dto;
 
+import java.math.BigDecimal;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Balance {
@@ -13,10 +15,10 @@ public class Balance {
 	private String unit;
 	
 	@JsonProperty(value = "available")
-	private Long available;
+	private BigDecimal available;
 	
 	@JsonProperty(value = "holding")
-	private Long holding;
+	private BigDecimal holding;
 	
 	@JsonProperty(value = "credit_limit")
 	private Long creditLimit;
@@ -45,19 +47,19 @@ public class Balance {
 		this.unit = unit;
 	}
 
-	public Long getAvailable() {
+	public BigDecimal getAvailable() {
 		return available;
 	}
 
-	public void setAvailable(Long available) {
+	public void setAvailable(BigDecimal available) {
 		this.available = available;
 	}
 
-	public Long getHolding() {
+	public BigDecimal getHolding() {
 		return holding;
 	}
 
-	public void setHolding(Long holding) {
+	public void setHolding(BigDecimal holding) {
 		this.holding = holding;
 	}
 
