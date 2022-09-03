@@ -5,16 +5,16 @@
 
 	<groupId>com.dtone.dvs</groupId>
 	<artifactId>dvs-apiclient</artifactId>
-	<version>1.1.0.2-vincejv</version>
+	<version>1.1.0.3-vincejv</version>
 	<packaging>jar</packaging>
 
 	<name>dvs-apiclient</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>17</maven.compiler.source>
-		<maven.compiler.target>17</maven.compiler.target>
+		<compiler-plugin.version>3.8.1</compiler-plugin.version>
 		<jdk.version>17</jdk.version>
+		<org.projectlombok.version>1.18.24</org.projectlombok.version>
 
 		<jacoco.version>0.8.4</jacoco.version>
 		<sonar.projectKey>dtone-dvs-apiclient</sonar.projectKey>
@@ -95,14 +95,25 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
+				<version>${compiler-plugin.version}</version>
 				<configuration>
 					<source>${jdk.version}</source>
 					<target>${jdk.version}</target>
+					<release>${jdk.version}</release>
+					<compilerArgs>
+						<arg>-parameters</arg>
+					</compilerArgs>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>${org.projectlombok.version}</version>
+						</path>
+					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
 
