@@ -25,7 +25,7 @@ public class RestApiInvokeService {
 	private final String apiKey;
 	private final String apiSecret;
 
-	private final HttpClient httpClient;
+	private HttpClient httpClient;
 
 	public RestApiInvokeService(String apiKey, String apiSecret) {
 		this.apiKey = apiKey;
