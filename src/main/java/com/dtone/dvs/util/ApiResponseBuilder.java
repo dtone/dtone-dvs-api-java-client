@@ -1,8 +1,6 @@
 package com.dtone.dvs.util;
 
-import java.io.EOFException;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -21,6 +19,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ApiResponseBuilder {
+
+	private static ObjectMapper objectMapper;
 
 	/**
 	 * Prepare API response
@@ -64,25 +64,19 @@ public class ApiResponseBuilder {
 	private static <T> void setPageDetails(ApiResponse<T> apiResponse, Header[] headers) {
 		for (Header header : headers) {
 			switch (header.getName()) {
-			case Constants.CURRENT_PAGE_HEADER:
-				apiResponse.setCurrentPage(Integer.parseInt(header.getValue()));
-				break;
-			case Constants.RECORDS_PER_PAGE_HEADER:
-				apiResponse.setRecordsPerPage(Integer.parseInt(header.getValue()));
-				break;
-			case Constants.TOTAL_RECORDS_HEADER:
-				apiResponse.setTotalRecords(Integer.parseInt(header.getValue()));
-				break;
-			case Constants.TOTAL_PAGES_HEADER:
-				apiResponse.setTotalPages(Integer.parseInt(header.getValue()));
-				break;
-			case Constants.NEXT_PAGE_HEADER:
-				apiResponse.setNextPage(Integer.parseInt(header.getValue()));
-				break;
-			case Constants.PREVIOUS_PAGE_HEADER:
-				apiResponse.setPreviousPage(Integer.parseInt(header.getValue()));
-				break;
-			default:
+				case Constants.CURRENT_PAGE_HEADER ->
+						apiResponse.setCurrentPage(Integer.parseInt(header.getValue()));
+				case Constants.RECORDS_PER_PAGE_HEADER ->
+						apiResponse.setRecordsPerPage(Integer.parseInt(header.getValue()));
+				case Constants.TOTAL_RECORDS_HEADER ->
+						apiResponse.setTotalRecords(Integer.parseInt(header.getValue()));
+				case Constants.TOTAL_PAGES_HEADER ->
+						apiResponse.setTotalPages(Integer.parseInt(header.getValue()));
+				case Constants.NEXT_PAGE_HEADER ->
+						apiResponse.setNextPage(Integer.parseInt(header.getValue()));
+				case Constants.PREVIOUS_PAGE_HEADER ->
+						apiResponse.setPreviousPage(Integer.parseInt(header.getValue()));
+				default -> {}
 			}
 		}
 	}
@@ -99,9 +93,7 @@ public class ApiResponseBuilder {
 	 * @throws JsonMappingException
 	 */
 	public static <T> T extractResult(HttpEntity httpEntity, TypeReference<T> valueTypeRef) throws IOException {
-		var rez = new String(httpEntity.getContent().readAllBytes(), StandardCharsets.UTF_8);
-		throw new EOFException(rez);
-		//return getObjectMapper().readValue(httpEntity.getContent(), valueTypeRef);
+		return getObjectMapper().readerFor(valueTypeRef).readValue(httpEntity.getContent());
 	}
 
 	/**
@@ -110,10 +102,12 @@ public class ApiResponseBuilder {
 	 * @return objectMapper
 	 */
 	public static ObjectMapper getObjectMapper() {
-		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		objectMapper.configure(Feature.AUTO_CLOSE_SOURCE, true);
-		objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
+		if (objectMapper == null) {
+			objectMapper = new ObjectMapper();
+			objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			objectMapper.configure(Feature.AUTO_CLOSE_SOURCE, true);
+			objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
+		}
 		return objectMapper;
 	}
 
