@@ -22,10 +22,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class RestApiInvokeService {
 
-	private String apiKey;
-	private String apiSecret;
+	private final String apiKey;
+	private final String apiSecret;
 
-	private HttpClient httpClient;
+	private final HttpClient httpClient;
 
 	public RestApiInvokeService(String apiKey, String apiSecret) {
 		this.apiKey = apiKey;

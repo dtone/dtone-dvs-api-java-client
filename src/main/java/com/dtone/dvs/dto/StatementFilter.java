@@ -4,7 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.dtone.dvs.util.Constants;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
 public class StatementFilter {
 
 	private String accountNumber;
@@ -16,51 +24,6 @@ public class StatementFilter {
 	private Long productId;
 
 	private String accountQualifier;
-
-	public StatementFilter(String accountNumber, Long productId) {
-		this.accountNumber = accountNumber;
-		this.productId = productId;
-	}
-
-	public String getAccountNumber() {
-		return accountNumber;
-	}
-
-	public void setAccountNumber(String accountNumber) {
-		this.accountNumber = accountNumber;
-	}
-
-	public Integer getPage() {
-		return page;
-	}
-
-	public void setPage(Integer page) {
-		this.page = page;
-	}
-
-	public Integer getPerPage() {
-		return perPage;
-	}
-
-	public void setPerPage(Integer perPage) {
-		this.perPage = perPage;
-	}
-
-	public Long getProductId() {
-		return productId;
-	}
-
-	public void setProductId(Long productId) {
-		this.productId = productId;
-	}
-
-	public String getAccountQualifier() {
-		return accountQualifier;
-	}
-
-	public void setAccountQualifier(String accountQualifier) {
-		this.accountQualifier = accountQualifier;
-	}
 
 	public Map<String, String> getQueryParameterMap() {
 		Map<String, String> queryParameterMap = new HashMap<>();
@@ -77,10 +40,6 @@ public class StatementFilter {
 
 		if (null != perPage) {
 			queryParameterMap.put(Constants.PER_PAGE, String.valueOf(perPage));
-		}
-
-		if (queryParameterMap.isEmpty()) {
-			return null;
 		}
 
 		return queryParameterMap;

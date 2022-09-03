@@ -3,8 +3,15 @@ package com.dtone.dvs.dto;
 import com.dtone.dvs.DvsApiClient;
 import com.dtone.dvs.exception.DvsApiException;
 import com.dtone.dvs.util.Constants;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @SuppressWarnings("unchecked")
+@Data
+@AllArgsConstructor
+@EqualsAndHashCode
 public class Page<T> {
 
 	private final DvsApiClient dvsClient;
@@ -87,61 +94,4 @@ public class Page<T> {
 			return getApiResponse();
 		}
 	}
-
-	public int getTotalPages() {
-		return totalPages;
-	}
-
-	public void setTotalPages(int totalPages) {
-		this.totalPages = totalPages;
-	}
-
-	public int getTotalRecords() {
-		return totalRecords;
-	}
-
-	public void setTotalRecords(int totalRecords) {
-		this.totalRecords = totalRecords;
-	}
-
-	public int getCurrentPage() {
-		return currentPage;
-	}
-
-	public void setCurrentPage(int currentPage) {
-		this.currentPage = currentPage;
-	}
-
-	public int getRecordsPerPage() {
-		return recordsPerPage;
-	}
-
-	public void setRecordsPerPage(int recordsPerPage) {
-		this.recordsPerPage = recordsPerPage;
-	}
-
-	public int getNextPage() {
-		return nextPage;
-	}
-
-	public void setNextPage(int nextPage) {
-		this.nextPage = nextPage;
-	}
-
-	public int getPreviousPage() {
-		return previousPage;
-	}
-
-	public void setPreviousPage(int previousPage) {
-		this.previousPage = previousPage;
-	}
-
-	public String getApiOperation() {
-		return apiOperation;
-	}
-
-	public void setApiOperation(String apiOperation) {
-		this.apiOperation = apiOperation;
-	}
-
 }

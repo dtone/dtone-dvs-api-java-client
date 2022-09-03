@@ -25,7 +25,7 @@ public class ApiResponseBuilder {
 	 * 
 	 * @param <T>         the result type
 	 * @param apiResponse the api response object
-	 * @param classType   the response type
+	 * @param typeReference   the response type
 	 * @param response    the http response
 	 * @return the final api response
 	 * @throws IOException
@@ -91,7 +91,6 @@ public class ApiResponseBuilder {
 	 * @param <T>          the result type
 	 * @param httpEntity   the HTTP entity
 	 * @param valueTypeRef the result type reference
-	 * @param classType    the class type
 	 * @return the result
 	 * @throws IOException
 	 * @throws JsonParseException

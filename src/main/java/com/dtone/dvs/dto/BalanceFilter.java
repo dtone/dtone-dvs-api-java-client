@@ -4,7 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.dtone.dvs.util.Constants;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
 public class BalanceFilter {
 
 	private UnitTypes unitTypes;
@@ -17,32 +25,6 @@ public class BalanceFilter {
 
 	public BalanceFilter(UnitTypes unitTypes) {
 		this.unitTypes = unitTypes;
-	}
-
-	public BalanceFilter(UnitTypes unitTypes, String unit) {
-		this.unitTypes = unitTypes;
-		this.unit = unit;
-	}
-
-	public String getUnit() {
-		return unit;
-	}
-
-	public void setUnit(String unit) {
-		this.unit = unit;
-	}
-
-	public UnitTypes getUnitTypes() {
-		return unitTypes;
-	}
-
-	public void setUnitTypes(UnitTypes unitTypes) {
-		this.unitTypes = unitTypes;
-	}
-
-	@Override
-	public String toString() {
-		return "BalanceFilter [unitTypes=" + unitTypes + ", unit=" + unit + "]";
 	}
 
 	public Map<String, String> getQueryParameterMap() {

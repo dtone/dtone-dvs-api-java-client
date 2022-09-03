@@ -5,7 +5,15 @@ import java.util.List;
 import java.util.Map;
 
 import com.dtone.dvs.util.Constants;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
 public class ProductFilter {
 
 	private ProductType type;
@@ -19,54 +27,6 @@ public class ProductFilter {
 	private String region;
 
 	private List<BenefitTypes> benefitTypes;
-
-	public ProductType getType() {
-		return type;
-	}
-
-	public void setType(ProductType type) {
-		this.type = type;
-	}
-
-	public Long getServiceId() {
-		return serviceId;
-	}
-
-	public void setServiceId(Long serviceId) {
-		this.serviceId = serviceId;
-	}
-
-	public String getCountryIsoCode() {
-		return countryIsoCode;
-	}
-
-	public void setCountryIsoCode(String countryIsoCode) {
-		this.countryIsoCode = countryIsoCode;
-	}
-
-	public Long getOperatorId() {
-		return operatorId;
-	}
-
-	public void setOperatorId(Long operatorId) {
-		this.operatorId = operatorId;
-	}
-
-	public String getRegion() {
-		return region;
-	}
-
-	public void setRegion(String region) {
-		this.region = region;
-	}
-
-	public List<BenefitTypes> getBenefitTypes() {
-		return benefitTypes;
-	}
-
-	public void setBenefitTypes(List<BenefitTypes> benefitTypes) {
-		this.benefitTypes = benefitTypes;
-	}
 
 	public Map<String, String> getQueryParameterMap() {
 		Map<String, String> queryParameterMap = new HashMap<>();
@@ -102,12 +62,6 @@ public class ProductFilter {
 		}
 		return queryParameterMap;
 
-	}
-
-	@Override
-	public String toString() {
-		return "ProductFilter [serviceId=" + serviceId + ", countryIsoCode=" + countryIsoCode + ", operatorId="
-				+ operatorId + ", region=" + region + ", benefitTypes=" + benefitTypes + "]";
 	}
 
 }
