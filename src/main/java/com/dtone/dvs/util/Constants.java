@@ -1,7 +1,9 @@
 package com.dtone.dvs.util;
 
 public class Constants {
-	
+
+	public static final String DVS_SDK_VERSION = "DVS-ASYNC-CLIENT-SDK/2.0.0 JAVA";
+
 	private Constants() { }
 	
 	//Pagination Response Headers

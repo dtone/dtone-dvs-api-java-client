@@ -5,8 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
-import org.apache.commons.lang3.StringUtils;
+import java.util.concurrent.CompletableFuture;
 
 import com.dtone.dvs.dto.ApiResponse;
 import com.dtone.dvs.dto.Balance;
@@ -14,7 +13,7 @@ import com.dtone.dvs.dto.BalanceFilter;
 import com.dtone.dvs.dto.BenefitType;
 import com.dtone.dvs.dto.Country;
 import com.dtone.dvs.dto.Operator;
-import com.dtone.dvs.dto.Page;
+import com.dtone.dvs.dto.PageAsync;
 import com.dtone.dvs.dto.Product;
 import com.dtone.dvs.dto.ProductFilter;
 import com.dtone.dvs.dto.Promotion;
@@ -26,13 +25,14 @@ import com.dtone.dvs.dto.TransactionFilter;
 import com.dtone.dvs.dto.TransactionRequest;
 import com.dtone.dvs.dto.TransactionResponse;
 import com.dtone.dvs.exception.DvsApiException;
-import com.dtone.dvs.service.ApiService;
+import com.dtone.dvs.service.ApiServiceAsync;
 import com.dtone.dvs.util.Constants;
 import com.fasterxml.jackson.core.type.TypeReference;
+import org.apache.commons.lang3.StringUtils;
 
-public class DvsApiClientHelper {
+public class DvsApiClientHelperAsync {
 
-	private ApiService apiService;
+	private ApiServiceAsync apiService;
 
 	private String url = null;
 
@@ -40,31 +40,31 @@ public class DvsApiClientHelper {
 		return url;
 	}
 
-	public DvsApiClientHelper(String url, String apiKey, String apiSecret) {
+	public DvsApiClientHelperAsync(String url, String apiKey, String apiSecret) {
 		this.url = url;
-		apiService = new ApiService(url, apiKey, apiSecret);
+		apiService = new ApiServiceAsync(url, apiKey, apiSecret);
 	}
 
-	public DvsApiClientHelper(ApiService apiServiceParam, String url) {
+	public DvsApiClientHelperAsync(ApiServiceAsync apiServiceParam, String url) {
 		this.url = url;
 		this.apiService = apiServiceParam;
 	}
 
 	// Services - Begin
 
-	public Page<ApiResponse<List<Service>>> getAllServices() throws DvsApiException {
+	public CompletableFuture<PageAsync<CompletableFuture<ApiResponse<List<Service>>>>> getAllServices() throws DvsApiException {
 		return apiService.httpGetPageable(Constants.SERVICES, getUrl(Constants.SERVICES),
 				new ApiResponse<List<Service>>(), new TypeReference<List<Service>>() {
 				});
 	}
 
-	public ApiResponse<List<Service>> getServices(int page, int recordsPerPage) throws DvsApiException {
+	public CompletableFuture<ApiResponse<List<Service>>> getServices(int page, int recordsPerPage) throws DvsApiException {
 		return apiService.httpGet(getUrl(Constants.SERVICES, page, recordsPerPage), new ApiResponse<List<Service>>(),
 				new TypeReference<List<Service>>() {
 				});
 	}
 
-	public ApiResponse<Service> getService(String serviceId) throws DvsApiException {
+	public CompletableFuture<ApiResponse<Service>> getService(String serviceId) throws DvsApiException {
 		return apiService.httpGet(getUrl(Constants.SERVICES, serviceId), new ApiResponse<Service>(),
 				new TypeReference<Service>() {
 				});
@@ -74,19 +74,19 @@ public class DvsApiClientHelper {
 
 	// Countries - Begin
 
-	public Page<ApiResponse<List<Country>>> getAllCountries() throws DvsApiException {
+	public CompletableFuture<PageAsync<CompletableFuture<ApiResponse<List<Country>>>>> getAllCountries() throws DvsApiException {
 		return apiService.httpGetPageable(Constants.COUNTRIES, getUrl(Constants.COUNTRIES),
 				new ApiResponse<List<Country>>(), new TypeReference<List<Country>>() {
 				});
 	}
 
-	public ApiResponse<List<Country>> getCountries(int page, int recordsPerPage) throws DvsApiException {
+	public CompletableFuture<ApiResponse<List<Country>>> getCountries(int page, int recordsPerPage) throws DvsApiException {
 		return apiService.httpGet(getUrl(Constants.COUNTRIES, page, recordsPerPage), new ApiResponse<List<Country>>(),
 				new TypeReference<List<Country>>() {
 				});
 	}
 
-	public ApiResponse<Country> getCountry(String isoCode) throws DvsApiException {
+	public CompletableFuture<ApiResponse<Country>> getCountry(String isoCode) throws DvsApiException {
 		return apiService.httpGet(getUrl(Constants.COUNTRIES, isoCode), new ApiResponse<Country>(),
 				new TypeReference<Country>() {
 				});
@@ -96,19 +96,19 @@ public class DvsApiClientHelper {
 
 	// Operators - Begin
 
-	public Page<ApiResponse<List<Operator>>> getAllOperators() throws DvsApiException {
+	public CompletableFuture<PageAsync<CompletableFuture<ApiResponse<List<Operator>>>>> getAllOperators() throws DvsApiException {
 		return apiService.httpGetPageable(Constants.OPERATORS, getUrl(Constants.OPERATORS),
 				new ApiResponse<List<Operator>>(), new TypeReference<List<Operator>>() {
 				});
 	}
 
-	public ApiResponse<List<Operator>> getOperators(int page, int recordsPerPage) throws DvsApiException {
+	public CompletableFuture<ApiResponse<List<Operator>>> getOperators(int page, int recordsPerPage) throws DvsApiException {
 		return apiService.httpGet(getUrl(Constants.OPERATORS, page, recordsPerPage), new ApiResponse<List<Operator>>(),
 				new TypeReference<List<Operator>>() {
 				});
 	}
 
-	public ApiResponse<List<Operator>> getOperators(String countryIsoCode, int page, int recordsPerPage)
+	public CompletableFuture<ApiResponse<List<Operator>>> getOperators(String countryIsoCode, int page, int recordsPerPage)
 			throws DvsApiException {
 		return apiService.httpGet(
 				getUrl(Constants.OPERATORS, null, page, recordsPerPage,
@@ -117,13 +117,13 @@ public class DvsApiClientHelper {
 				});
 	}
 
-	public ApiResponse<Operator> getOperator(Long operatorId) throws DvsApiException {
+	public CompletableFuture<ApiResponse<Operator>> getOperator(Long operatorId) throws DvsApiException {
 		return apiService.httpGet(getUrl(Constants.OPERATORS, String.valueOf(operatorId)), new ApiResponse<Operator>(),
 				new TypeReference<Operator>() {
 				});
 	}
 
-	public ApiResponse<List<Operator>> lookupOperators(String mobileNumber, int page, int recordsPerPage)
+	public CompletableFuture<ApiResponse<List<Operator>>> lookupOperators(String mobileNumber, int page, int recordsPerPage)
 			throws DvsApiException {
 		return apiService.httpGet(getUrl(Constants.OPERATOR_LOOKUP, mobileNumber, page, recordsPerPage, null),
 				new ApiResponse<List<Operator>>(), new TypeReference<List<Operator>>() {
@@ -134,13 +134,13 @@ public class DvsApiClientHelper {
 
 	// Benefit Types - Begin
 
-	public Page<ApiResponse<List<BenefitType>>> getAllBenefitTypes() throws DvsApiException {
+	public CompletableFuture<PageAsync<CompletableFuture<ApiResponse<List<BenefitType>>>>> getAllBenefitTypes() throws DvsApiException {
 		return apiService.httpGetPageable(Constants.BENEFIT_TYPES, getUrl(Constants.BENEFIT_TYPES),
 				new ApiResponse<List<BenefitType>>(), new TypeReference<List<BenefitType>>() {
 				});
 	}
 
-	public ApiResponse<List<BenefitType>> getBenefitTypes(int page, int recordsPerPage) throws DvsApiException {
+	public CompletableFuture<ApiResponse<List<BenefitType>>> getBenefitTypes(int page, int recordsPerPage) throws DvsApiException {
 		return apiService.httpGet(getUrl(Constants.BENEFIT_TYPES, page, recordsPerPage),
 				new ApiResponse<List<BenefitType>>(), new TypeReference<List<BenefitType>>() {
 				});
@@ -150,20 +150,20 @@ public class DvsApiClientHelper {
 
 	// Promotions - Begin
 
-	public Page<ApiResponse<List<Promotion>>> getAllPromotions() throws DvsApiException {
+	public CompletableFuture<PageAsync<CompletableFuture<ApiResponse<List<Promotion>>>>> getAllPromotions() throws DvsApiException {
 		return apiService.httpGetPageable(Constants.PROMOTIONS, getUrl(Constants.PROMOTIONS),
 				new ApiResponse<List<Promotion>>(), new TypeReference<List<Promotion>>() {
 				});
 	}
 
-	public ApiResponse<List<Promotion>> getPromotions(int page, int recordsPerPage) throws DvsApiException {
+	public CompletableFuture<ApiResponse<List<Promotion>>> getPromotions(int page, int recordsPerPage) throws DvsApiException {
 		return apiService.httpGet(getUrl(Constants.PROMOTIONS, page, recordsPerPage),
 				new ApiResponse<List<Promotion>>(), new TypeReference<List<Promotion>>() {
 				});
 	}
 
-	public ApiResponse<List<Promotion>> getPromotions(PromotionFilter promotionFilter, int page,
-			int recordsPerPage) throws DvsApiException {
+	public CompletableFuture<ApiResponse<List<Promotion>>> getPromotions(PromotionFilter promotionFilter, int page,
+																																			 int recordsPerPage) throws DvsApiException {
 		return apiService.httpGet(
 				getUrl(Constants.PROMOTIONS, null, page, recordsPerPage,
 						promotionFilter.getQueryParameterMap()),
@@ -171,7 +171,7 @@ public class DvsApiClientHelper {
 				});
 	}
 
-	public ApiResponse<Promotion> getPromotion(Long promotionId) throws DvsApiException {
+	public CompletableFuture<ApiResponse<Promotion>> getPromotion(Long promotionId) throws DvsApiException {
 		return apiService.httpGet(getUrl(Constants.PROMOTIONS, String.valueOf(promotionId)),
 				new ApiResponse<Promotion>(), new TypeReference<Promotion>() {
 				});
@@ -181,20 +181,20 @@ public class DvsApiClientHelper {
 
 	// Products - Begin
 
-	public Page<ApiResponse<List<Product>>> getAllProducts() throws DvsApiException {
+	public CompletableFuture<PageAsync<CompletableFuture<ApiResponse<List<Product>>>>> getAllProducts() throws DvsApiException {
 		return apiService.httpGetPageable(Constants.PRODUCTS, getUrl(Constants.PRODUCTS),
 				new ApiResponse<List<Product>>(), new TypeReference<List<Product>>() {
 				});
 	}
 
-	public ApiResponse<List<Product>> getProducts(ProductFilter productFilter, int page, int recordsPerPage)
+	public CompletableFuture<ApiResponse<List<Product>>> getProducts(ProductFilter productFilter, int page, int recordsPerPage)
 			throws DvsApiException {
 		return apiService.httpGet(getUrl(Constants.PRODUCTS, null, page, recordsPerPage, productFilter.getQueryParameterMap()), new ApiResponse<List<Product>>(),
 				new TypeReference<List<Product>>() {
 				});
 	}
 
-	public ApiResponse<Product> getProduct(Long productId) throws DvsApiException {
+	public CompletableFuture<ApiResponse<Product>> getProduct(Long productId) throws DvsApiException {
 		return apiService.httpGet(getUrl(Constants.PRODUCTS, String.valueOf(productId)), new ApiResponse<Product>(),
 				new TypeReference<Product>() {
 				});
@@ -204,24 +204,24 @@ public class DvsApiClientHelper {
 
 	// Transactions - Begin
 
-	public ApiResponse<TransactionResponse> postTransaction(TransactionRequest transactionRequest, boolean synchronous)
+	public CompletableFuture<ApiResponse<TransactionResponse>> postTransaction(TransactionRequest transactionRequest)
 			throws DvsApiException {
 		if (StringUtils.isEmpty(transactionRequest.getExternalId())){
 			transactionRequest.setExternalId(String.valueOf(Calendar.getInstance().getTimeInMillis()) + UUID.randomUUID());
 		}
 
-		return apiService.httpPost(getUrl(synchronous ? Constants.TRANSACTION_SYNC : Constants.TRANSACTION_ASYNC),
+		return apiService.httpPost(getUrl(Constants.TRANSACTION_ASYNC),
 				new ApiResponse<TransactionResponse>(), new TypeReference<TransactionResponse>() {
 				}, transactionRequest);
 	}
 
-	public ApiResponse<TransactionResponse> getTransaction(Long transactionId) throws DvsApiException {
+	public CompletableFuture<ApiResponse<TransactionResponse>> getTransaction(Long transactionId) throws DvsApiException {
 		return apiService.httpGet(getUrl(Constants.TRANSACTIONS, String.valueOf(transactionId)),
 				new ApiResponse<TransactionResponse>(), new TypeReference<TransactionResponse>() {
 				});
 	}
 
-	public ApiResponse<List<TransactionResponse>> getTransactions(TransactionFilter transactionFilter, int page, int recordsPerPage)
+	public CompletableFuture<ApiResponse<List<TransactionResponse>>> getTransactions(TransactionFilter transactionFilter, int page, int recordsPerPage)
 			throws DvsApiException {
 		return apiService.httpGet(
 				getUrl(Constants.TRANSACTIONS, null, page, recordsPerPage, transactionFilter.getQueryParameterMap()),
@@ -229,16 +229,16 @@ public class DvsApiClientHelper {
 				});
 	}
 
-	public ApiResponse<TransactionResponse> confirmTransaction(Long transactionId, boolean synchronous)
+	public CompletableFuture<ApiResponse<TransactionResponse>> confirmTransaction(Long transactionId)
 			throws DvsApiException {
 		return apiService.httpPost(
-				getUrl(synchronous ? Constants.CONFIRM_TRANSACTION_SYNC : Constants.CONFIRM_TRANSACTION_ASYNC,
+				getUrl(Constants.CONFIRM_TRANSACTION_ASYNC,
 						String.valueOf(transactionId)),
 				new ApiResponse<TransactionResponse>(), new TypeReference<TransactionResponse>() {
 				}, null);
 	}
 
-	public ApiResponse<TransactionResponse> cancelTransaction(Long transactionId) throws DvsApiException {
+	public CompletableFuture<ApiResponse<TransactionResponse>> cancelTransaction(Long transactionId) throws DvsApiException {
 		return apiService.httpPost(getUrl(Constants.CANCEL_TRANSACTION, String.valueOf(transactionId)),
 				new ApiResponse<TransactionResponse>(), new TypeReference<TransactionResponse>() {
 				}, null);
@@ -248,25 +248,25 @@ public class DvsApiClientHelper {
 
 	// Balances - Begin
 
-	public Page<ApiResponse<List<Balance>>> getAllBalances() throws DvsApiException {
+	public CompletableFuture<PageAsync<CompletableFuture<ApiResponse<List<Balance>>>>> getAllBalances() throws DvsApiException {
 		return apiService.httpGetPageable(Constants.BALANCES, getUrl(Constants.BALANCES),
 				new ApiResponse<List<Balance>>(), new TypeReference<List<Balance>>() {
 				});
 	}
 
-	public ApiResponse<List<Balance>> getBalances(int page, int recordsPerPage) throws DvsApiException {
+	public CompletableFuture<ApiResponse<List<Balance>>> getBalances(int page, int recordsPerPage) throws DvsApiException {
 		return apiService.httpGet(getUrl(Constants.BALANCES, page, recordsPerPage), new ApiResponse<List<Balance>>(),
 				new TypeReference<List<Balance>>() {
 				});
 	}
-	
-	public ApiResponse<List<Balance>> getBalances(BalanceFilter balanceFilter) throws DvsApiException {
+
+	public CompletableFuture<ApiResponse<List<Balance>>> getBalances(BalanceFilter balanceFilter) throws DvsApiException {
 		return apiService.httpGet(getUrl(Constants.BALANCES, null, 0, 0, balanceFilter.getQueryParameterMap()), new ApiResponse<List<Balance>>(),
 				new TypeReference<List<Balance>>() {
 				});
 	}
-	
-	public ApiResponse<List<StatementDetail>> getStatement(StatementFilter statementFilter) throws DvsApiException {
+
+	public CompletableFuture<ApiResponse<List<StatementDetail>>> getStatement(StatementFilter statementFilter) throws DvsApiException {
 		return apiService.httpGet(getUrl(Constants.STATEMENT_INQUIRY, statementFilter.getAccountNumber(), 0, 0, statementFilter.getQueryParameterMap()), new ApiResponse<List<StatementDetail>>(),
 				new TypeReference<List<StatementDetail>>() {
 				});
@@ -288,7 +288,7 @@ public class DvsApiClientHelper {
 
 	/**
 	 * Method to prepare query parameter map
-	 * 
+	 *
 	 * @param queryParams the query parameters array
 	 * @return query parameter map
 	 */
@@ -315,7 +315,7 @@ public class DvsApiClientHelper {
 
 	/**
 	 * Method to prepare final URL
-	 * 
+	 *
 	 * @param uri            the base URL
 	 * @param pathParam      the path param
 	 * @param pageNumber     the page number
@@ -326,7 +326,7 @@ public class DvsApiClientHelper {
 	private String getUrl(String uri, String pathParam, int pageNumber, int recordsPerPage,
 			Map<String, String> queryParams) {
 		StringBuilder sb = new StringBuilder(this.getUrl());
-		
+
 		appendUri(uri, pathParam, sb);
 
 		appendQueryParameters(queryParams, sb);

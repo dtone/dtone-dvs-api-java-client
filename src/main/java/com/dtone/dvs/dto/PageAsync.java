@@ -1,20 +1,19 @@
 package com.dtone.dvs.dto;
 
-import com.dtone.dvs.DvsApiClient;
+import com.dtone.dvs.DvsApiClientAsync;
 import com.dtone.dvs.exception.DvsApiException;
 import com.dtone.dvs.util.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 @SuppressWarnings("unchecked")
 @Data
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Page<T> {
+public class PageAsync<T> {
 
-	private final DvsApiClient dvsClient;
+	private final DvsApiClientAsync dvsClient;
 	private T first;
 	private String apiOperation;
 
@@ -25,9 +24,9 @@ public class Page<T> {
 	private int nextPage;
 	private int previousPage;
 
-	public Page(String apiOperation, String url, String apiKey, String apiSecret, T apiResponse) {
+	public PageAsync(String apiOperation, String url, String apiKey, String apiSecret, T apiResponse) {
 		this.apiOperation = apiOperation;
-		this.dvsClient = new DvsApiClient(url, apiKey, apiSecret);
+		this.dvsClient = new DvsApiClientAsync(url, apiKey, apiSecret);
 		this.first = apiResponse;
 	}
 
@@ -80,7 +79,7 @@ public class Page<T> {
 			t = (T) dvsClient.getCountries(getCurrentPage(), getRecordsPerPage());
 			break;
 		default:
-			
+
 		}
 
 		return t;
