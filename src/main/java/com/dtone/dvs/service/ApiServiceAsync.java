@@ -5,7 +5,6 @@ import java.util.concurrent.CompletableFuture;
 import com.dtone.dvs.dto.ApiRequest;
 import com.dtone.dvs.dto.ApiResponse;
 import com.dtone.dvs.dto.PageAsync;
-import com.dtone.dvs.exception.DvsApiException;
 import com.dtone.dvs.util.ApiResponseBuilderAsync;
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -35,19 +34,13 @@ public class ApiServiceAsync {
 		this.apiResponseBuilder = apiResponseBuilder;
 	}
 
-	public <T> CompletableFuture<ApiResponse<T>> httpGet(String url, ApiResponse<T> apiResponse, TypeReference<T> typeReference)
-			throws DvsApiException {
-		try {
+	public <T> CompletableFuture<ApiResponse<T>> httpGet(String url, ApiResponse<T> apiResponse, TypeReference<T> typeReference) {
 			return apiResponseBuilder.prepareResponse(apiResponse, typeReference,
 					restApiInvokeService.executeGet(url));
-		} catch (Exception e) {
-			throw new DvsApiException(e);
-		}
 	}
 
 	public <T> CompletableFuture<PageAsync<CompletableFuture<ApiResponse<T>>>> httpGetPageable(String apiOperation, String url, ApiResponse<T> apiResponse,
-																																														 TypeReference<T> typeReference) throws DvsApiException {
-		try {
+																																														 TypeReference<T> typeReference) {
 			CompletableFuture<ApiResponse<T>> resultJob = apiResponseBuilder.prepareResponse(apiResponse, typeReference,
 					restApiInvokeService.executeGet(url));
 
@@ -63,20 +56,13 @@ public class ApiServiceAsync {
 				page.setRecordsPerPage(result.getRecordsPerPage());
 				return CompletableFuture.completedFuture(page);
 			});
-		} catch (Exception e) {
-			throw new DvsApiException(e);
-		}
 	}
 
 	public <T> CompletableFuture<ApiResponse<T>> httpPost(String uri, ApiResponse<T> apiResponse,
 																											 TypeReference<T> typeReference,
-																											 ApiRequest apiRequest) throws DvsApiException {
-		try {
+																											 ApiRequest apiRequest) {
 			return apiResponseBuilder.prepareResponse(apiResponse, typeReference,
 					restApiInvokeService.executePost(uri, apiRequest));
-		} catch (Exception e) {
-			throw new DvsApiException(e);
-		}
 	}
 
 	public String getApiKey() {

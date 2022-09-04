@@ -1,6 +1,5 @@
 package com.dtone.dvs.service;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
@@ -13,9 +12,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
 
 import com.dtone.dvs.dto.ApiRequest;
+import com.dtone.dvs.exception.DvsApiException;
 import com.dtone.dvs.util.ApiResponseBuilderAsync;
 import com.dtone.dvs.util.Constants;
 import com.dtone.dvs.util.HttpConstants;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 public class RestApiInvokeServiceAsync {
 
@@ -49,34 +50,42 @@ public class RestApiInvokeServiceAsync {
 		};
 	}
 
-	public CompletableFuture<HttpResponse<InputStream>> executeGet(String url) throws IOException, URISyntaxException {
-		return httpClient.sendAsync(getHttpGet(url),
-				HttpResponse.BodyHandlers.ofInputStream());
+	public CompletableFuture<HttpResponse<InputStream>> executeGet(String url) {
+		try {
+			return httpClient.sendAsync(getHttpGet(url),
+					HttpResponse.BodyHandlers.ofInputStream());
+		} catch (URISyntaxException e) {
+			return CompletableFuture.failedFuture(new DvsApiException(e));
+		}
 	}
 
 	public CompletableFuture<HttpResponse<InputStream>> executePost(String url, InputStream stream)
-			throws IOException, URISyntaxException {
+			throws URISyntaxException {
 		return httpClient.sendAsync(getHttpPost(url, stream),
 				HttpResponse.BodyHandlers.ofInputStream());
 	}
 
 	public CompletableFuture<HttpResponse<InputStream>> executePost(String url, ApiRequest request)
-			throws IOException, URISyntaxException {
-		if (request != null) {
-			return httpClient.sendAsync(getHttpPost(url,
-							ApiResponseBuilderAsync.getObjectMapper().
-									writerFor(request.getClass())
-									.writeValueAsBytes(request)),
-					HttpResponse.BodyHandlers.ofInputStream());
-		} else {
-			return httpClient.sendAsync(getHttpPost(url),
-					HttpResponse.BodyHandlers.ofInputStream());
+	{
+		try {
+			if (request != null) {
+					return httpClient.sendAsync(getHttpPost(url,
+									ApiResponseBuilderAsync.getObjectMapper().
+											writerFor(request.getClass())
+											.writeValueAsBytes(request)),
+							HttpResponse.BodyHandlers.ofInputStream());
+			} else {
+				return httpClient.sendAsync(getHttpPost(url),
+						HttpResponse.BodyHandlers.ofInputStream());
+			}
+		} catch (JsonProcessingException | URISyntaxException ex) {
+			return CompletableFuture.failedFuture(new DvsApiException(ex));
 		}
 	}
 
 	public CompletableFuture<HttpResponse<InputStream>> executePost(String url,
 			String postBody)
-			throws IOException, URISyntaxException {
+			throws URISyntaxException {
 		return httpClient.sendAsync(getHttpPost(url,
 						postBody.getBytes(StandardCharsets.UTF_8)),
 				HttpResponse.BodyHandlers.ofInputStream());

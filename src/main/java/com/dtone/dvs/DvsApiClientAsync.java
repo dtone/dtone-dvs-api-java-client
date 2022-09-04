@@ -20,7 +20,6 @@ import com.dtone.dvs.dto.StatementFilter;
 import com.dtone.dvs.dto.TransactionFilter;
 import com.dtone.dvs.dto.TransactionRequest;
 import com.dtone.dvs.dto.TransactionResponse;
-import com.dtone.dvs.exception.DvsApiException;
 import com.dtone.dvs.helper.DvsApiClientHelperAsync;
 
 public class DvsApiClientAsync {
@@ -42,7 +41,7 @@ public class DvsApiClientAsync {
 	 *
 	 * @return paginated list of services
 	 */
-	public CompletableFuture<PageAsync<CompletableFuture<ApiResponse<List<Service>>>>> getServices() throws DvsApiException {
+	public CompletableFuture<PageAsync<CompletableFuture<ApiResponse<List<Service>>>>> getServices() {
 		return this.dvsApiClientHelper.getAllServices();
 	}
 
@@ -54,7 +53,7 @@ public class DvsApiClientAsync {
 	 * @param recordsPerPage the number of records per page the number of records per page
 	 * @return list of services
 	 */
-	public CompletableFuture<ApiResponse<List<Service>>> getServices(int pageNumber, int recordsPerPage) throws DvsApiException {
+	public CompletableFuture<ApiResponse<List<Service>>> getServices(int pageNumber, int recordsPerPage) {
 		return this.dvsApiClientHelper.getServices(pageNumber, recordsPerPage);
 	}
 
@@ -64,7 +63,7 @@ public class DvsApiClientAsync {
 	 * @param serviceId the service id
 	 * @return service
 	 */
-	public CompletableFuture<ApiResponse<Service>> getService(Long serviceId) throws DvsApiException {
+	public CompletableFuture<ApiResponse<Service>> getService(Long serviceId) {
 		return this.dvsApiClientHelper.getService(String.valueOf(serviceId));
 	}
 
@@ -78,7 +77,7 @@ public class DvsApiClientAsync {
 	 *
 	 * @return paginated list of countries
 	 */
-	public CompletableFuture<PageAsync<CompletableFuture<ApiResponse<List<Country>>>>> getCountries() throws DvsApiException {
+	public CompletableFuture<PageAsync<CompletableFuture<ApiResponse<List<Country>>>>> getCountries() {
 		return this.dvsApiClientHelper.getAllCountries();
 	}
 
@@ -89,7 +88,7 @@ public class DvsApiClientAsync {
 	 * @param recordsPerPage the number of records per page
 	 * @return
 	 */
-	public CompletableFuture<ApiResponse<List<Country>>> getCountries(int pageNumber, int recordsPerPage) throws DvsApiException {
+	public CompletableFuture<ApiResponse<List<Country>>> getCountries(int pageNumber, int recordsPerPage) {
 		return this.dvsApiClientHelper.getCountries(pageNumber, recordsPerPage);
 	}
 
@@ -99,7 +98,7 @@ public class DvsApiClientAsync {
 	 * @param countryIsoCode the country ISO code
 	 * @return country
 	 */
-	public CompletableFuture<ApiResponse<Country>> getCountry(String countryIsoCode) throws DvsApiException {
+	public CompletableFuture<ApiResponse<Country>> getCountry(String countryIsoCode) {
 		return this.dvsApiClientHelper.getCountry(countryIsoCode);
 	}
 
@@ -112,7 +111,7 @@ public class DvsApiClientAsync {
 	 *
 	 * @return paginated list of operators
 	 */
-	public CompletableFuture<PageAsync<CompletableFuture<ApiResponse<List<Operator>>>>> getOperators() throws DvsApiException {
+	public CompletableFuture<PageAsync<CompletableFuture<ApiResponse<List<Operator>>>>> getOperators() {
 		return this.dvsApiClientHelper.getAllOperators();
 	}
 
@@ -123,7 +122,7 @@ public class DvsApiClientAsync {
 	 * @param recordsPerPage the number of records per page
 	 * @return list of operators
 	 */
-	public CompletableFuture<ApiResponse<List<Operator>>> getOperators(int pageNumber, int recordsPerPage) throws DvsApiException {
+	public CompletableFuture<ApiResponse<List<Operator>>> getOperators(int pageNumber, int recordsPerPage) {
 		return this.dvsApiClientHelper.getOperators(pageNumber, recordsPerPage);
 	}
 
@@ -133,7 +132,7 @@ public class DvsApiClientAsync {
 	 * @param countryIsoCode
 	 * @return list of operators
 	 */
-	public CompletableFuture<ApiResponse<List<Operator>>> getOperators(String countryIsoCode) throws DvsApiException {
+	public CompletableFuture<ApiResponse<List<Operator>>> getOperators(String countryIsoCode) {
 		return this.dvsApiClientHelper.getOperators(countryIsoCode, 0, 0);
 	}
 
@@ -145,7 +144,7 @@ public class DvsApiClientAsync {
 	 * @param recordsPerPage the number of records per page
 	 * @return list of operators
 	 */
-	public CompletableFuture<ApiResponse<List<Operator>>> getOperators(String countryIsoCode, int pageNumber, int recordsPerPage) throws DvsApiException {
+	public CompletableFuture<ApiResponse<List<Operator>>> getOperators(String countryIsoCode, int pageNumber, int recordsPerPage) {
 		return this.dvsApiClientHelper.getOperators(countryIsoCode, pageNumber, recordsPerPage);
 	}
 
@@ -155,7 +154,7 @@ public class DvsApiClientAsync {
 	 * @param operatorId the operator id
 	 * @return operator
 	 */
-	public CompletableFuture<ApiResponse<Operator>> getOperator(Long operatorId) throws DvsApiException {
+	public CompletableFuture<ApiResponse<Operator>> getOperator(Long operatorId) {
 		return this.dvsApiClientHelper.getOperator(operatorId);
 	}
 
@@ -165,7 +164,7 @@ public class DvsApiClientAsync {
 	 * @param mobileNumber the mobile number
 	 * @return list of operators
 	 */
-	public CompletableFuture<ApiResponse<List<Operator>>> lookupOperators(String mobileNumber) throws DvsApiException {
+	public CompletableFuture<ApiResponse<List<Operator>>> lookupOperators(String mobileNumber) {
 		return this.dvsApiClientHelper.lookupOperators(mobileNumber, 0, 0);
 	}
 
@@ -177,7 +176,7 @@ public class DvsApiClientAsync {
 	 * @param recordsPerPage the number of records per page
 	 * @return list of operators
 	 */
-	public CompletableFuture<ApiResponse<List<Operator>>> lookupOperators(String mobileNumber, int pageNumber, int recordsPerPage) throws DvsApiException {
+	public CompletableFuture<ApiResponse<List<Operator>>> lookupOperators(String mobileNumber, int pageNumber, int recordsPerPage) {
 		return this.dvsApiClientHelper.lookupOperators(mobileNumber, pageNumber, recordsPerPage);
 	}
 
@@ -190,7 +189,7 @@ public class DvsApiClientAsync {
 	 *
 	 * @return paginated list of benefit types
 	 */
-	public CompletableFuture<PageAsync<CompletableFuture<ApiResponse<List<BenefitType>>>>> getBenefitTypes() throws DvsApiException {
+	public CompletableFuture<PageAsync<CompletableFuture<ApiResponse<List<BenefitType>>>>> getBenefitTypes() {
 		return this.dvsApiClientHelper.getAllBenefitTypes();
 	}
 
@@ -201,7 +200,7 @@ public class DvsApiClientAsync {
 	 * @param recordsPerPage the number of records per page
 	 * @return list of benefit types
 	 */
-	public CompletableFuture<ApiResponse<List<BenefitType>>> getBenefitTypes(int pageNumber, int recordsPerPage) throws DvsApiException {
+	public CompletableFuture<ApiResponse<List<BenefitType>>> getBenefitTypes(int pageNumber, int recordsPerPage) {
 		return this.dvsApiClientHelper.getBenefitTypes(pageNumber, recordsPerPage);
 	}
 
@@ -215,7 +214,7 @@ public class DvsApiClientAsync {
 	 *
 	 * @return paginated list of promotions
 	 */
-	public CompletableFuture<PageAsync<CompletableFuture<ApiResponse<List<Promotion>>>>> getPromotions() throws DvsApiException {
+	public CompletableFuture<PageAsync<CompletableFuture<ApiResponse<List<Promotion>>>>> getPromotions() {
 		return this.dvsApiClientHelper.getAllPromotions();
 	}
 
@@ -226,7 +225,7 @@ public class DvsApiClientAsync {
 	 * @param recordsPerPage the number of records per page
 	 * @return list of promotions
 	 */
-	public CompletableFuture<ApiResponse<List<Promotion>>> getPromotions(int pageNumber, int recordsPerPage) throws DvsApiException {
+	public CompletableFuture<ApiResponse<List<Promotion>>> getPromotions(int pageNumber, int recordsPerPage) {
 		return this.dvsApiClientHelper.getPromotions(pageNumber, recordsPerPage);
 	}
 
@@ -236,7 +235,7 @@ public class DvsApiClientAsync {
 	 * @param promotionFilter the promotionFilter instance
 	 * @return list of promotions
 	 */
-	public CompletableFuture<ApiResponse<List<Promotion>>> getPromotions(PromotionFilter promotionFilter) throws DvsApiException {
+	public CompletableFuture<ApiResponse<List<Promotion>>> getPromotions(PromotionFilter promotionFilter) {
 		return this.dvsApiClientHelper.getPromotions(promotionFilter, 0, 0);
 	}
 
@@ -249,7 +248,7 @@ public class DvsApiClientAsync {
 	 * @return list of promotions
 	 */
 	public CompletableFuture<ApiResponse<List<Promotion>>> getPromotions(PromotionFilter promotionFilter,
-																																			 int pageNumber, int recordsPerPage) throws DvsApiException {
+																																			 int pageNumber, int recordsPerPage) {
 		return this.dvsApiClientHelper.getPromotions(promotionFilter, pageNumber, recordsPerPage);
 	}
 
@@ -259,7 +258,7 @@ public class DvsApiClientAsync {
 	 * @param promotionId the promotion id
 	 * @return promotion
 	 */
-	public CompletableFuture<ApiResponse<Promotion>> getPromotion(Long promotionId) throws DvsApiException {
+	public CompletableFuture<ApiResponse<Promotion>> getPromotion(Long promotionId) {
 		return this.dvsApiClientHelper.getPromotion(promotionId);
 	}
 
@@ -271,7 +270,7 @@ public class DvsApiClientAsync {
 	 *
 	 * @return paginated list of products
 	 */
-	public CompletableFuture<PageAsync<CompletableFuture<ApiResponse<List<Product>>>>> getProducts() throws DvsApiException {
+	public CompletableFuture<PageAsync<CompletableFuture<ApiResponse<List<Product>>>>> getProducts() {
 		return this.dvsApiClientHelper.getAllProducts();
 	}
 
@@ -282,7 +281,7 @@ public class DvsApiClientAsync {
 	 * @param recordsPerPage the number of records per page
 	 * @return list of products
 	 */
-	public CompletableFuture<ApiResponse<List<Product>>> getProducts(int pageNumber, int recordsPerPage) throws DvsApiException {
+	public CompletableFuture<ApiResponse<List<Product>>> getProducts(int pageNumber, int recordsPerPage) {
 		return this.dvsApiClientHelper.getProducts(new ProductFilter(), pageNumber, recordsPerPage);
 	}
 
@@ -292,7 +291,7 @@ public class DvsApiClientAsync {
 	 * @param productFilter  the product filter object
 	 * @return list of products
 	 */
-	public CompletableFuture<ApiResponse<List<Product>>> getProducts(ProductFilter productFilter) throws DvsApiException {
+	public CompletableFuture<ApiResponse<List<Product>>> getProducts(ProductFilter productFilter) {
 		return this.dvsApiClientHelper.getProducts(productFilter, 0, 0);
 	}
 
@@ -303,7 +302,7 @@ public class DvsApiClientAsync {
 	 * @param recordsPerPage the number of records per page
 	 * @return list of products
 	 */
-	public CompletableFuture<ApiResponse<List<Product>>> getProducts(ProductFilter productFilter, int pageNumber, int recordsPerPage) throws DvsApiException {
+	public CompletableFuture<ApiResponse<List<Product>>> getProducts(ProductFilter productFilter, int pageNumber, int recordsPerPage) {
 		return this.dvsApiClientHelper.getProducts(productFilter, pageNumber, recordsPerPage);
 	}
 
@@ -313,7 +312,7 @@ public class DvsApiClientAsync {
 	 * @param productId the product id
 	 * @return product
 	 */
-	public CompletableFuture<ApiResponse<Product>> getProduct(Long productId) throws DvsApiException {
+	public CompletableFuture<ApiResponse<Product>> getProduct(Long productId) {
 		return this.dvsApiClientHelper.getProduct(productId);
 	}
 
@@ -327,7 +326,7 @@ public class DvsApiClientAsync {
 	 * @param transactionRequest the transaction request
 	 * @return transaction
 	 */
-	public CompletableFuture<ApiResponse<TransactionResponse>> createTransaction(TransactionRequest transactionRequest) throws DvsApiException {
+	public CompletableFuture<ApiResponse<TransactionResponse>> createTransaction(TransactionRequest transactionRequest) {
 		return this.dvsApiClientHelper.postTransaction(transactionRequest);
 	}
 
@@ -337,7 +336,7 @@ public class DvsApiClientAsync {
 	 * @param transactionId the transaction id
 	 * @return transaction
 	 */
-	public CompletableFuture<ApiResponse<TransactionResponse>> getTransaction(Long transactionId) throws DvsApiException {
+	public CompletableFuture<ApiResponse<TransactionResponse>> getTransaction(Long transactionId) {
 		return this.dvsApiClientHelper.getTransaction(transactionId);
 	}
 
@@ -348,7 +347,7 @@ public class DvsApiClientAsync {
 	 *
 	 * @return list of transactions
 	 */
-	public CompletableFuture<ApiResponse<List<TransactionResponse>>> getTransactions(TransactionFilter transactionFilter) throws DvsApiException {
+	public CompletableFuture<ApiResponse<List<TransactionResponse>>> getTransactions(TransactionFilter transactionFilter) {
 		return this.dvsApiClientHelper.getTransactions(transactionFilter, 0, 0);
 	}
 
@@ -362,7 +361,7 @@ public class DvsApiClientAsync {
 	 * @param recordsPerPage the number of records per page
 	 * @return list of transactions
 	 */
-	public CompletableFuture<ApiResponse<List<TransactionResponse>>> getTransactions(TransactionFilter transactionFilter, int pageNumber, int recordsPerPage) throws DvsApiException {
+	public CompletableFuture<ApiResponse<List<TransactionResponse>>> getTransactions(TransactionFilter transactionFilter, int pageNumber, int recordsPerPage) {
 		return this.dvsApiClientHelper.getTransactions(transactionFilter, pageNumber, recordsPerPage);
 	}
 
@@ -372,7 +371,7 @@ public class DvsApiClientAsync {
 	 * @param transactionId the transaction id
 	 * @return transaction
 	 */
-	public CompletableFuture<ApiResponse<TransactionResponse>> confirmTransaction(Long transactionId) throws DvsApiException {
+	public CompletableFuture<ApiResponse<TransactionResponse>> confirmTransaction(Long transactionId) {
 		return this.dvsApiClientHelper.confirmTransaction(transactionId);
 	}
 
@@ -382,7 +381,7 @@ public class DvsApiClientAsync {
 	 * @param transactionId the transaction id
 	 * @return transaction
 	 */
-	public CompletableFuture<ApiResponse<TransactionResponse>> cancelTransaction(Long transactionId) throws DvsApiException {
+	public CompletableFuture<ApiResponse<TransactionResponse>> cancelTransaction(Long transactionId) {
 		return this.dvsApiClientHelper.cancelTransaction(transactionId);
 	}
 
@@ -395,7 +394,7 @@ public class DvsApiClientAsync {
 	 *
 	 * @return list of balances
 	 */
-	public CompletableFuture<PageAsync<CompletableFuture<ApiResponse<List<Balance>>>>> getBalances() throws DvsApiException {
+	public CompletableFuture<PageAsync<CompletableFuture<ApiResponse<List<Balance>>>>> getBalances() {
 		return this.dvsApiClientHelper.getAllBalances();
 	}
 
@@ -406,7 +405,7 @@ public class DvsApiClientAsync {
 	 * @param recordsPerPage the number of records per page
 	 * @return list of balances
 	 */
-	public CompletableFuture<ApiResponse<List<Balance>>> getBalances(int pageNumber, int recordsPerPage) throws DvsApiException {
+	public CompletableFuture<ApiResponse<List<Balance>>> getBalances(int pageNumber, int recordsPerPage) {
 		return this.dvsApiClientHelper.getBalances(pageNumber, recordsPerPage);
 	}
 
@@ -415,7 +414,7 @@ public class DvsApiClientAsync {
 	 *
 	 * @return list of balances
 	 */
-	public CompletableFuture<ApiResponse<List<Balance>>> getBalances(BalanceFilter balanceFilter) throws DvsApiException {
+	public CompletableFuture<ApiResponse<List<Balance>>> getBalances(BalanceFilter balanceFilter) {
 		return this.dvsApiClientHelper.getBalances(balanceFilter);
 	}
 
@@ -429,7 +428,7 @@ public class DvsApiClientAsync {
 	 *
 	 * @return statement details
 	 */
-	private CompletableFuture<ApiResponse<List<StatementDetail>>> getStatement(StatementFilter statementFilter) throws DvsApiException {
+	private CompletableFuture<ApiResponse<List<StatementDetail>>> getStatement(StatementFilter statementFilter) {
 		return this.dvsApiClientHelper.getStatement(statementFilter);
 	}
 

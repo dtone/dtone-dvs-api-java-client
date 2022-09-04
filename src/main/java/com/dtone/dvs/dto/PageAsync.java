@@ -1,7 +1,6 @@
 package com.dtone.dvs.dto;
 
 import com.dtone.dvs.DvsApiClientAsync;
-import com.dtone.dvs.exception.DvsApiException;
 import com.dtone.dvs.util.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,22 +37,22 @@ public class PageAsync<T> {
 		return currentPage > 1;
 	}
 
-	public T next() throws DvsApiException {
+	public T next() {
 		setCurrentPage(getCurrentPage() + 1);
 		return getApiResponse();
 	}
 	
-	public T previous() throws DvsApiException {
+	public T previous() {
 		setCurrentPage(getCurrentPage() - 1);
 		return getApiResponse();
 	}
 	
-	public T last() throws DvsApiException {
+	public T last() {
 		setCurrentPage(getTotalPages());
 		return getApiResponse();
 	}
 
-	private T getApiResponse() throws DvsApiException {
+	private T getApiResponse() {
 		T t = null;
 
 		switch (this.apiOperation) {
@@ -85,7 +84,7 @@ public class PageAsync<T> {
 		return t;
 	}
 
-	public T first() throws DvsApiException {
+	public T first() {
 		if(getCurrentPage() <= 1) {
 			return first;
 		} else {
