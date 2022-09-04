@@ -4,7 +4,7 @@
 
 Language: Java
 
-Latest Release: v1.0.0
+Latest Release: v2.0.0
 
 An Open Source Client Library for Java applications to integrate and interact with
 the Digital Value Services (DVS) API of [DT One](https://dtone.com)
@@ -18,7 +18,8 @@ the issue tracker if you feel that it can be improved!
 - Ready-to-use interfaces to consume DT One's [DVS API](https://dvs-api-doc.dtone.com/)
 - Pagination and Filtering support on API Responses
 - Common response object
-- Unit and functional testing with mocked responses from the API.
+- ~~Unit and functional testing with mocked responses from the API.~~ TODO
+- Asynchronous calls
 
 ## Domain Objects
 This library deals with the following list of domain objects from the DVS API:
@@ -33,7 +34,7 @@ This library deals with the following list of domain objects from the DVS API:
 
 ## Installation & Usage
 
-- Requires Java 1.8 or later
+- Requires Java 17 or later
 
 - The library is available to be installed as a Maven Dependency or Standalone Java ARchive. Please [contact us](https://www.dtone.com/contact-us) if you are looking for a different option.
 
@@ -64,7 +65,7 @@ This library deals with the following list of domain objects from the DVS API:
            <dependency>
                <groupId>com.dtone.dvs</groupId>
                <artifactId>dvs-apiclient</artifactId>
-               <version>1.0</version>
+               <version>2.0.0-async-vincejv</version>
            </dependency>
            ```
 
@@ -75,7 +76,7 @@ This library deals with the following list of domain objects from the DVS API:
                <repository>
                    <id>github</id>
                    <name>Github DTOne Apache Maven Packages</name>
-                   <url>https://maven.pkg.github.com/dtone/dtone-dvs-api-java-client</url>
+                   <url>https://maven.pkg.github.com/vincejv/dtone-dvs-api-java-client</url>
                </repository>
            </repositories>
            ```
@@ -88,13 +89,14 @@ This library deals with the following list of domain objects from the DVS API:
       ```
       import com.dtone.dvs.DvsApiClient;
       
-      DvsClient dvsClient = new DvsClient(String baseUrl,
+      DvsApiClientAsync dvsClient = new DvsApiClientAsync(String baseUrl,
               String apiKey, String apiSecret)
       ```
 
 - Start calling the DVS API!
 
 ## Available endpoints
+#### Note: For v2 custom build, documentation has to be updated, all calls return `CompletableFuture`
 
 - Service (Only GET operations)
 
@@ -333,4 +335,5 @@ This library deals with the following list of domain objects from the DVS API:
     No
 
 ## License
-[DTOne](http://dtone.com)
+- [DTOne](http://dtone.com)
+- [MIT](https://github.com/vincejv/dtone-dvs-api-java-client/blob/master/LICENSE.txt)
