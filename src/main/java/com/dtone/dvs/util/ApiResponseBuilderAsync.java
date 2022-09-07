@@ -11,6 +11,7 @@ import java.util.concurrent.CompletableFuture;
 import com.dtone.dvs.dto.ApiResponse;
 import com.dtone.dvs.dto.ErrorResponse;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser.Feature;
@@ -115,6 +116,7 @@ public class ApiResponseBuilderAsync {
 			objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 			objectMapper.configure(Feature.AUTO_CLOSE_SOURCE, true);
 			objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
+			objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 		return objectMapper;
 	}
