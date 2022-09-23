@@ -9,7 +9,6 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.node.IntNode;
-import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  * Custom deserializer for {@link AmountValue}.
@@ -24,7 +23,7 @@ public class AmountDez extends JsonDeserializer<AmountValue> {
     var value = new AmountValue();
 
     if (jp.getCurrentToken() == JsonToken.VALUE_NUMBER_INT) {
-      value.setValue(NumberUtils.createBigDecimal(jp.getValueAsString()));
+      value.setValue((jp.getDecimalValue()));
     } else {
       var node = jp.getCodec().readTree(jp);
       value.setMin(((IntNode)node.get("min")).decimalValue());
