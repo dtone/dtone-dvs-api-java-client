@@ -13,12 +13,12 @@ import lombok.NoArgsConstructor;
 public class Amount {
 
   @JsonProperty(value = "base")
-  private String base;
+  private AmountValue base;
 
   @JsonProperty(value = "promotion_bonus")
-  private Double promotionBonus;
+  private AmountValue promotionBonus;
 
   @JsonProperty(value = "total_excluding_tax")
-  private Double totalExcludingTax;
+  private AmountValue totalExcludingTax;
 
 }
