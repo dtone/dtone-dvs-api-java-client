@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.node.IntNode;
 /**
  * Custom deserializer for {@link AmountValue}.
  */
-public class AmountDez extends JsonDeserializer<AmountValue> {
+public class AmountValueDes extends JsonDeserializer<AmountValue> {
 
   /**
    * {@inheritDoc}
