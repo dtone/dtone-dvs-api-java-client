@@ -23,7 +23,7 @@ public class AmountDez extends JsonDeserializer<AmountValue> {
   public AmountValue deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JacksonException {
     var value = new AmountValue();
 
-    if (jp.getCurrentToken() == JsonToken.VALUE_STRING) {
+    if (jp.getCurrentToken() == JsonToken.VALUE_NUMBER_INT) {
       value.setValue(NumberUtils.createBigDecimal(jp.getValueAsString()));
     } else {
       var node = jp.getCodec().readTree(jp);
