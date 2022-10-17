@@ -2,9 +2,19 @@
 
 ![Logo](https://dvs-api-doc.dtone.com/images/dtone.png)
 
-Language: Java
+[![Maven Central version](https://img.shields.io/maven-central/v/com.vincejv/dvs-apiclient?logo=apache-maven)](https://search.maven.org/artifact/com.vincejv/dtone-dvs-api-java-client-core)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/vincejv/dtone-dvs-api-java-client/Maven%20Central%20deployment?label=CI/CD&logo=github)](https://github.com/vincejv/dtone-dvs-api-java-client/actions?query=workflow%3A%22Maven+Central+deployment%22)
+[![License](https://img.shields.io/github/license/vincejv/dtone-dvs-api-java-client?logo=apache)](https://github.com/vincejv/dtone-dvs-api-java-client/blob/main/LICENSE)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/vincejv/dtone-dvs-api-java-client?label=commits&logo=git)](https://github.com/vincejv/dtone-dvs-api-java-client/pulse)
+[![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=vincejv_dtone-dvs-api-java-client&metric=alert_status)](https://sonarcloud.io/dashboard?id=vincejv_dtone-dvs-api-java-client)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=vincejv_dtone-dvs-api-java-client&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=vincejv_dtone-dvs-api-java-client)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=vincejv_dtone-dvs-api-java-client&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=vincejv_dtone-dvs-api-java-client)
+[![SonarCloud Bugs](https://sonarcloud.io/api/project_badges/measure?project=vincejv_dtone-dvs-api-java-client&metric=bugs)](https://sonarcloud.io/component_measures/metric/reliability_rating/list?id=vincejv_dtone-dvs-api-java-client)
+[![SonarCloud Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=vincejv_dtone-dvs-api-java-client&metric=vulnerabilities)](https://sonarcloud.io/component_measures/metric/security_rating/list?id=vincejv_dtone-dvs-api-java-client)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=vincejv_dtone-dvs-api-java-client&metric=security_rating)](https://sonarcloud.io/dashboard?id=vincejv_dtone-dvs-api-java-client)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=vincejv_dtone-dvs-api-java-client&metric=ncloc)](https://sonarcloud.io/dashboard?id=vincejv_dtone-dvs-api-java-client)
 
-Latest Release: v2.0.0
+Language: Java
 
 An Open Source Client Library for Java applications to integrate and interact with
 the Digital Value Services (DVS) API of [DT One](https://dtone.com)
