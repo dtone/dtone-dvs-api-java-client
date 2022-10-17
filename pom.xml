@@ -9,7 +9,6 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-  <inceptionYear>2022</inceptionYear>
 
   <developers>
     <developer>
@@ -32,12 +31,15 @@
     <tag>HEAD</tag>
   </scm>
 
-	<groupId>com.abavilla</groupId>
+	<groupId>com.vincejv</groupId>
 	<artifactId>dvs-apiclient</artifactId>
 	<version>0</version>
 	<packaging>jar</packaging>
 
 	<name>DVS API Client</name>
+  <description>Easily integrate DT One's DVS API to your Java application</description>
+  <url>https://github.com/vincejv/dtone-dvs-api-java-client</url>
+  <inceptionYear>2022</inceptionYear>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
