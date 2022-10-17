@@ -46,7 +46,7 @@ This library deals with the following list of domain objects from the DVS API:
            <dependency>
                <groupId>com.vincejv</groupId>
                <artifactId>dvs-apiclient</artifactId>
-               <version>2.1.1</version> <!-- replace with latest version -->
+               <version>2.1.3</version> <!-- replace with latest version -->
            </dependency>
            ```
     2. Standalone JAR
