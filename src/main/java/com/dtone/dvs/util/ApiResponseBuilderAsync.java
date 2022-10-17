@@ -13,11 +13,9 @@ import com.dtone.dvs.dto.ErrorResponse;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 
@@ -96,9 +94,6 @@ public class ApiResponseBuilderAsync {
 	 * @param src   			 the InputStream source
 	 * @param valueTypeRef the result type reference
 	 * @return the result
-	 * @throws IOException
-	 * @throws JsonParseException
-	 * @throws JsonMappingException
 	 */
 	@SneakyThrows
 	public static <T> T extractResult(InputStream src, TypeReference<T> valueTypeRef) {

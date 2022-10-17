@@ -2,39 +2,87 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>http://www.opensource.org/licenses/mit-license.php</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <inceptionYear>2022</inceptionYear>
 
-	<groupId>com.dtone.dvs</groupId>
+  <developers>
+    <developer>
+      <id>vincejv</id>
+      <name>Vince Jerald Villamora</name>
+      <email>vincevillamora@gmail.com</email>
+      <timezone>+8</timezone>
+      <organization>Abavilla</organization>
+      <organizationUrl>https://github.com/vincejv</organizationUrl>
+      <roles>
+        <role>developer</role>
+      </roles>
+    </developer>
+  </developers>
+
+  <scm>
+    <url>https://github.com/vincejv/dtone-dvs-api-java-client</url>
+    <connection>scm:git:git://github.com/vincejv/dtone-dvs-api-java-client.git</connection>
+    <developerConnection>scm:git:git@github.com:vincejv/dtone-dvs-api-java-client.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+
+	<groupId>com.abavilla</groupId>
 	<artifactId>dvs-apiclient</artifactId>
-	<version>2.0.8-async-vincejv</version>
+	<version>0</version>
 	<packaging>jar</packaging>
 
-	<name>dvs-apiclient</name>
+	<name>DVS API Client</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<compiler-plugin.version>3.8.1</compiler-plugin.version>
 		<maven.compiler.release>17</maven.compiler.release>
 		<org.projectlombok.version>1.18.24</org.projectlombok.version>
-
 		<jacoco.version>0.8.4</jacoco.version>
-		<sonar.projectKey>dtone-dvs-apiclient</sonar.projectKey>
-		<sonar.projectName>DTONE DVS API Client</sonar.projectName>
-		<sonar.login>admin</sonar.login>
-		<sonar.password>admin</sonar.password>
-		<sonar.host.url>localhost:9000</sonar.host.url>
-		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-		<sonar.junit.reportsPath>target/surefire-reports</sonar.junit.reportsPath>
-		<sonar.jacoco.reportPath>target/jacoco.exec</sonar.jacoco.reportPath>
-		<sonar.binaries>target/classes</sonar.binaries>
-		<sonar.exclusions>src/main/java/com/dtone/dvs/dto/*.java</sonar.exclusions>
+
+    <sonar.organization>vincejv</sonar.organization>
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
+    <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+    <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
+    <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
+    <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
+
+    <!-- repository settings for deployment -->
+    <maven.deploy.nexus.repository-id>ossrh</maven.deploy.nexus.repository-id>
+    <maven.deploy.nexus.base-url>https://s01.oss.sonatype.org/</maven.deploy.nexus.base-url>
+    <maven.deploy.nexus.repository-url>${maven.deploy.nexus.base-url}service/local/staging/deploy/maven2
+    </maven.deploy.nexus.repository-url>
+
+    <!-- repository settings for snapshot release -->
+    <maven.deploy.nexus.snapshot.repository-id>${maven.deploy.nexus.repository-id}
+    </maven.deploy.nexus.snapshot.repository-id>
+    <maven.deploy.nexus.snapshot.repository-url>${maven.deploy.nexus.base-url}content/repositories/snapshots
+    </maven.deploy.nexus.snapshot.repository-url>
 	</properties>
-	<distributionManagement>
-		<repository>
-			<id>github</id>
-			<name>GitHub DTOne Apache Maven Packages</name>
-			<url>https://maven.pkg.github.com/vincejv/dtone-dvs-api-java-client</url>
-		</repository>
-	</distributionManagement>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>${maven.deploy.nexus.snapshot.repository-id}</id>
+      <url>${maven.deploy.nexus.snapshot.repository-url}</url>
+    </snapshotRepository>
+    <repository>
+      <id>${maven.deploy.nexus.repository-id}</id>
+      <url>${maven.deploy.nexus.repository-url}</url>
+    </repository>
+  </distributionManagement>
+
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/vincejv/dtone-dvs-api-java-client/issues</url>
+  </issueManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -144,4 +192,72 @@
 			
 		</plugins>
 	</build>
+
+  <profiles>
+    <profile>
+      <id>release-for-oss</id>
+      <build>
+        <plugins>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>${maven-source-plugin.version}</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>${maven-javadoc-plugin.version}</version>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>${maven-gpg-plugin.version}</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <version>${nexus-staging-maven-plugin.version}</version>
+            <extensions>true</extensions>
+            <configuration>
+              <serverId>${maven.deploy.nexus.repository-id}</serverId>
+              <nexusUrl>${maven.deploy.nexus.base-url}</nexusUrl>
+              <autoReleaseAfterClose>true</autoReleaseAfterClose>
+              <stagingProgressTimeoutMinutes>120</stagingProgressTimeoutMinutes>
+            </configuration>
+          </plugin>
+
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
 </project>
