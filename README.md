@@ -36,63 +36,30 @@ This library deals with the following list of domain objects from the DVS API:
 
 - Requires Java 17 or later
 
-- The library is available to be installed as a Maven Dependency or Standalone Java ARchive. Please [contact us](https://www.dtone.com/contact-us) if you are looking for a different option.
+- The library is available to be installed as a Maven Dependency or Standalone Java Archive.
 
     1. Maven Dependency
 
-        - Ensure that you have generated an access token from [github](https://github.com/settings/tokens)
-
-            Github packages (where we've hosted our library's package) requires authentication
-            (https://help.github.com/en/github/managing-packages-with-github-packages/about-github-packages#about-tokens)
-
-        - Add your username and access token to `~/.m2/settings.xml`
-
-         ```xml
-         <settings>
-           <servers>
-               <server>
-                   <id>github</id>
-                   <username>{GithubUsername}</username>
-                   <password>{GithubToken}</password>
-               </server>
-           </servers>
-         </settings>
-         ```
-
        - Add the following dependency in your `pom.xml`
 
-           ```
+           ```xml
            <dependency>
-               <groupId>com.dtone.dvs</groupId>
+               <groupId>com.vincejv</groupId>
                <artifactId>dvs-apiclient</artifactId>
-               <version>2.0.0-async-vincejv</version>
+               <version>2.1.1</version> <!-- replace with latest version -->
            </dependency>
            ```
-
-       - Ensure that DT One maven repository is included in your `pom.xml`
-
-           ```
-           <repositories>
-               <repository>
-                   <id>github</id>
-                   <name>Github DTOne Apache Maven Packages</name>
-                   <url>https://maven.pkg.github.com/vincejv/dtone-dvs-api-java-client</url>
-               </repository>
-           </repositories>
-           ```
     2. Standalone JAR
-        - Feel free to download the latest JAR with the dependencies directly from the repository [here](https://github.com/dtone/dtone-dvs-api-java-client/tree/master/jars)
+        - Feel free to download the latest JAR with the dependencies directly from maven central [here](https://repo.maven.apache.org/maven2/com/vincejv/dvs-apiclient/)
         and add the jar to the classpath of your project.
   
-- Create an instance from DtoneHttpClient with your basic auth keys.
-  
-      ```
-      import com.dtone.dvs.DvsApiClient;
-      
-      DvsApiClientAsync dvsClient = new DvsApiClientAsync(String baseUrl,
-              String apiKey, String apiSecret)
-      ```
-
+- Create an instance from `DvsApiClientAsync` with your basic auth keys.
+    ```java
+    import com.dtone.dvs.DvsApiClient;
+    
+    DvsApiClientAsync dvsClient = new DvsApiClientAsync(String baseUrl,
+            String apiKey, String apiSecret)
+    ```
 - Start calling the DVS API!
 
 ## Available endpoints
@@ -186,7 +153,7 @@ This library deals with the following list of domain objects from the DVS API:
 - List of products with inbuilt pagination:
 
     - All APIs which support pagination, return Page instance.
-        ```
+        ```java
         DvsApiClient dvsApiClient = new DvsApiClient("https://dvsapi.com", "apiKey", "apiSecret");
         
         Page<ApiResponse<List<Product>>> pagedProductsResponse = dvsApiClient.getProducts();
@@ -194,14 +161,14 @@ This library deals with the following list of domain objects from the DVS API:
 
     - Fetch the first page records
 
-        ```
+        ```java
         ApiResponse<List<Product>> productsApiResponse = pagedProductsResponse.first();
     
         List<Product> productList = productsApiResponse.getResult();
         ```
 
     - Fetch the next page records
-        ```
+        ```java
         while(pagedProductsResponse.hasNext()){
             ApiResponse<List<Product>> productsApiResponse = pagedProductsResponse.next();
       
@@ -211,7 +178,7 @@ This library deals with the following list of domain objects from the DVS API:
 
     - Fetch the previous page records
     
-        ```
+        ```java
         if(pagedProductsResponse.hasPrevious()){
             ApiResponse<List<Product>> productsApiResponse = pagedProductsResponse.previous();
       
@@ -221,7 +188,7 @@ This library deals with the following list of domain objects from the DVS API:
 
     - Fetch the last page records
 
-        ```
+        ```java
         ApiResponse<List<Product>> productsApiResponse = pagedProductsResponse.last();
       
         List<Product> productList = productsApiResponse.getResult();
@@ -236,7 +203,7 @@ This library deals with the following list of domain objects from the DVS API:
 
 - List of products with custom pagination
 
-    ```
+    ```java
     ApiResponse<List<Product>> productsApiResponse = dvsApiClient.getProducts(1, 100);
 
     boolean success = productsApiResponse.isSuccess()
@@ -253,7 +220,7 @@ This library deals with the following list of domain objects from the DVS API:
 
 - Get a product by id
 
-    ```
+    ```java
     ApiResponse<Product> productByIdResponse = dvsApiClient.getProduct(123L);
     boolean success = productByIdResponse.isSuccess();
     int code = productByIdResponse.getCode();
@@ -263,7 +230,7 @@ This library deals with the following list of domain objects from the DVS API:
 
 - Get list of products with filters
 
-    ```
+    ```java
     ProductFilter productFilter = new ProductFilter();
     List<BenefitTypes> benefitTypes = new ArrayList<BenefitTypes>();
     benefitTypes.add(BenefitTypes.TALKTIME);
@@ -296,7 +263,7 @@ This library deals with the following list of domain objects from the DVS API:
     1. Synchronous
     2. Asynchronous
  
-    ```
+    ```java
     boolean synchronous = true;
     TransactionRequest transactionRequest = new TransactionRequest();
     transactionRequest.setExternalId("<String External Id>");
