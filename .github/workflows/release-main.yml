@@ -3,7 +3,7 @@ name: Maven Central deployment
 on:
   push:
     branches:
-      - main
+      - master
 
 env:
   SONAR_PROJECT_KEY: vincejv_dtone-dvs-api-java-client
