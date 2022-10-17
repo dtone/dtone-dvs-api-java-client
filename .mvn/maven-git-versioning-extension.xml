@@ -1,0 +1,42 @@
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright (C) 2022 Vince Jerald Villamora @ https://vincejv.com      ~
+  ~                                                                      ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");      ~
+  ~ you may not use this file except in compliance with the License.     ~
+  ~ You may obtain a copy of the License at                              ~
+  ~                                                                      ~
+  ~   http://www.apache.org/licenses/LICENSE-2.0                         ~
+  ~                                                                      ~
+  ~ Unless required by applicable law or agreed to in writing, software  ~
+  ~ distributed under the License is distributed on an "AS IS" BASIS,    ~
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or      ~
+  ~ implied. See the License for the specific language governing         ~
+  ~ permissions and limitations under the License.                       ~
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<configuration xmlns="https://github.com/qoomon/maven-git-versioning-extension"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="https://github.com/qoomon/maven-git-versioning-extension https://qoomon.github.io/maven-git-versioning-extension/configuration-9.1.0.xsd">
+  <refs considerTagsOnBranches="true">
+    <ref type="branch">
+      <pattern>master</pattern> <!-- expects that main branch is 1 commit = 1 tag -->
+      <describeTagPattern><![CDATA[v(?<version>.*)]]></describeTagPattern>
+      <version>${describe.tag.version}</version>
+      <properties>
+        <abavilla.framework.version>${describe.tag.version}</abavilla.framework.version>
+      </properties>
+    </ref>
+    <ref type="branch">
+      <pattern>.+</pattern>
+      <describeTagPattern><![CDATA[v(?<version>.*)]]></describeTagPattern>
+      <version>${describe.tag.version}-${commit.short}-SNAPSHOT</version>
+      <properties>
+        <abavilla.framework.version>${describe.tag.version}-${commit.short}-SNAPSHOT</abavilla.framework.version>
+      </properties>
+    </ref>
+  </refs>
+  <!-- optional fallback configuration in case of no matching ref configuration-->
+  <rev>
+    <version>${commit}-SNAPSHOT</version>
+  </rev>
+</configuration>
