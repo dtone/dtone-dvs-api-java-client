@@ -11,7 +11,7 @@ public class Price {
 	private String unit;
 
 	@JsonProperty(value = "amount")
-	private Double amount;
+	private Object amount;
 	
 	@JsonProperty(value = "fee")
 	private Double fee;
@@ -32,11 +32,11 @@ public class Price {
 		this.unit = unit;
 	}
 
-	public Double getAmount() {
+	public Object getAmount() {
 		return amount;
 	}
 
-	public void setAmount(Double amount) {
+	public void setAmount(Object amount) {
 		this.amount = amount;
 	}
 

@@ -11,7 +11,7 @@ public class Source {
 	private String unit;
 
 	@JsonProperty(value = "amount")
-	private Double amount;
+	private Object amount;
 
 	public String getUnitType() {
 		return unitType;
@@ -29,11 +29,11 @@ public class Source {
 		this.unit = unit;
 	}
 
-	public Double getAmount() {
+	public Object getAmount() {
 		return amount;
 	}
 
-	public void setAmount(Double amount) {
+	public void setAmount(Object amount) {
 		this.amount = amount;
 	}
 

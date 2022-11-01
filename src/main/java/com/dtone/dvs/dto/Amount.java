@@ -5,35 +5,35 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Amount {
 
 	@JsonProperty(value = "base")
-	private String base;
+	private Object base;
 
 	@JsonProperty(value = "promotion_bonus")
-	private Double promotionBonus;
+	private Object promotionBonus;
 
 	@JsonProperty(value = "total_excluding_tax")
-	private Double totalExcludingTax;
+	private Object totalExcludingTax;
 
-	public String getBase() {
+	public Object getBase() {
 		return base;
 	}
 
-	public void setBase(String base) {
+	public void setBase(Object base) {
 		this.base = base;
 	}
 
-	public Double getPromotionBonus() {
+	public Object getPromotionBonus() {
 		return promotionBonus;
 	}
 
-	public void setPromotionBonus(Double promotionBonus) {
+	public void setPromotionBonus(Object promotionBonus) {
 		this.promotionBonus = promotionBonus;
 	}
 
-	public Double getTotalExcludingTax() {
+	public Object getTotalExcludingTax() {
 		return totalExcludingTax;
 	}
 
-	public void setTotalExcludingTax(Double totalExcludingTax) {
+	public void setTotalExcludingTax(Object totalExcludingTax) {
 		this.totalExcludingTax = totalExcludingTax;
 	}
 
