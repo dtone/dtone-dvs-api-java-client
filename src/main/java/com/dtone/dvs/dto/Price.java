@@ -1,5 +1,7 @@
 package com.dtone.dvs.dto;
 
+import com.dtone.dvs.util.NumberUtils;
+import com.dtone.dvs.util.RangedProductUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Price {
@@ -12,7 +14,7 @@ public class Price {
 
 	@JsonProperty(value = "amount")
 	private Object amount;
-	
+
 	@JsonProperty(value = "fee")
 	private Double fee;
 
@@ -32,8 +34,20 @@ public class Price {
 		this.unit = unit;
 	}
 
-	public Object getAmount() {
-		return amount;
+	/**
+	 * Get amount for fixed type product
+	 * 
+	 */
+	public Double getAmount() {
+		return NumberUtils.toDouble(amount);
+	}
+
+	/**
+	 * Get amount for ranged type product
+	 * 
+	 */
+	public AmountRanged getAmountRanged() {
+		return RangedProductUtils.toAmountRanged(amount);
 	}
 
 	public void setAmount(Object amount) {

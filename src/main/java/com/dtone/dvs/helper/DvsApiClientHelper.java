@@ -335,7 +335,6 @@ public class DvsApiClientHelper {
 
 		appendRecordsPerPage(recordsPerPage, sb);
 
-		System.out.println(sb.toString());
 		return sb.toString();
 	}
 
