@@ -15,7 +15,6 @@ public class NumberUtils {
 				return (Double) object;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			return null;
 		}
 
