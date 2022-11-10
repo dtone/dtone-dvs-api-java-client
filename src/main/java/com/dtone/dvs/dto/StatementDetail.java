@@ -8,9 +8,38 @@ public class StatementDetail {
 	private String reference;
 
 	@JsonProperty(value = "dates")
-	private Dates dates;
+	private StatementDates dates;
 
 	@JsonProperty(value = "balance")
-	private AccountBalance balance;
+	private StatementBalance balance;
+
+	public String getReference() {
+		return reference;
+	}
+
+	public void setReference(String reference) {
+		this.reference = reference;
+	}
+
+	public StatementDates getDates() {
+		return dates;
+	}
+
+	public void setDates(StatementDates dates) {
+		this.dates = dates;
+	}
+
+	public StatementBalance getBalance() {
+		return balance;
+	}
+
+	public void setBalance(StatementBalance balance) {
+		this.balance = balance;
+	}
+
+	@Override
+	public String toString() {
+		return "StatementDetail [reference=" + reference + ", dates=" + dates + ", balance=" + balance + "]";
+	}
 
 }

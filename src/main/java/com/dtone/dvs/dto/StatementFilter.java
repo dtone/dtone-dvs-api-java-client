@@ -17,6 +17,9 @@ public class StatementFilter {
 
 	private String accountQualifier;
 
+	public StatementFilter() {
+	}
+
 	public StatementFilter(String accountNumber, Long productId) {
 		this.accountNumber = accountNumber;
 		this.productId = productId;

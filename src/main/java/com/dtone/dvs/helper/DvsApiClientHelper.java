@@ -12,6 +12,8 @@ import com.dtone.dvs.dto.ApiResponse;
 import com.dtone.dvs.dto.Balance;
 import com.dtone.dvs.dto.BalanceFilter;
 import com.dtone.dvs.dto.BenefitType;
+import com.dtone.dvs.dto.Campaign;
+import com.dtone.dvs.dto.CampaignFilter;
 import com.dtone.dvs.dto.Country;
 import com.dtone.dvs.dto.Operator;
 import com.dtone.dvs.dto.Page;
@@ -263,16 +265,58 @@ public class DvsApiClientHelper {
 				new ApiResponse<List<Balance>>(), new TypeReference<List<Balance>>() {
 				});
 	}
+	
+	// Balances - End
+	
+	// Statements - Start
 
-	public ApiResponse<List<StatementDetail>> getStatement(StatementFilter statementFilter) throws DvsApiException {
+	public Page<ApiResponse<List<StatementDetail>>> getAllStatements() throws DvsApiException {
+		return apiService.httpGetPageable(Constants.STATEMENT_INQUIRY, getUrl(Constants.STATEMENT_INQUIRY),
+				new ApiResponse<List<StatementDetail>>(), new TypeReference<List<StatementDetail>>() {
+				});
+	}
+
+	public ApiResponse<List<StatementDetail>> getStatements(StatementFilter statementFilter, int page,
+			int recordsPerPage) throws DvsApiException {
+		return apiService.httpGet(
+				getUrl(Constants.STATEMENT_INQUIRY, null, page, recordsPerPage, statementFilter.getQueryParameterMap()),
+				new ApiResponse<List<StatementDetail>>(), new TypeReference<List<StatementDetail>>() {
+				});
+	}
+
+	public ApiResponse<List<StatementDetail>> getStatements(StatementFilter statementFilter) throws DvsApiException {
 		return apiService.httpGet(
 				getUrl(Constants.STATEMENT_INQUIRY, statementFilter.getAccountNumber(), 0, 0,
 						statementFilter.getQueryParameterMap()),
 				new ApiResponse<List<StatementDetail>>(), new TypeReference<List<StatementDetail>>() {
 				});
 	}
+	
+	// Statements - End
 
-	// Balances - Begin
+	// Campaigns - Start
+	
+	public Page<ApiResponse<List<Campaign>>> getAllCampaigns() throws DvsApiException {
+		return apiService.httpGetPageable(Constants.CAMPAIGNS, getUrl(Constants.CAMPAIGNS),
+				new ApiResponse<List<Campaign>>(), new TypeReference<List<Campaign>>() {
+				});
+	}
+
+	public ApiResponse<List<Campaign>> getCampaigns(CampaignFilter campaignFilter, int page, int recordsPerPage)
+			throws DvsApiException {
+		return apiService.httpGet(
+				getUrl(Constants.CAMPAIGNS, null, page, recordsPerPage, campaignFilter.getQueryParameterMap()),
+				new ApiResponse<List<Campaign>>(), new TypeReference<List<Campaign>>() {
+				});
+	}
+
+	public ApiResponse<Campaign> getCampaign(Long campaignId) throws DvsApiException {
+		return apiService.httpGet(getUrl(Constants.CAMPAIGNS, String.valueOf(campaignId)), new ApiResponse<Campaign>(),
+				new TypeReference<Campaign>() {
+				});
+	}
+	
+	// Campaigns - End
 
 	public String getUrl(String uri) {
 		return getUrl(uri, null, 0, 0, null);

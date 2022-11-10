@@ -39,6 +39,7 @@ public class Constants {
 	public static final String BALANCES = CONTEXT_ROOT + "balances";
 	public static final String OPERATOR_LOOKUP = CONTEXT_ROOT + "lookup/mobile-number";
 	public static final String STATEMENT_INQUIRY = CONTEXT_ROOT + "lookup/statement-inquiry/{}";
+	public static final String CAMPAIGNS = CONTEXT_ROOT + "campaigns";
 
 	// Path Param
 	public static final String PATH_PARAM_PLACEHOLDER = "{}";

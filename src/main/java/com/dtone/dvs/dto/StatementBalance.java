@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class AccountBalance {
+public class StatementBalance {
 	@JsonProperty(value = "unit_type")
 	private UnitTypes unitType;
 
@@ -36,5 +36,10 @@ public class AccountBalance {
 
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
+	}
+
+	@Override
+	public String toString() {
+		return "StatementBalance [unitType=" + unitType + ", unit=" + unit + ", amount=" + amount + "]";
 	}
 }

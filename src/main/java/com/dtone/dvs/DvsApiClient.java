@@ -6,6 +6,8 @@ import com.dtone.dvs.dto.ApiResponse;
 import com.dtone.dvs.dto.Balance;
 import com.dtone.dvs.dto.BalanceFilter;
 import com.dtone.dvs.dto.BenefitType;
+import com.dtone.dvs.dto.Campaign;
+import com.dtone.dvs.dto.CampaignFilter;
 import com.dtone.dvs.dto.Country;
 import com.dtone.dvs.dto.Operator;
 import com.dtone.dvs.dto.Page;
@@ -374,8 +376,7 @@ public class DvsApiClient {
 	 * @param transactionId the transaction id
 	 * @return transaction
 	 */
-	public ApiResponse<TransactionResponse> confirmTransaction(Long transactionId)
-			throws DvsApiException {
+	public ApiResponse<TransactionResponse> confirmTransaction(Long transactionId) throws DvsApiException {
 		return this.dvsApiClientHelper.confirmTransaction(transactionId);
 	}
 
@@ -427,14 +428,104 @@ public class DvsApiClient {
 	// Statement Inquiry - Begin
 
 	/**
-	 * Get statement for an account number
+	 * Get statement
 	 * 
-	 * @return statement details
+	 * @return paginated list of statement
 	 */
-	private ApiResponse<List<StatementDetail>> getStatement(StatementFilter statementFilter) throws DvsApiException {
-		return this.dvsApiClientHelper.getStatement(statementFilter);
+	private Page<ApiResponse<List<StatementDetail>>> getStatements() throws DvsApiException {
+		return this.dvsApiClientHelper.getAllStatements();
+	}
+
+	/**
+	 * Get statements by page number and records per page
+	 * 
+	 * @param pageNumber     the page number
+	 * @param recordsPerPage the number of records per page
+	 * @return list of statements
+	 */
+	private ApiResponse<List<StatementDetail>> getStatements(int pageNumber, int recordsPerPage)
+			throws DvsApiException {
+		return this.dvsApiClientHelper.getStatements(new StatementFilter(), pageNumber, recordsPerPage);
+	}
+
+	/**
+	 * Get statements by filters
+	 * 
+	 * @return statements details
+	 */
+	private ApiResponse<List<StatementDetail>> getStatements(StatementFilter statementFilter) throws DvsApiException {
+		return this.dvsApiClientHelper.getStatements(statementFilter);
+	}
+
+	/**
+	 * Get statements by filters, page number and records per page
+	 * 
+	 * @param statementFilter the statement filter object
+	 * @param recordsPerPage  the number of records per page
+	 * @return list of statements
+	 */
+	private ApiResponse<List<StatementDetail>> getStatements(StatementFilter statementFilter, int pageNumber,
+			int recordsPerPage) throws DvsApiException {
+		return this.dvsApiClientHelper.getStatements(statementFilter, pageNumber, recordsPerPage);
 	}
 
 	// Statement Inquiry - End
+
+	// Campaigns - Begin
+
+	/**
+	 * Get campaigns
+	 * 
+	 * @return paginated list of campaigns
+	 */
+	private Page<ApiResponse<List<Campaign>>> getCampaigns() throws DvsApiException {
+		return this.dvsApiClientHelper.getAllCampaigns();
+	}
+
+	/**
+	 * Get campaigns by page number and records per page
+	 * 
+	 * @param pageNumber     the page number
+	 * @param recordsPerPage the number of records per page
+	 * @return list of campaigns
+	 */
+	private ApiResponse<List<Campaign>> getCampaigns(int pageNumber, int recordsPerPage) throws DvsApiException {
+		return this.dvsApiClientHelper.getCampaigns(new CampaignFilter(), pageNumber, recordsPerPage);
+	}
+
+	/**
+	 * Get campaigns by filters
+	 * 
+	 * @param campaignFilter the campaign filter object
+	 * @param recordsPerPage the number of records per page
+	 * @return list of campaigns
+	 */
+	private ApiResponse<List<Campaign>> getCampaigns(CampaignFilter campaignFilter) throws DvsApiException {
+		return this.dvsApiClientHelper.getCampaigns(campaignFilter, 0, 0);
+	}
+
+	/**
+	 * Get campaigns by filters, page number and records per page
+	 * 
+	 * @param campaignFilter the campaign filter object
+	 * @param recordsPerPage the number of records per page
+	 * @return list of campaigns
+	 */
+	private ApiResponse<List<Campaign>> getCampaigns(CampaignFilter campaignFilter, int pageNumber, int recordsPerPage)
+			throws DvsApiException {
+		return this.dvsApiClientHelper.getCampaigns(campaignFilter, pageNumber, recordsPerPage);
+	}
+
+	/**
+	 * Get campaign by id
+	 * 
+	 * @param campaignId the campaign id
+	 * @return campaign
+	 */
+	private ApiResponse<Campaign> getCampaign(Long campaignId) throws DvsApiException {
+		return this.dvsApiClientHelper.getCampaign(campaignId);
+	}
+
+	// Campaigns - End
 
 }
