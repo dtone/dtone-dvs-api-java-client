@@ -31,7 +31,6 @@ public class ProductDeserializer extends StdDeserializer<Product> {
 		String type = node.get("type").asText();
 
 		if (ProductUtils.isFixedType(type)) {
-			System.out.println("Fixed");
 			ProductFixed productFixed = new ProductFixed();
 
 			List<BenefitFixed> benefitsFixedList = mapper.convertValue(node.get("benefits"),
