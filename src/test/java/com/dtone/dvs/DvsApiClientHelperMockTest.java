@@ -101,12 +101,14 @@ public class DvsApiClientHelperMockTest {
 
 		when(apiService.httpGet(Mockito.any(), Mockito.any(ApiResponse.class), Mockito.any()))
 				.thenReturn(MockTestUtils.getOperators());
-		ApiResponse<List<Operator>> apiResponseOperatorsByIsoCodeFilter = dvsApiClientHelper.getOperators("BGD", 1, 100);
+		ApiResponse<List<Operator>> apiResponseOperatorsByIsoCodeFilter = dvsApiClientHelper.getOperators("BGD", 1,
+				100);
 		assertNotNull(apiResponseOperatorsByIsoCodeFilter.getResult());
 
 		when(apiService.httpGet(Mockito.any(), Mockito.any(ApiResponse.class), Mockito.any()))
 				.thenReturn(MockTestUtils.getOperators());
-		ApiResponse<List<Operator>> apiResponseLookupOperators = dvsApiClientHelper.lookupOperators("8888888888", 1, 100);
+		ApiResponse<List<Operator>> apiResponseLookupOperators = dvsApiClientHelper.lookupOperators("8888888888", 1,
+				100);
 		assertNotNull(apiResponseLookupOperators.getResult());
 	}
 
@@ -155,8 +157,8 @@ public class DvsApiClientHelperMockTest {
 
 		when(apiService.httpGet(Mockito.any(), Mockito.any(ApiResponse.class), Mockito.any()))
 				.thenReturn(MockTestUtils.getPromotions());
-		ApiResponse<List<Promotion>> apiResponsePromotionsFilters = dvsApiClientHelper.getPromotions(new PromotionFilter("BGD", 1L, 1L), 1,
-				100);
+		ApiResponse<List<Promotion>> apiResponsePromotionsFilters = dvsApiClientHelper
+				.getPromotions(new PromotionFilter("BGD", 1L, 1L), 1, 100);
 		assertNotNull(apiResponsePromotionsFilters.getResult());
 	}
 
@@ -188,8 +190,8 @@ public class DvsApiClientHelperMockTest {
 
 		when(apiService.httpGet(Mockito.any(), Mockito.any(ApiResponse.class), Mockito.any()))
 				.thenReturn(MockTestUtils.getTransactions());
-		ApiResponse<List<TransactionResponse>> apiResponseTransactions = dvsApiClientHelper.getTransactions(new TransactionFilter("NEX-123"), 1,
-				100);
+		ApiResponse<List<TransactionResponse>> apiResponseTransactions = dvsApiClientHelper
+				.getTransactions(new TransactionFilter("NEX-123"), 1, 100);
 		assertNotNull(apiResponseTransactions.getResult());
 
 		when(apiService.httpGet(Mockito.any(), Mockito.any(ApiResponse.class), Mockito.any()))
@@ -200,12 +202,12 @@ public class DvsApiClientHelperMockTest {
 		when(apiService.httpPost(Mockito.any(), Mockito.any(ApiResponse.class), Mockito.any(), Mockito.any()))
 				.thenReturn(MockTestUtils.getTransaction());
 		ApiResponse<TransactionResponse> apiResponseTransactionPost = dvsApiClientHelper
-				.postTransaction(new TransactionRequest(), true);
+				.postTransaction(new TransactionRequest());
 		assertNotNull(apiResponseTransactionPost.getResult());
 
 		when(apiService.httpPost(Mockito.any(), Mockito.any(ApiResponse.class), Mockito.any(), Mockito.any()))
 				.thenReturn(MockTestUtils.getTransaction());
-		ApiResponse<TransactionResponse> apiResponseTransactionConfirm = dvsApiClientHelper.confirmTransaction(1L, true);
+		ApiResponse<TransactionResponse> apiResponseTransactionConfirm = dvsApiClientHelper.confirmTransaction(1L);
 		assertNotNull(apiResponseTransactionConfirm.getResult());
 
 		when(apiService.httpPost(Mockito.any(), Mockito.any(ApiResponse.class), Mockito.any(), Mockito.any()))

@@ -162,11 +162,10 @@ public class DvsApiClientHelper {
 				});
 	}
 
-	public ApiResponse<List<Promotion>> getPromotions(PromotionFilter promotionFilter, int page,
-			int recordsPerPage) throws DvsApiException {
+	public ApiResponse<List<Promotion>> getPromotions(PromotionFilter promotionFilter, int page, int recordsPerPage)
+			throws DvsApiException {
 		return apiService.httpGet(
-				getUrl(Constants.PROMOTIONS, null, page, recordsPerPage,
-						promotionFilter.getQueryParameterMap()),
+				getUrl(Constants.PROMOTIONS, null, page, recordsPerPage, promotionFilter.getQueryParameterMap()),
 				new ApiResponse<List<Promotion>>(), new TypeReference<List<Promotion>>() {
 				});
 	}
@@ -189,8 +188,9 @@ public class DvsApiClientHelper {
 
 	public ApiResponse<List<Product>> getProducts(ProductFilter productFilter, int page, int recordsPerPage)
 			throws DvsApiException {
-		return apiService.httpGet(getUrl(Constants.PRODUCTS, null, page, recordsPerPage, productFilter.getQueryParameterMap()), new ApiResponse<List<Product>>(),
-				new TypeReference<List<Product>>() {
+		return apiService.httpGet(
+				getUrl(Constants.PRODUCTS, null, page, recordsPerPage, productFilter.getQueryParameterMap()),
+				new ApiResponse<List<Product>>(), new TypeReference<List<Product>>() {
 				});
 	}
 
@@ -204,14 +204,15 @@ public class DvsApiClientHelper {
 
 	// Transactions - Begin
 
-	public ApiResponse<TransactionResponse> postTransaction(TransactionRequest transactionRequest, boolean synchronous)
+	public ApiResponse<TransactionResponse> postTransaction(TransactionRequest transactionRequest)
 			throws DvsApiException {
-		if (StringUtils.isEmpty(transactionRequest.getExternalId())){
-			transactionRequest.setExternalId(String.valueOf(Calendar.getInstance().getTimeInMillis()) + UUID.randomUUID());
+		if (StringUtils.isEmpty(transactionRequest.getExternalId())) {
+			transactionRequest
+					.setExternalId(String.valueOf(Calendar.getInstance().getTimeInMillis()) + UUID.randomUUID());
 		}
 
-		return apiService.httpPost(getUrl(synchronous ? Constants.TRANSACTION_SYNC : Constants.TRANSACTION_ASYNC),
-				new ApiResponse<TransactionResponse>(), new TypeReference<TransactionResponse>() {
+		return apiService.httpPost(getUrl(Constants.TRANSACTION_ASYNC), new ApiResponse<TransactionResponse>(),
+				new TypeReference<TransactionResponse>() {
 				}, transactionRequest);
 	}
 
@@ -221,19 +222,16 @@ public class DvsApiClientHelper {
 				});
 	}
 
-	public ApiResponse<List<TransactionResponse>> getTransactions(TransactionFilter transactionFilter, int page, int recordsPerPage)
-			throws DvsApiException {
+	public ApiResponse<List<TransactionResponse>> getTransactions(TransactionFilter transactionFilter, int page,
+			int recordsPerPage) throws DvsApiException {
 		return apiService.httpGet(
 				getUrl(Constants.TRANSACTIONS, null, page, recordsPerPage, transactionFilter.getQueryParameterMap()),
 				new ApiResponse<List<TransactionResponse>>(), new TypeReference<List<TransactionResponse>>() {
 				});
 	}
 
-	public ApiResponse<TransactionResponse> confirmTransaction(Long transactionId, boolean synchronous)
-			throws DvsApiException {
-		return apiService.httpPost(
-				getUrl(synchronous ? Constants.CONFIRM_TRANSACTION_SYNC : Constants.CONFIRM_TRANSACTION_ASYNC,
-						String.valueOf(transactionId)),
+	public ApiResponse<TransactionResponse> confirmTransaction(Long transactionId) throws DvsApiException {
+		return apiService.httpPost(getUrl(Constants.CONFIRM_TRANSACTION_ASYNC, String.valueOf(transactionId)),
 				new ApiResponse<TransactionResponse>(), new TypeReference<TransactionResponse>() {
 				}, null);
 	}
@@ -259,16 +257,18 @@ public class DvsApiClientHelper {
 				new TypeReference<List<Balance>>() {
 				});
 	}
-	
+
 	public ApiResponse<List<Balance>> getBalances(BalanceFilter balanceFilter) throws DvsApiException {
-		return apiService.httpGet(getUrl(Constants.BALANCES, null, 0, 0, balanceFilter.getQueryParameterMap()), new ApiResponse<List<Balance>>(),
-				new TypeReference<List<Balance>>() {
+		return apiService.httpGet(getUrl(Constants.BALANCES, null, 0, 0, balanceFilter.getQueryParameterMap()),
+				new ApiResponse<List<Balance>>(), new TypeReference<List<Balance>>() {
 				});
 	}
-	
+
 	public ApiResponse<List<StatementDetail>> getStatement(StatementFilter statementFilter) throws DvsApiException {
-		return apiService.httpGet(getUrl(Constants.STATEMENT_INQUIRY, statementFilter.getAccountNumber(), 0, 0, statementFilter.getQueryParameterMap()), new ApiResponse<List<StatementDetail>>(),
-				new TypeReference<List<StatementDetail>>() {
+		return apiService.httpGet(
+				getUrl(Constants.STATEMENT_INQUIRY, statementFilter.getAccountNumber(), 0, 0,
+						statementFilter.getQueryParameterMap()),
+				new ApiResponse<List<StatementDetail>>(), new TypeReference<List<StatementDetail>>() {
 				});
 	}
 
@@ -326,7 +326,7 @@ public class DvsApiClientHelper {
 	private String getUrl(String uri, String pathParam, int pageNumber, int recordsPerPage,
 			Map<String, String> queryParams) {
 		StringBuilder sb = new StringBuilder(this.getUrl());
-		
+
 		appendUri(uri, pathParam, sb);
 
 		appendQueryParameters(queryParams, sb);
