@@ -1,0 +1,25 @@
+package com.dtone.dvs.dto;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class SourceFixed extends Source {
+
+	@JsonProperty(value = "amount")
+	private Double amount;
+
+	public Double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
+
+	@Override
+	public String toString() {
+		return "SourceFixed [amount=" + amount + ", getUnitType()=" + getUnitType() + ", getUnit()=" + getUnit()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
+				+ "]";
+	}
+
+}

@@ -3,7 +3,9 @@ package com.dtone.dvs.dto;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+@JsonDeserialize(using = ProductDeserializer.class)
 public class Product {
 
 	@JsonProperty(value = "id")
@@ -45,20 +47,8 @@ public class Product {
 	@JsonProperty(value = "availability_zones")
 	private List<String> availabilityZones;
 
-	@JsonProperty(value = "source")
-	private Source source;
-
-	@JsonProperty(value = "destination")
-	private Source destination;
-
-	@JsonProperty(value = "prices")
-	private Prices prices;
-
 	@JsonProperty(value = "rates")
 	private Rates rates;
-
-	@JsonProperty(value = "benefits")
-	private List<Benefit> benefits;
 
 	@JsonProperty(value = "promotions")
 	private List<Promotion> promotions;
@@ -170,44 +160,12 @@ public class Product {
 		this.availabilityZones = availabilityZones;
 	}
 
-	public Source getSource() {
-		return source;
-	}
-
-	public void setSource(Source source) {
-		this.source = source;
-	}
-
-	public Source getDestination() {
-		return destination;
-	}
-
-	public void setDestination(Source destination) {
-		this.destination = destination;
-	}
-
-	public Prices getPrices() {
-		return prices;
-	}
-
-	public void setPrices(Prices prices) {
-		this.prices = prices;
-	}
-
 	public Rates getRates() {
 		return rates;
 	}
 
 	public void setRates(Rates rates) {
 		this.rates = rates;
-	}
-
-	public List<Benefit> getBenefits() {
-		return benefits;
-	}
-
-	public void setBenefits(List<Benefit> benefits) {
-		this.benefits = benefits;
 	}
 
 	public List<Promotion> getPromotions() {
@@ -217,24 +175,13 @@ public class Product {
 	public void setPromotions(List<Promotion> promotions) {
 		this.promotions = promotions;
 	}
-	
+
 	public Validity getValidity() {
 		return validity;
 	}
 
 	public void setValidity(Validity validity) {
 		this.validity = validity;
-	}
-
-	@Override
-	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", type=" + type + ", service="
-				+ service + ", operator=" + operator + ", regions=" + regions + ", requiredDebitPartyIdentifierFields="
-				+ requiredDebitPartyIdentifierFields + ", requiredCreditPartyIdentifierFields="
-				+ requiredCreditPartyIdentifierFields + ", requiredSenderFields=" + requiredSenderFields
-				+ ", requiredBeneficiaryFields=" + requiredBeneficiaryFields + ", availabilityZones="
-				+ availabilityZones + ", source=" + source + ", destination=" + destination + ", prices=" + prices
-				+ ", rates=" + rates + ", benefits=" + benefits + ", promotions=" + promotions + "]";
 	}
 
 }

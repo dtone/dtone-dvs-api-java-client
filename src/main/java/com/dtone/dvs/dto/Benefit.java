@@ -9,13 +9,10 @@ public class Benefit {
 
 	@JsonProperty(value = "unit_type")
 	private String unitType;
-	
+
 	@JsonProperty(value = "unit")
 	private String unit;
 
-	@JsonProperty(value = "amount")
-	private Amount amount;
-	
 	@JsonProperty(value = "additional_information")
 	private String additionalInformation;
 
@@ -43,26 +40,12 @@ public class Benefit {
 		this.unit = unit;
 	}
 
-	public Amount getAmount() {
-		return amount;
-	}
-
-	public void setAmount(Amount amount) {
-		this.amount = amount;
-	}
-
 	public String getAdditionalInformation() {
 		return additionalInformation;
 	}
 
 	public void setAdditionalInformation(String additionalInformation) {
 		this.additionalInformation = additionalInformation;
-	}
-
-	@Override
-	public String toString() {
-		return "Benefit [type=" + type + ", unitType=" + unitType + ", unit=" + unit + ", amount=" + amount
-				+ ", additionalInformation=" + additionalInformation + "]";
 	}
 
 }
