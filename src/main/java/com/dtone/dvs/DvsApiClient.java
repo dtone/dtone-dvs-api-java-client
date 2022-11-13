@@ -386,9 +386,20 @@ public class DvsApiClient {
 	public Page<ApiResponse<List<Transaction>>> getTransactions() throws DvsApiException {
 		return this.dvsApiClientHelper.getAllTransactions();
 	}
+	
+	/**
+	 * Get transactions by page number and records per page
+	 * 
+	 * @param pageNumber     the page number
+	 * @param recordsPerPage the number of records per page
+	 * @return list of transactions
+	 */
+	public ApiResponse<List<Transaction>> getTransactions(int pageNumber, int recordsPerPage) throws DvsApiException {
+		return this.dvsApiClientHelper.getTransactions(new TransactionFilter(), pageNumber, recordsPerPage);
+	}
 
 	/**
-	 * Get transactions by external id
+	 * Get transactions by filters
 	 * 
 	 * transactionFilter the TransactionFilter instance
 	 * 
@@ -399,7 +410,7 @@ public class DvsApiClient {
 	}
 
 	/**
-	 * Get transactions by external id, page number and records per page
+	 * Get transactions by filters, page number and records per page
 	 * 
 	 * transactionFilter the TransactionFilter instance
 	 * 
