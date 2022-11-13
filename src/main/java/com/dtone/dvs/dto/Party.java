@@ -1,7 +1,10 @@
 package com.dtone.dvs.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+@JsonInclude(Include.NON_NULL)
 public class Party {
 
 	@JsonProperty(value = "last_name")
@@ -21,6 +24,18 @@ public class Party {
 
 	@JsonProperty(value = "email")
 	private String email;
+
+	@JsonProperty(value = "address_text")
+	private String addressText;
+
+	@JsonProperty(value = "address_city")
+	private String addressCity;
+
+	@JsonProperty(value = "address_country_iso_code")
+	private String addressCountryIsoCode;
+
+	@JsonProperty(value = "address_postal_code")
+	private String addressPostalCode;
 
 	public String getLastName() {
 		return lastName;
@@ -70,11 +85,44 @@ public class Party {
 		this.email = email;
 	}
 
+	public String getAddressText() {
+		return addressText;
+	}
+
+	public void setAddressText(String addressText) {
+		this.addressText = addressText;
+	}
+
+	public String getAddressCity() {
+		return addressCity;
+	}
+
+	public void setAddressCity(String addressCity) {
+		this.addressCity = addressCity;
+	}
+
+	public String getAddressCountryIsoCode() {
+		return addressCountryIsoCode;
+	}
+
+	public void setAddressCountryIsoCode(String addressCountryIsoCode) {
+		this.addressCountryIsoCode = addressCountryIsoCode;
+	}
+
+	public String getAddressPostalCode() {
+		return addressPostalCode;
+	}
+
+	public void setAddressPostalCode(String addressPostalCode) {
+		this.addressPostalCode = addressPostalCode;
+	}
+
 	@Override
 	public String toString() {
 		return "Party [lastName=" + lastName + ", firstName=" + firstName + ", middleName=" + middleName
 				+ ", nationalityCountryIsoCode=" + nationalityCountryIsoCode + ", mobileNumber=" + mobileNumber
-				+ ", email=" + email + "]";
+				+ ", email=" + email + ", addressText=" + addressText + ", addressCity=" + addressCity
+				+ ", addressCountryIsoCode=" + addressCountryIsoCode + ", addressPostalCode=" + addressPostalCode + "]";
 	}
 
 }

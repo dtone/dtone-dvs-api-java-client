@@ -3,8 +3,10 @@ package com.dtone.dvs.dto;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-public class TransactionResponse {
+@JsonDeserialize(using = TransactionDeserializer.class)
+public class Transaction {
 
 	@JsonProperty(value = "id")
 	private Long id;
@@ -39,9 +41,6 @@ public class TransactionResponse {
 	@JsonProperty(value = "rates")
 	private Rates rates;
 
-	@JsonProperty(value = "benefits")
-	private List<Benefit> benefits;
-
 	@JsonProperty(value = "promotions")
 	private List<Promotion> promotions;
 
@@ -62,6 +61,12 @@ public class TransactionResponse {
 
 	@JsonProperty(value = "credit_party_identifier")
 	private PartyIdentifier creditPartyIdentifier;
+
+	@JsonProperty(value = "statement_identifier")
+	private StatementIdentifier statementIdentifier;
+
+	@JsonProperty(value = "callback_url")
+	private String callbackUrl;
 
 	public Long getId() {
 		return id;
@@ -151,14 +156,6 @@ public class TransactionResponse {
 		this.rates = rates;
 	}
 
-	public List<Benefit> getBenefits() {
-		return benefits;
-	}
-
-	public void setBenefits(List<Benefit> benefits) {
-		this.benefits = benefits;
-	}
-
 	public List<Promotion> getPromotions() {
 		return promotions;
 	}
@@ -215,15 +212,32 @@ public class TransactionResponse {
 		this.creditPartyIdentifier = creditPartyIdentifier;
 	}
 
+	public StatementIdentifier getStatementIdentifier() {
+		return statementIdentifier;
+	}
+
+	public void setStatementIdentifier(StatementIdentifier statementIdentifier) {
+		this.statementIdentifier = statementIdentifier;
+	}
+
+	public String getCallbackUrl() {
+		return callbackUrl;
+	}
+
+	public void setCallbackUrl(String callbackUrl) {
+		this.callbackUrl = callbackUrl;
+	}
+
 	@Override
 	public String toString() {
-		return "TransactionResponse [id=" + id + ", externalId=" + externalId + ", creationDate=" + creationDate
+		return "Transaction [id=" + id + ", externalId=" + externalId + ", creationDate=" + creationDate
 				+ ", confirmationExpirationDate=" + confirmationExpirationDate + ", confirmationDate="
 				+ confirmationDate + ", status=" + status + ", operatorReference=" + operatorReference + ", pin=" + pin
-				+ ", product=" + product + ", prices=" + prices + ", rates=" + rates + ", benefits=" + benefits
-				+ ", promotions=" + promotions + ", requestedValues=" + requestedValues + ", adjustedValues="
-				+ adjustedValues + ", sender=" + sender + ", beneficiary=" + beneficiary + ", debitPartyIdentifier="
-				+ debitPartyIdentifier + ", creditPartyIdentifier=" + creditPartyIdentifier + "]";
+				+ ", product=" + product + ", prices=" + prices + ", rates=" + rates + ", promotions=" + promotions
+				+ ", requestedValues=" + requestedValues + ", adjustedValues=" + adjustedValues + ", sender=" + sender
+				+ ", beneficiary=" + beneficiary + ", debitPartyIdentifier=" + debitPartyIdentifier
+				+ ", creditPartyIdentifier=" + creditPartyIdentifier + ", statementIdentifier=" + statementIdentifier
+				+ ", callbackUrl=" + callbackUrl + "]";
 	}
 
 }

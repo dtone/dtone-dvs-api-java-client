@@ -2,7 +2,7 @@ package com.dtone.dvs.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class SourceRanged extends Source {
+public class SourceRanged extends ProductSource {
 
 	@JsonProperty(value = "amount")
 	private AmountRanged amount;
@@ -17,9 +17,7 @@ public class SourceRanged extends Source {
 
 	@Override
 	public String toString() {
-		return "SourceRanged [amount=" + amount + ", getUnitType()=" + getUnitType() + ", getUnit()=" + getUnit()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
-				+ "]";
+		return "SourceRanged [amount=" + amount + ", unitType=" + getUnitType() + ", unit=" + getUnit() + "]";
 	}
 
 }

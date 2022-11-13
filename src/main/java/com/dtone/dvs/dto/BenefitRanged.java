@@ -15,4 +15,10 @@ public class BenefitRanged extends Benefit {
 		this.amount = amount;
 	}
 
+	@Override
+	public String toString() {
+		return "BenefitRanged [amount=" + amount + ", type=" + getType() + ", unitType=" + getUnitType()
+				+ ", unit=" + getUnit() + ", additionalInformation=" + getAdditionalInformation() + "]";
+	}
+
 }

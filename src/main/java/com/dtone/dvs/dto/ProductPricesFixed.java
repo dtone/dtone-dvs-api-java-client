@@ -28,8 +28,7 @@ public class ProductPricesFixed {
 
 	@Override
 	public String toString() {
-		return "ProductPricesFixed [wholesale=" + wholesale + ", retail=" + retail + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+		return "ProductPricesFixed [wholesale=" + wholesale + ", retail=" + retail + "]";
 	}
 
 }

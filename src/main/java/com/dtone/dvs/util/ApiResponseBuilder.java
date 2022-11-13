@@ -6,6 +6,7 @@ import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 
+import com.dtone.dvs.dto.ApiError;
 import com.dtone.dvs.dto.ApiResponse;
 import com.dtone.dvs.dto.ErrorResponse;
 import com.dtone.dvs.exception.DvsApiException;
@@ -14,7 +15,6 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -51,8 +51,8 @@ public class ApiResponseBuilder {
 				apiResponse.setErrors(extractResult(httpEntity, new TypeReference<ErrorResponse>() {
 				}).getErrors());
 			} else {
-				apiResponse.getErrors().add(new com.dtone.dvs.dto.Error(String.valueOf(statusCode),
-						response.getStatusLine().getReasonPhrase()));
+				apiResponse.getErrors()
+						.add(new ApiError(String.valueOf(statusCode), response.getStatusLine().getReasonPhrase()));
 			}
 
 		}
@@ -108,7 +108,6 @@ public class ApiResponseBuilder {
 	 */
 	public static ObjectMapper getObjectMapper() {
 		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		objectMapper.configure(Feature.AUTO_CLOSE_SOURCE, true);
 		objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
 		return objectMapper;

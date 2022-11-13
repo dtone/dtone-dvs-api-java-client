@@ -24,24 +24,75 @@ public class Page<T> {
 		this.first = apiResponse;
 	}
 
+	public Page(String apiOperation, int totalPages, int totalRecords, int currentPage, int recordsPerPage,
+			int nextPage, int previousPage) {
+		this.dvsClient = null;
+		this.apiOperation = apiOperation;
+		this.totalPages = totalPages;
+		this.totalRecords = totalRecords;
+		this.currentPage = currentPage;
+		this.recordsPerPage = recordsPerPage;
+		this.nextPage = nextPage;
+		this.previousPage = previousPage;
+	}
+
+	/**
+	 * Get first page
+	 * 
+	 * @return the first page
+	 */
+	public T first() throws DvsApiException {
+		if (getCurrentPage() <= 1) {
+			return first;
+		} else {
+			setCurrentPage(1);
+			return getApiResponse();
+		}
+	}
+
+	/**
+	 * Has next page
+	 * 
+	 * @return if next page is available
+	 */
 	public boolean hasNext() {
 		return totalPages > currentPage;
 	}
 
+	/**
+	 * Has previous page
+	 * 
+	 * @return if previous page is available
+	 */
 	public boolean hasPrevious() {
 		return currentPage > 1;
 	}
 
+	/**
+	 * Get next page
+	 * 
+	 * @return the next page
+	 */
 	public T next() throws DvsApiException {
 		setCurrentPage(getCurrentPage() + 1);
 		return getApiResponse();
 	}
-	
+
+	/**
+	 * Get previous page
+	 * 
+	 * @return the previous page
+	 */
 	public T previous() throws DvsApiException {
 		setCurrentPage(getCurrentPage() - 1);
 		return getApiResponse();
 	}
-	
+
+	/**
+	 * Get last page
+	 * 
+	 * @return the last page
+	 */
 	public T last() throws DvsApiException {
 		setCurrentPage(getTotalPages());
 		return getApiResponse();
@@ -72,26 +123,26 @@ public class Page<T> {
 		case Constants.COUNTRIES:
 			t = (T) dvsClient.getCountries(getCurrentPage(), getRecordsPerPage());
 			break;
-		/*case Constants.STATEMENT_INQUIRY:
-			t = (T) dvsClient.getStatement(getCurrentPage(), getRecordsPerPage());
-			break;
-		case Constants.CAMPAIGNS:
-			t = (T) dvsClient.getCampaigns(getCurrentPage(), getRecordsPerPage());
-			break;*/
+		/*
+		 * case Constants.STATEMENT_INQUIRY: t = (T)
+		 * dvsClient.getStatement(getCurrentPage(), getRecordsPerPage()); break; case
+		 * Constants.CAMPAIGNS: t = (T) dvsClient.getCampaigns(getCurrentPage(),
+		 * getRecordsPerPage()); break;
+		 */
 		default:
-			
+
 		}
 
 		return t;
 	}
 
-	public T first() throws DvsApiException {
-		if(getCurrentPage() <= 1) {
-			return first;
-		} else {
-			setCurrentPage(1);
-			return getApiResponse();
-		}
+	/**
+	 * Get page information
+	 * 
+	 * @return the page information
+	 */
+	public PageInfo getPageInfo() {
+		return new PageInfo(totalPages, totalRecords, currentPage, recordsPerPage, nextPage, previousPage);
 	}
 
 	public int getTotalPages() {
@@ -150,4 +201,10 @@ public class Page<T> {
 		this.apiOperation = apiOperation;
 	}
 
+	@Override
+	public String toString() {
+		return "Page [apiOperation=" + apiOperation + ", totalPages=" + totalPages + ", totalRecords=" + totalRecords
+				+ ", currentPage=" + currentPage + ", recordsPerPage=" + recordsPerPage + ", nextPage=" + nextPage
+				+ ", previousPage=" + previousPage + "]";
+	}
 }

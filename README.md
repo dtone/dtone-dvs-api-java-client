@@ -128,6 +128,10 @@ This library deals with the following list of domain objects from the DVS API:
     
     `ApiResponse<List<Operator>> lookupOperators(String mobileNumber, int pageNumber, int recordsPerPage) throws DvsApiException`
 
+    `ApiResponse<List<Operator>> lookupOperators(LookupOperatorRequest lookupOperatorRequest) throws DvsApiException`
+
+    `ApiResponse<List<Operator>> lookupOperators(LookupOperatorRequest lookupOperatorRequest, int pageNumber, int recordsPerPage) throws DvsApiException`
+
 - Benefit Type (Only GET operations)
 
     `Page<ApiResponse<List<BenefitType>>> getBenefitTypes() throws DvsApiException`
@@ -160,18 +164,20 @@ This library deals with the following list of domain objects from the DVS API:
     
 - Transaction (Only GET & POST operations)
 
-    `ApiResponse<TransactionResponse> createTransaction(TransactionRequest transactionRequest, boolean synchronous) throws DvsApiException`
+    `ApiResponse<Transaction> createTransaction(TransactionRequest transactionRequest) throws DvsApiException`
     
-    `ApiResponse<TransactionResponse> confirmTransaction(Long transactionId, boolean synchronous) throws DvsApiException`
+    `ApiResponse<Transaction> confirmTransaction(Long transactionId) throws DvsApiException`
     
-    `ApiResponse<TransactionResponse> cancelTransaction(Long transactionId) throws DvsApiException`
+    `ApiResponse<Transaction> cancelTransaction(Long transactionId) throws DvsApiException`
     
 
-    `ApiResponse<TransactionResponse> getTransaction(Long transactionId) throws DvsApiException`
+    `Page<ApiResponse<List<Transaction>>> getTransactions() throws DvsApiException`
     
-    `ApiResponse<List<TransactionResponse>> getTransactions(TransactionFilter transactionFilter) throws DvsApiException`
+    `ApiResponse<List<Transaction>> getTransactions(TransactionFilter transactionFilter) throws DvsApiException`
     
-    `ApiResponse<List<TransactionResponse>> getTransactions(TransactionFilter transactionFilter, int pageNumber, int recordsPerPage) throws DvsApiException`
+    `ApiResponse<List<Transaction>> getTransactions(TransactionFilter transactionFilter, int pageNumber, int recordsPerPage) throws DvsApiException`
+
+    `ApiResponse<Transaction> getTransaction(Long transactionId) throws DvsApiException`
     
 - Balance (Only GET operations)
 
@@ -188,6 +194,38 @@ This library deals with the following list of domain objects from the DVS API:
         DvsApiClient dvsApiClient = new DvsApiClient("https://dvsapi.com", "apiKey", "apiSecret");
         
         Page<ApiResponse<List<Product>>> pagedProductsResponse = dvsApiClient.getProducts();
+
+        int totalPages = pagedProductsResponse.getTotalPages(); 
+        int totalRecords = pagedProductsResponse.getTotalRecords();
+        int CurrentPage = pagedProductsResponse.getCurrentPage();
+        int recordsPerPage = pagedProductsResponse.getRecordsPerPage(); 
+        int nextPage = pagedProductsResponse.getNextPage();
+        int previousPage = pagedProductsResponse.getPreviousPage();
+		        
+        ApiResponse<List<Product>> productsResponse = pagedProductsResponse.first();
+        
+        List<Product> productList = productsResponse.getResult();
+
+        for (Product product : productList) {
+            if (ProductUtils.isFixedType(product.getType())) {
+                ProductFixed productFixed = (ProductFixed)product;
+                
+                Long id = productFixed.getId();
+                List<BenefitFixed> benefitList = productFixed.getBenefits();
+                SourceFixed source = productFixed.getSource();
+                SourceFixed destination = productFixed.getDestination();
+                ProductPricesFixed prices = productFixed.getPrices();
+                
+            } else {
+                ProductRanged productRanged = (ProductRanged)product;
+                
+                Long id = productRanged.getId();
+                List<BenefitRanged> benefitList = productRanged.getBenefits();
+                SourceRanged source = productRanged.getSource();
+                SourceRanged destination = productRanged.getDestination();
+                ProductPricesRanged prices = productRanged.getPrices();
+            }
+        }
         ```
 
     - Fetch the first page records
@@ -223,13 +261,6 @@ This library deals with the following list of domain objects from the DVS API:
         ApiResponse<List<Product>> productsApiResponse = pagedProductsResponse.last();
       
         List<Product> productList = productsApiResponse.getResult();
-
-        int totalPages = pagedProductsResponse.getTotalPages(); 
-        int totalRecords = pagedProductsResponse.getTotalRecords();
-        int CurrentPage = pagedProductsResponse.getCurrentPage();
-        int recordsPerPage = pagedProductsResponse.getRecordsPerPage(); 
-        int nextPage = pagedProductsResponse.getNextPage();
-        int previousPage = pagedProductsResponse.getPreviousPage();
         ```
 
 - List of products with custom pagination
@@ -237,10 +268,13 @@ This library deals with the following list of domain objects from the DVS API:
     ```
     ApiResponse<List<Product>> productsApiResponse = dvsApiClient.getProducts(1, 100);
 
-    boolean success = productsApiResponse.isSuccess()
+    boolean success = productsApiResponse.isSuccess();
     int code = productsApiResponse.getCode();
-    List<Error> errorList = productsApiResponse.getErrors(); //(Error(String code, String message))
+
+    List<ApiError> errorList = productsApiResponse.getErrors(); //(Error(String code, String message))
+
     List<Product> productList = productsApiResponse.getResult();
+
     int totalPages = productsApiResponse.getTotalPages(); 
     int totalRecords = productsApiResponse.getTotalRecords();
     int CurrentPage = productsApiResponse.getCurrentPage();
@@ -255,7 +289,7 @@ This library deals with the following list of domain objects from the DVS API:
     ApiResponse<Product> productByIdResponse = dvsApiClient.getProduct(123L);
     boolean success = productByIdResponse.isSuccess();
     int code = productByIdResponse.getCode();
-    List<Error> errorList = productByIdResponse.getErrors();
+    List<ApiError> errorList = productByIdResponse.getErrors();
     Product product = productByIdResponse.getResult();
     ```
 
@@ -267,17 +301,22 @@ This library deals with the following list of domain objects from the DVS API:
     benefitTypes.add(BenefitTypes.TALKTIME);
     benefitTypes.add(BenefitTypes.DATA);
     productFilter.setBenefitTypes(benefitTypes);
+
     productFilter.setType(ProductType.FIXED_VALUE_RECHARGE);
     productFilter.setServiceId(1231L);
     productFilter.setCountryIsoCode("UAE");
     productFilter.setOperatorId(345L);
     productFilter.setRegion("South");
+
     ApiResponse<List<Product>> getProducts(ProductFilter productFilter);
 
     boolean success = productsApiResponse.isSuccess()
     int code = productsApiResponse.getCode();
-    List<Error> errorList = productsApiResponse.getErrors(); //(Error(String code, String message))
+
+    List<ApiError> errorList = productsApiResponse.getErrors(); //(Error(String code, String message))
+
     List<Product> productList = productsApiResponse.getResult();
+
     int totalPages = productsApiResponse.getTotalPages(); 
     int totalRecords = productsApiResponse.getTotalRecords();
     int CurrentPage = productsApiResponse.getCurrentPage();
@@ -288,39 +327,51 @@ This library deals with the following list of domain objects from the DVS API:
 
 ## HTTP POST operation Examples:
 
-- Create transaction (Sync/Async)
+- Create transaction (auto_confirm = true)
 
-    A transaction can be posted in 2 modes.
-    1. Synchronous
-    2. Asynchronous
- 
     ```
-    boolean synchronous = true;
     TransactionRequest transactionRequest = new TransactionRequest();
     transactionRequest.setExternalId("<String External Id>");
-    transactionRequest.setProductId(5L);
-    transactionRequest.setAutoConfirm(false);
-    PartyIdentifier creditPartyIdentifier = new PartyIdentifier();
-    creditPartyIdentifier.setMobileNumber("+628123456100");
-    creditPartyIdentifier.setAccountNumber("628123456100");
-    transactionRequest.setCreditPartyIdentifier(creditPartyIdentifier);
+    transactionRequest.setAutoConfirm(true);
+    transactionRequest.setProductId(20153L);
+    transactionRequest.setCreditPartyIdentifier(new PartyIdentifier("+919962589100"));
+    transactionRequest.setCallbackUrl("<Callback URL>");
         
-    ApiResponse<TransactionResponse> transactionSyncResponse = dvsApiClient.createTransaction(txnRequest, synchronous);
+    ApiResponse<Transaction> transactionAsyncResponse = dvsApiClient.createTransaction(transactionRequest);
  
-    boolean success = transactionSyncResponse.isSuccess();
-    int code = transactionSyncResponse.getCode();
-    List<Error> errorList = transactionSyncResponse.getErrors();
-    TransactionResponse transactionResponse = transactionSyncResponse.getResult();
-    Long transactionId = transactionSyncResponse.getResult().getId();
+    boolean success = transactionAsyncResponse.isSuccess();
+    int code = transactionAsyncResponse.getCode();
+    List<ApiError> errorList = transactionAsyncResponse.getErrors();
+    Transaction Transaction = transactionAsyncResponse.getResult();
+    Long transactionId = transactionAsyncResponse.getResult().getId();
+    ```
+
+- Create transaction (auto_confirm = false)
+
+    ```
+    TransactionRequest transactionRequest = new TransactionRequest();
+    transactionRequest.setExternalId("<String External Id>");
+    transactionRequest.setAutoConfirm(true);
+    transactionRequest.setProductId(20153L);
+    transactionRequest.setCreditPartyIdentifier(new PartyIdentifier("+919962589100"));
+    transactionRequest.setCallbackUrl("<Callback URL>");
+        
+    ApiResponse<Transaction> transactionAsyncResponse = dvsApiClient.createTransaction(transactionRequest);
+ 
+    boolean success = transactionAsyncResponse.isSuccess();
+    int code = transactionAsyncResponse.getCode();
+    List<ApiError> errorList = transactionAsyncResponse.getErrors();
+    Transaction Transaction = transactionAsyncResponse.getResult();
+    Long transactionId = transactionAsyncResponse.getResult().getId();
+    ```
  
 - Confirm Transaction:
  
-    `ApiResponse<TransactionResponse> confirmTransactionSyncResponse = dvsApiClient.confirmTransaction(transactionId, synchronous);`
+    `ApiResponse<Transaction> confirmTransactionResponse = dvsApiClient.confirmTransaction(transactionId);`
  
 - Cancel Transaction:
  
-
-    `ApiResponse<TransactionResponse> cancelTransactionResponse = dvsApiClient.cancelTransaction(transactionId);`
+    `ApiResponse<Transaction> cancelTransactionResponse = dvsApiClient.cancelTransaction(transactionId);`
 
 ## Basic Troubleshooting and frequently asked questions:
 

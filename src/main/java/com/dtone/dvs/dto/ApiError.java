@@ -1,13 +1,13 @@
 package com.dtone.dvs.dto;
 
-public class Error {
+public class ApiError {
 	private String code;
 	private String message;
 
-	public Error() {
+	public ApiError() {
 	}
 
-	public Error(String code, String message) {
+	public ApiError(String code, String message) {
 		this.code = code;
 		this.message = message;
 	}

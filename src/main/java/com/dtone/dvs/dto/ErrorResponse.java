@@ -3,20 +3,20 @@ package com.dtone.dvs.dto;
 import java.util.List;
 
 public class ErrorResponse {
-	private List<Error> errors;
+	private List<ApiError> errors;
 
 	public ErrorResponse() {
 	}
 
-	public ErrorResponse(List<Error> errors) {
+	public ErrorResponse(List<ApiError> errors) {
 		this.errors = errors;
 	}
 
-	public List<Error> getErrors() {
+	public List<ApiError> getErrors() {
 		return errors;
 	}
 
-	public void setErrors(List<Error> errors) {
+	public void setErrors(List<ApiError> errors) {
 		this.errors = errors;
 	}
 

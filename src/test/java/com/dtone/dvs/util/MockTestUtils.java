@@ -12,7 +12,7 @@ import com.dtone.dvs.dto.ApiResponse;
 import com.dtone.dvs.dto.Balance;
 import com.dtone.dvs.dto.BenefitType;
 import com.dtone.dvs.dto.Country;
-import com.dtone.dvs.dto.Error;
+import com.dtone.dvs.dto.ApiError;
 import com.dtone.dvs.dto.ErrorResponse;
 import com.dtone.dvs.dto.Operator;
 import com.dtone.dvs.dto.Page;
@@ -21,7 +21,7 @@ import com.dtone.dvs.dto.Product;
 import com.dtone.dvs.dto.Promotion;
 import com.dtone.dvs.dto.Service;
 import com.dtone.dvs.dto.TransactionRequest;
-import com.dtone.dvs.dto.TransactionResponse;
+import com.dtone.dvs.dto.Transaction;
 import com.dtone.dvs.util.ApiResponseBuilder;
 import com.dtone.dvs.util.Constants;
 import com.dtone.dvs.util.ErrorCodes;
@@ -42,8 +42,8 @@ public class MockTestUtils {
 	}
 
 	public static ErrorResponse getErrorResponse() throws JsonProcessingException {
-		List<Error> errorList = new ArrayList<Error>();
-		errorList.add(new Error(ErrorCodes.SERVICE_NOT_FOUND.getCode(), ErrorCodes.SERVICE_NOT_FOUND.getMessage()));
+		List<ApiError> errorList = new ArrayList<ApiError>();
+		errorList.add(new ApiError(ErrorCodes.SERVICE_NOT_FOUND.getCode(), ErrorCodes.SERVICE_NOT_FOUND.getMessage()));
 
 		return new ErrorResponse(errorList);
 	}
@@ -192,16 +192,16 @@ public class MockTestUtils {
 		return new Page<ApiResponse<List<Product>>>("", "", "", "", apiResponse);
 	}
 
-	public static ApiResponse<List<TransactionResponse>> getTransactions() {
-		ApiResponse<List<TransactionResponse>> apiResponse = new ApiResponse<List<TransactionResponse>>();
-		apiResponse.setResult(new ArrayList<TransactionResponse>());
+	public static ApiResponse<List<Transaction>> getTransactions() {
+		ApiResponse<List<Transaction>> apiResponse = new ApiResponse<List<Transaction>>();
+		apiResponse.setResult(new ArrayList<Transaction>());
 
 		return apiResponse;
 	}
 
-	public static ApiResponse<TransactionResponse> getTransaction() {
-		ApiResponse<TransactionResponse> apiResponse = new ApiResponse<TransactionResponse>();
-		apiResponse.setResult(new TransactionResponse());
+	public static ApiResponse<Transaction> getTransaction() {
+		ApiResponse<Transaction> apiResponse = new ApiResponse<Transaction>();
+		apiResponse.setResult(new Transaction());
 
 		return apiResponse;
 	}

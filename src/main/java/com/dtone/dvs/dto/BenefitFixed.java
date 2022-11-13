@@ -17,7 +17,8 @@ public class BenefitFixed extends Benefit {
 
 	@Override
 	public String toString() {
-		return "BenefitFixed [amount=" + amount + "]";
+		return "BenefitFixed [amount=" + amount + ", type=" + getType() + ", unitType=" + getUnitType()
+				+ ", unit=" + getUnit() + ", additionalInformation=" + getAdditionalInformation() + "]";
 	}
 
 }

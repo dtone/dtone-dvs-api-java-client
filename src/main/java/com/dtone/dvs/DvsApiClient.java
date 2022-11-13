@@ -9,6 +9,7 @@ import com.dtone.dvs.dto.BenefitType;
 import com.dtone.dvs.dto.Campaign;
 import com.dtone.dvs.dto.CampaignFilter;
 import com.dtone.dvs.dto.Country;
+import com.dtone.dvs.dto.LookupOperatorRequest;
 import com.dtone.dvs.dto.Operator;
 import com.dtone.dvs.dto.Page;
 import com.dtone.dvs.dto.Product;
@@ -18,9 +19,9 @@ import com.dtone.dvs.dto.PromotionFilter;
 import com.dtone.dvs.dto.Service;
 import com.dtone.dvs.dto.StatementDetail;
 import com.dtone.dvs.dto.StatementFilter;
+import com.dtone.dvs.dto.Transaction;
 import com.dtone.dvs.dto.TransactionFilter;
 import com.dtone.dvs.dto.TransactionRequest;
-import com.dtone.dvs.dto.TransactionResponse;
 import com.dtone.dvs.exception.DvsApiException;
 import com.dtone.dvs.helper.DvsApiClientHelper;
 
@@ -183,6 +184,30 @@ public class DvsApiClient {
 		return this.dvsApiClientHelper.lookupOperators(mobileNumber, pageNumber, recordsPerPage);
 	}
 
+	/**
+	 * Get list of operators by mobile number
+	 * 
+	 * @param mobileNumber the mobile number
+	 * @return list of operators
+	 */
+	public ApiResponse<List<Operator>> lookupOperators(LookupOperatorRequest lookupOperatorRequest)
+			throws DvsApiException {
+		return this.dvsApiClientHelper.lookupOperators(lookupOperatorRequest, 0, 0);
+	}
+
+	/**
+	 * Get list of operators by mobile number, page number and records per page
+	 * 
+	 * @param mobileNumber
+	 * @param pageNumber     the page number
+	 * @param recordsPerPage the number of records per page
+	 * @return list of operators
+	 */
+	public ApiResponse<List<Operator>> lookupOperators(LookupOperatorRequest lookupOperatorRequest, int pageNumber,
+			int recordsPerPage) throws DvsApiException {
+		return this.dvsApiClientHelper.lookupOperators(lookupOperatorRequest, pageNumber, recordsPerPage);
+	}
+
 	// Operators - End
 
 	// Benefit Types - Begin
@@ -329,19 +354,37 @@ public class DvsApiClient {
 	 * @param transactionRequest the transaction request
 	 * @return transaction
 	 */
-	public ApiResponse<TransactionResponse> createTransaction(TransactionRequest transactionRequest)
-			throws DvsApiException {
+	public ApiResponse<Transaction> createTransaction(TransactionRequest transactionRequest) throws DvsApiException {
 		return this.dvsApiClientHelper.postTransaction(transactionRequest);
 	}
 
 	/**
-	 * Get transaction by id
+	 * Confirm a transaction asynchronously
 	 * 
 	 * @param transactionId the transaction id
 	 * @return transaction
 	 */
-	public ApiResponse<TransactionResponse> getTransaction(Long transactionId) throws DvsApiException {
-		return this.dvsApiClientHelper.getTransaction(transactionId);
+	public ApiResponse<Transaction> confirmTransaction(Long transactionId) throws DvsApiException {
+		return this.dvsApiClientHelper.confirmTransaction(transactionId);
+	}
+
+	/**
+	 * Cancel a transaction
+	 * 
+	 * @param transactionId the transaction id
+	 * @return transaction
+	 */
+	public ApiResponse<Transaction> cancelTransaction(Long transactionId) throws DvsApiException {
+		return this.dvsApiClientHelper.cancelTransaction(transactionId);
+	}
+
+	/**
+	 * Get transactions
+	 * 
+	 * @return paginated list of transactions
+	 */
+	public Page<ApiResponse<List<Transaction>>> getTransactions() throws DvsApiException {
+		return this.dvsApiClientHelper.getAllTransactions();
 	}
 
 	/**
@@ -351,8 +394,7 @@ public class DvsApiClient {
 	 * 
 	 * @return list of transactions
 	 */
-	public ApiResponse<List<TransactionResponse>> getTransactions(TransactionFilter transactionFilter)
-			throws DvsApiException {
+	public ApiResponse<List<Transaction>> getTransactions(TransactionFilter transactionFilter) throws DvsApiException {
 		return this.dvsApiClientHelper.getTransactions(transactionFilter, 0, 0);
 	}
 
@@ -365,29 +407,19 @@ public class DvsApiClient {
 	 * @param recordsPerPage the number of records per page
 	 * @return list of transactions
 	 */
-	public ApiResponse<List<TransactionResponse>> getTransactions(TransactionFilter transactionFilter, int pageNumber,
+	public ApiResponse<List<Transaction>> getTransactions(TransactionFilter transactionFilter, int pageNumber,
 			int recordsPerPage) throws DvsApiException {
 		return this.dvsApiClientHelper.getTransactions(transactionFilter, pageNumber, recordsPerPage);
 	}
 
 	/**
-	 * Confirm a transaction asynchronously
+	 * Get transaction by id
 	 * 
 	 * @param transactionId the transaction id
 	 * @return transaction
 	 */
-	public ApiResponse<TransactionResponse> confirmTransaction(Long transactionId) throws DvsApiException {
-		return this.dvsApiClientHelper.confirmTransaction(transactionId);
-	}
-
-	/**
-	 * Cancel a transaction
-	 * 
-	 * @param transactionId the transaction id
-	 * @return transaction
-	 */
-	public ApiResponse<TransactionResponse> cancelTransaction(Long transactionId) throws DvsApiException {
-		return this.dvsApiClientHelper.cancelTransaction(transactionId);
+	public ApiResponse<Transaction> getTransaction(Long transactionId) throws DvsApiException {
+		return this.dvsApiClientHelper.getTransaction(transactionId);
 	}
 
 	// Transactions - End

@@ -7,21 +7,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Balance {
 	@JsonProperty(value = "id")
 	private String id;
-	
+
 	@JsonProperty(value = "unit_type")
 	private UnitTypes unitType;
-	
+
 	@JsonProperty(value = "unit")
 	private String unit;
-	
+
 	@JsonProperty(value = "available")
 	private BigDecimal available;
-	
+
 	@JsonProperty(value = "holding")
 	private BigDecimal holding;
-	
+
 	@JsonProperty(value = "credit_limit")
-	private Long creditLimit;
+	private Double creditLimit;
 
 	public String getId() {
 		return id;
@@ -63,11 +63,11 @@ public class Balance {
 		this.holding = holding;
 	}
 
-	public Long getCreditLimit() {
+	public Double getCreditLimit() {
 		return creditLimit;
 	}
 
-	public void setCreditLimit(Long creditLimit) {
+	public void setCreditLimit(Double creditLimit) {
 		this.creditLimit = creditLimit;
 	}
 

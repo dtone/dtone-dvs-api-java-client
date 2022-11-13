@@ -6,7 +6,7 @@ import java.util.List;
 public class ApiResponse<T> {
 	private boolean success;
 	private int code;
-	private List<Error> errors;
+	private List<ApiError> errors;
 	private T result;
 
 	private int totalPages;
@@ -19,7 +19,7 @@ public class ApiResponse<T> {
 	public ApiResponse() {
 	}
 
-	public ApiResponse(boolean success, Integer code, List<Error> errors) {
+	public ApiResponse(boolean success, Integer code, List<ApiError> errors) {
 		this.success = success;
 		this.code = code;
 		this.errors = errors;
@@ -41,14 +41,14 @@ public class ApiResponse<T> {
 		this.code = code;
 	}
 
-	public List<Error> getErrors() {
+	public List<ApiError> getErrors() {
 		if (null == errors) {
 			errors = new ArrayList<>();
 		}
 		return errors;
 	}
 
-	public void setErrors(List<Error> errors) {
+	public void setErrors(List<ApiError> errors) {
 		this.errors = errors;
 	}
 
@@ -91,7 +91,7 @@ public class ApiResponse<T> {
 	public void setRecordsPerPage(int recordsPerPage) {
 		this.recordsPerPage = recordsPerPage;
 	}
-	
+
 	public int getNextPage() {
 		return nextPage;
 	}
@@ -112,7 +112,18 @@ public class ApiResponse<T> {
 	public String toString() {
 		return "ApiResponse [success=" + success + ", code=" + code + ", errors=" + errors + ", result=" + result
 				+ ", totalPages=" + totalPages + ", totalRecords=" + totalRecords + ", currentPage=" + currentPage
-				+ ", recordsPerPage=" + recordsPerPage + "]";
+				+ ", recordsPerPage=" + recordsPerPage + ", nextPage=" + nextPage + ", previousPage=" + previousPage
+				+ "]";
 	}
+	
+	/**
+	 * Get page information
+	 * 
+	 * @return the page information
+	 */
+	public PageInfo getPageInfo() {
+		return new PageInfo(totalPages, totalRecords, currentPage, recordsPerPage, nextPage, previousPage);
+	}
+
 
 }

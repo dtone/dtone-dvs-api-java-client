@@ -15,4 +15,10 @@ public class ProductPriceFixed extends ProductPrice {
 		this.amount = amount;
 	}
 
+	@Override
+	public String toString() {
+		return "ProductPriceFixed [amount=" + amount + ", unitType=" + getUnitType() + ", unit=" + getUnit()
+				+ ", fee=" + getFee() + "]";
+	}
+
 }

@@ -15,6 +15,7 @@ import com.dtone.dvs.dto.BenefitType;
 import com.dtone.dvs.dto.Campaign;
 import com.dtone.dvs.dto.CampaignFilter;
 import com.dtone.dvs.dto.Country;
+import com.dtone.dvs.dto.LookupOperatorRequest;
 import com.dtone.dvs.dto.Operator;
 import com.dtone.dvs.dto.Page;
 import com.dtone.dvs.dto.Product;
@@ -24,9 +25,9 @@ import com.dtone.dvs.dto.PromotionFilter;
 import com.dtone.dvs.dto.Service;
 import com.dtone.dvs.dto.StatementDetail;
 import com.dtone.dvs.dto.StatementFilter;
+import com.dtone.dvs.dto.Transaction;
 import com.dtone.dvs.dto.TransactionFilter;
 import com.dtone.dvs.dto.TransactionRequest;
-import com.dtone.dvs.dto.TransactionResponse;
 import com.dtone.dvs.exception.DvsApiException;
 import com.dtone.dvs.service.ApiService;
 import com.dtone.dvs.util.Constants;
@@ -132,6 +133,13 @@ public class DvsApiClientHelper {
 				});
 	}
 
+	public ApiResponse<List<Operator>> lookupOperators(LookupOperatorRequest lookupOperatorRequest, int page,
+			int recordsPerPage) throws DvsApiException {
+		return apiService.httpPost(getUrl(Constants.OPERATOR_LOOKUP), new ApiResponse<List<Operator>>(),
+				new TypeReference<List<Operator>>() {
+				}, lookupOperatorRequest);
+	}
+
 	// Operators - End
 
 	// Benefit Types - Begin
@@ -187,6 +195,12 @@ public class DvsApiClientHelper {
 				new ApiResponse<List<Product>>(), new TypeReference<List<Product>>() {
 				});
 	}
+	
+	public Page<ApiResponse<List<Product>>> getProducts(int page, int recordsPerPage) throws DvsApiException {
+		return apiService.httpGetPageable(Constants.PRODUCTS, getUrl(Constants.PRODUCTS, null, page, recordsPerPage, null),
+				new ApiResponse<List<Product>>(), new TypeReference<List<Product>>() {
+				});
+	}
 
 	public ApiResponse<List<Product>> getProducts(ProductFilter productFilter, int page, int recordsPerPage)
 			throws DvsApiException {
@@ -206,41 +220,46 @@ public class DvsApiClientHelper {
 
 	// Transactions - Begin
 
-	public ApiResponse<TransactionResponse> postTransaction(TransactionRequest transactionRequest)
-			throws DvsApiException {
+	public ApiResponse<Transaction> postTransaction(TransactionRequest transactionRequest) throws DvsApiException {
 		if (StringUtils.isEmpty(transactionRequest.getExternalId())) {
 			transactionRequest
 					.setExternalId(String.valueOf(Calendar.getInstance().getTimeInMillis()) + UUID.randomUUID());
 		}
 
-		return apiService.httpPost(getUrl(Constants.TRANSACTION_ASYNC), new ApiResponse<TransactionResponse>(),
-				new TypeReference<TransactionResponse>() {
+		return apiService.httpPost(getUrl(Constants.TRANSACTION_ASYNC), new ApiResponse<Transaction>(),
+				new TypeReference<Transaction>() {
 				}, transactionRequest);
 	}
 
-	public ApiResponse<TransactionResponse> getTransaction(Long transactionId) throws DvsApiException {
-		return apiService.httpGet(getUrl(Constants.TRANSACTIONS, String.valueOf(transactionId)),
-				new ApiResponse<TransactionResponse>(), new TypeReference<TransactionResponse>() {
+	public Page<ApiResponse<List<Transaction>>> getAllTransactions() throws DvsApiException {
+		return apiService.httpGetPageable(Constants.TRANSACTIONS, getUrl(Constants.TRANSACTIONS),
+				new ApiResponse<List<Transaction>>(), new TypeReference<List<Transaction>>() {
 				});
 	}
 
-	public ApiResponse<List<TransactionResponse>> getTransactions(TransactionFilter transactionFilter, int page,
+	public ApiResponse<Transaction> getTransaction(Long transactionId) throws DvsApiException {
+		return apiService.httpGet(getUrl(Constants.TRANSACTIONS, String.valueOf(transactionId)),
+				new ApiResponse<Transaction>(), new TypeReference<Transaction>() {
+				});
+	}
+
+	public ApiResponse<List<Transaction>> getTransactions(TransactionFilter transactionFilter, int page,
 			int recordsPerPage) throws DvsApiException {
 		return apiService.httpGet(
 				getUrl(Constants.TRANSACTIONS, null, page, recordsPerPage, transactionFilter.getQueryParameterMap()),
-				new ApiResponse<List<TransactionResponse>>(), new TypeReference<List<TransactionResponse>>() {
+				new ApiResponse<List<Transaction>>(), new TypeReference<List<Transaction>>() {
 				});
 	}
 
-	public ApiResponse<TransactionResponse> confirmTransaction(Long transactionId) throws DvsApiException {
+	public ApiResponse<Transaction> confirmTransaction(Long transactionId) throws DvsApiException {
 		return apiService.httpPost(getUrl(Constants.CONFIRM_TRANSACTION_ASYNC, String.valueOf(transactionId)),
-				new ApiResponse<TransactionResponse>(), new TypeReference<TransactionResponse>() {
+				new ApiResponse<Transaction>(), new TypeReference<Transaction>() {
 				}, null);
 	}
 
-	public ApiResponse<TransactionResponse> cancelTransaction(Long transactionId) throws DvsApiException {
+	public ApiResponse<Transaction> cancelTransaction(Long transactionId) throws DvsApiException {
 		return apiService.httpPost(getUrl(Constants.CANCEL_TRANSACTION, String.valueOf(transactionId)),
-				new ApiResponse<TransactionResponse>(), new TypeReference<TransactionResponse>() {
+				new ApiResponse<Transaction>(), new TypeReference<Transaction>() {
 				}, null);
 	}
 
@@ -265,9 +284,9 @@ public class DvsApiClientHelper {
 				new ApiResponse<List<Balance>>(), new TypeReference<List<Balance>>() {
 				});
 	}
-	
+
 	// Balances - End
-	
+
 	// Statements - Start
 
 	public Page<ApiResponse<List<StatementDetail>>> getAllStatements() throws DvsApiException {
@@ -291,11 +310,11 @@ public class DvsApiClientHelper {
 				new ApiResponse<List<StatementDetail>>(), new TypeReference<List<StatementDetail>>() {
 				});
 	}
-	
+
 	// Statements - End
 
 	// Campaigns - Start
-	
+
 	public Page<ApiResponse<List<Campaign>>> getAllCampaigns() throws DvsApiException {
 		return apiService.httpGetPageable(Constants.CAMPAIGNS, getUrl(Constants.CAMPAIGNS),
 				new ApiResponse<List<Campaign>>(), new TypeReference<List<Campaign>>() {
@@ -315,7 +334,7 @@ public class DvsApiClientHelper {
 				new TypeReference<Campaign>() {
 				});
 	}
-	
+
 	// Campaigns - End
 
 	public String getUrl(String uri) {

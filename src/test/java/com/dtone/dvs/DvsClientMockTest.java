@@ -27,7 +27,7 @@ import com.dtone.dvs.dto.PromotionFilter;
 import com.dtone.dvs.dto.Service;
 import com.dtone.dvs.dto.TransactionFilter;
 import com.dtone.dvs.dto.TransactionRequest;
-import com.dtone.dvs.dto.TransactionResponse;
+import com.dtone.dvs.dto.Transaction;
 import com.dtone.dvs.helper.DvsApiClientHelper;
 import com.dtone.dvs.util.MockTestUtils;
 
@@ -190,31 +190,31 @@ public class DvsClientMockTest {
 	public void testTransactionAPIs() throws Exception {
 		when(dvsClientHelper.getTransactions(Mockito.any(), Mockito.anyInt(), Mockito.anyInt()))
 				.thenReturn(MockTestUtils.getTransactions());
-		ApiResponse<List<TransactionResponse>> apiResponseTransactionsFiltersAll = dvsClient
+		ApiResponse<List<Transaction>> apiResponseTransactionsFiltersAll = dvsClient
 				.getTransactions(new TransactionFilter("NEX-123"));
 		assertNotNull(apiResponseTransactionsFiltersAll.getResult());
 
 		when(dvsClientHelper.getTransactions(Mockito.any(), Mockito.anyInt(), Mockito.anyInt()))
 				.thenReturn(MockTestUtils.getTransactions());
-		ApiResponse<List<TransactionResponse>> apiResponseTransactions = dvsClient
+		ApiResponse<List<Transaction>> apiResponseTransactions = dvsClient
 				.getTransactions(new TransactionFilter("NEX-123"), 1, 100);
 		assertNotNull(apiResponseTransactions.getResult());
 
 		when(dvsClientHelper.getTransaction(Mockito.anyLong())).thenReturn(MockTestUtils.getTransaction());
-		ApiResponse<TransactionResponse> apiResponseTransaction = dvsClient.getTransaction(1L);
+		ApiResponse<Transaction> apiResponseTransaction = dvsClient.getTransaction(1L);
 		assertNotNull(apiResponseTransaction.getResult());
 
 		when(dvsClientHelper.postTransaction(Mockito.any())).thenReturn(MockTestUtils.getTransaction());
-		ApiResponse<TransactionResponse> apiResponseTransactionPost = dvsClient
+		ApiResponse<Transaction> apiResponseTransactionPost = dvsClient
 				.createTransaction(new TransactionRequest());
 		assertNotNull(apiResponseTransactionPost.getResult());
 
 		when(dvsClientHelper.confirmTransaction(Mockito.anyLong())).thenReturn(MockTestUtils.getTransaction());
-		ApiResponse<TransactionResponse> apiResponseTransactionConfirm = dvsClient.confirmTransaction(1L);
+		ApiResponse<Transaction> apiResponseTransactionConfirm = dvsClient.confirmTransaction(1L);
 		assertNotNull(apiResponseTransactionConfirm.getResult());
 
 		when(dvsClientHelper.cancelTransaction(Mockito.anyLong())).thenReturn(MockTestUtils.getTransaction());
-		ApiResponse<TransactionResponse> apiResponseTransactionCancel = dvsClient.cancelTransaction(1L);
+		ApiResponse<Transaction> apiResponseTransactionCancel = dvsClient.cancelTransaction(1L);
 		assertNotNull(apiResponseTransactionCancel.getResult());
 	}
 

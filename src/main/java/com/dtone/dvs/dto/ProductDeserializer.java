@@ -56,7 +56,6 @@ public class ProductDeserializer extends StdDeserializer<Product> {
 
 			return productFixed;
 		} else {
-			System.out.println("Ranged");
 			ProductRanged productRanged = new ProductRanged();
 
 			List<BenefitRanged> benefitsRangedList = mapper.convertValue(node.get("benefits"),
@@ -130,7 +129,10 @@ public class ProductDeserializer extends StdDeserializer<Product> {
 
 		Validity validity = mapper.convertValue(node.get("validity"), new TypeReference<Validity>() {
 		});
-
+		
+		PinInfo pin = mapper.convertValue(node.get("pin"), new TypeReference<PinInfo>() {
+		});
+		
 		product.setId(id);
 		product.setName(name);
 		product.setType(type);
@@ -147,5 +149,6 @@ public class ProductDeserializer extends StdDeserializer<Product> {
 		product.setRates(rates);
 		product.setPromotions(promotions);
 		product.setValidity(validity);
+		product.setPin(pin);
 	}
 }

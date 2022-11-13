@@ -15,4 +15,10 @@ public class ProductPriceRanged extends ProductPrice {
 		this.amount = amount;
 	}
 
+	@Override
+	public String toString() {
+		return "ProductPriceRanged [amount=" + amount + ", unitType=" + getUnitType() + ", unit=" + getUnit()
+				+ ", fee=" + getFee() + "]";
+	}
+
 }

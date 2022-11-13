@@ -1,14 +1,16 @@
 package com.dtone.dvs.dto;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Country {
 	@JsonProperty(value = "iso_code")
 	private String isoCode;
-	
+
 	private String name;
-	
-	private String regions;
+
+	private List<Region> regions;
 
 	public String getIsoCode() {
 		return isoCode;
@@ -26,11 +28,11 @@ public class Country {
 		this.name = name;
 	}
 
-	public String getRegions() {
+	public List<Region> getRegions() {
 		return regions;
 	}
 
-	public void setRegions(String regions) {
+	public void setRegions(List<Region> regions) {
 		this.regions = regions;
 	}
 

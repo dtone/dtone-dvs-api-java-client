@@ -53,16 +53,16 @@ public class ProductRanged extends Product {
 	@Override
 	public String toString() {
 		return "ProductRanged [benefits=" + benefits + ", source=" + source + ", destination=" + destination
-				+ ", prices=" + prices + ", getId()=" + getId() + ", getName()=" + getName() + ", getDescription()="
-				+ getDescription() + ", getType()=" + getType() + ", getService()=" + getService() + ", getOperator()="
-				+ getOperator() + ", getRegions()=" + getRegions() + ", getRequiredDebitPartyIdentifierFields()="
-				+ getRequiredDebitPartyIdentifierFields() + ", getRequiredCreditPartyIdentifierFields()="
-				+ getRequiredCreditPartyIdentifierFields() + ", getRequiredSenderFields()=" + getRequiredSenderFields()
-				+ ", getRequiredBeneficiaryFields()=" + getRequiredBeneficiaryFields()
-				+ ", getRequiredStatementIdentifierFields()=" + getRequiredStatementIdentifierFields()
-				+ ", getAvailabilityZones()=" + getAvailabilityZones() + ", getRates()=" + getRates()
-				+ ", getPromotions()=" + getPromotions() + ", getValidity()=" + getValidity() + ", getClass()="
-				+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+				+ ", prices=" + prices + ", id=" + getId() + ", name=" + getName() + ", description="
+				+ getDescription() + ", tags=" + getTags() + ", service=" + getService() + ", operator="
+				+ getOperator() + ", regions=" + getRegions() + ", type=" + getType() + ", validity="
+				+ getValidity() + ", requiredDebitPartyIdentifierFields=" + getRequiredDebitPartyIdentifierFields()
+				+ ", requiredCreditPartyIdentifierFields=" + getRequiredCreditPartyIdentifierFields()
+				+ ", requiredSenderFields=" + getRequiredSenderFields() + ", requiredBeneficiaryFields="
+				+ getRequiredBeneficiaryFields() + ", requiredStatementIdentifierFields="
+				+ getRequiredStatementIdentifierFields() + ", availabilityZones=" + getAvailabilityZones()
+				+ ", rates=" + getRates() + ", promotions=" + getPromotions() + ", pin=" + getPin()
+				+ "]";
 	}
 
 }

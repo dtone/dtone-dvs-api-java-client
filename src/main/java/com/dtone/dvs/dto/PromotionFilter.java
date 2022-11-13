@@ -11,13 +11,13 @@ public class PromotionFilter {
 	private Long operatorId;
 	private Long productId;
 
+	public PromotionFilter() {
+	}
+
 	public PromotionFilter(String countryIsoCode, Long operatorId, Long productId) {
 		this.countryIsoCode = countryIsoCode;
 		this.operatorId = operatorId;
 		this.productId = productId;
-	}
-
-	public PromotionFilter() {
 	}
 
 	public Map<String, String> getQueryParameterMap() {

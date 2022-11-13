@@ -28,8 +28,7 @@ public class ProductPricesRanged {
 
 	@Override
 	public String toString() {
-		return "ProductPricesRanged [wholesale=" + wholesale + ", retail=" + retail + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+		return "ProductPricesRanged [wholesale=" + wholesale + ", retail=" + retail + "]";
 	}
 
 }
