@@ -3,7 +3,6 @@ package com.dtone.dvs.manualtests;
 import java.util.List;
 
 import com.dtone.dvs.DvsApiClient;
-import com.dtone.dvs.dto.ApiError;
 import com.dtone.dvs.dto.ApiResponse;
 import com.dtone.dvs.dto.Balance;
 import com.dtone.dvs.dto.BalanceFilter;
@@ -21,6 +20,7 @@ import com.dtone.dvs.dto.ProductFixed;
 import com.dtone.dvs.dto.ProductPricesFixed;
 import com.dtone.dvs.dto.ProductPricesRanged;
 import com.dtone.dvs.dto.ProductRanged;
+import com.dtone.dvs.dto.ProductType;
 import com.dtone.dvs.dto.Promotion;
 import com.dtone.dvs.dto.PromotionFilter;
 import com.dtone.dvs.dto.Service;
@@ -38,7 +38,8 @@ public class Test {
 		String apiKey = null;
 		String apiSecret = null;
 
-		DvsApiClient dvsClient = new DvsApiClient(baseUrl, apiKey, apiSecret);
+		DvsApiClient dvsClient = new DvsApiClient("https://staging-dvs-api.transferto.dtone.com:8443",
+				"73b310ab-9a22-4a85-9060-11dde00347f7", "8d254ee2-17f5-4177-8d44-d9da72412fb1");
 
 		services(dvsClient);
 		countries(dvsClient);
@@ -67,7 +68,7 @@ public class Test {
 		System.out.println("Services\n----------------------------");
 		Page<ApiResponse<List<Service>>> pageableAllServicesApiResponse = dvsClient.getServices();
 
-		System.out.println("Page Info = " + pageableAllServicesApiResponse.getPageInfo());
+		System.out.println("Page Info=" + pageableAllServicesApiResponse.getPageInfo());
 
 		ApiResponse<List<Service>> allServicesApiResponse = pageableAllServicesApiResponse.first();
 		List<Service> serviceList = allServicesApiResponse.getResult();
@@ -88,7 +89,7 @@ public class Test {
 		System.out.println("Countries\n----------------------------");
 		Page<ApiResponse<List<Country>>> pageableAllCountriesApiResponse = dvsClient.getCountries();
 
-		System.out.println("Page Info = " + pageableAllCountriesApiResponse.getPageInfo());
+		System.out.println("Page Info=" + pageableAllCountriesApiResponse.getPageInfo());
 
 		ApiResponse<List<Country>> allCountriesApiResponse = pageableAllCountriesApiResponse.first();
 		List<Country> countryList = allCountriesApiResponse.getResult();
@@ -109,7 +110,7 @@ public class Test {
 		System.out.println("Operators\n----------------------------");
 		Page<ApiResponse<List<Operator>>> pageableAllOperatorsApiResponse = dvsClient.getOperators();
 
-		System.out.println("Page Info = " + pageableAllOperatorsApiResponse.getPageInfo());
+		System.out.println("Page Info=" + pageableAllOperatorsApiResponse.getPageInfo());
 
 		ApiResponse<List<Operator>> allOperatorsApiResponse = pageableAllOperatorsApiResponse.first();
 		List<Operator> operatorList = allOperatorsApiResponse.getResult();
@@ -130,7 +131,7 @@ public class Test {
 		System.out.println("Benefit Types\n----------------------------");
 		Page<ApiResponse<List<BenefitType>>> pageableAllBenefitTypesApiResponse = dvsClient.getBenefitTypes();
 
-		System.out.println("Page Info = " + pageableAllBenefitTypesApiResponse.getPageInfo());
+		System.out.println("Page Info=" + pageableAllBenefitTypesApiResponse.getPageInfo());
 
 		ApiResponse<List<BenefitType>> allBenefitTypesApiResponse = pageableAllBenefitTypesApiResponse.first();
 		List<BenefitType> benefitTypeList = allBenefitTypesApiResponse.getResult();
@@ -145,7 +146,7 @@ public class Test {
 		System.out.println("Promotions\n----------------------------");
 		Page<ApiResponse<List<Promotion>>> pageableAllPromotionApiResponse = dvsClient.getPromotions();
 
-		System.out.println("Page Info = " + pageableAllPromotionApiResponse.getPageInfo());
+		System.out.println("Page Info=" + pageableAllPromotionApiResponse.getPageInfo());
 
 		ApiResponse<List<Promotion>> allPromotionApiResponse = pageableAllPromotionApiResponse.first();
 		List<Promotion> promotionList = allPromotionApiResponse.getResult();
@@ -176,7 +177,7 @@ public class Test {
 		System.out.println("Balances\n----------------------------");
 		Page<ApiResponse<List<Balance>>> pageableAllBalancesApiResponse = dvsClient.getBalances();
 
-		System.out.println("Page Info = " + pageableAllBalancesApiResponse.getPageInfo());
+		System.out.println("Page Info=" + pageableAllBalancesApiResponse.getPageInfo());
 
 		ApiResponse<List<Balance>> allBalancesApiResponse = pageableAllBalancesApiResponse.first();
 		List<Balance> balanceList = allBalancesApiResponse.getResult();
@@ -201,7 +202,7 @@ public class Test {
 		System.out.println("Number Lookup Get\n----------------------------");
 		ApiResponse<List<Operator>> allOperatorsApiResponse = dvsClient.lookupOperators("+919962589889");
 
-		System.out.println("Page Info = " + allOperatorsApiResponse.getPageInfo());
+		System.out.println("Page Info=" + allOperatorsApiResponse.getPageInfo());
 
 		List<Operator> operatorList = allOperatorsApiResponse.getResult();
 
@@ -216,12 +217,12 @@ public class Test {
 		ApiResponse<List<Operator>> allOperatorsApiResponse = dvsClient
 				.lookupOperators(new LookupOperatorRequest("+919962589889"));
 
-		System.out.println("Page Info = " + allOperatorsApiResponse.getPageInfo());
+		System.out.println("Page Info=" + allOperatorsApiResponse.getPageInfo());
 
 		List<Operator> operatorList = allOperatorsApiResponse.getResult();
 
 		for (Operator operator : operatorList) {
-			System.out.println("Operator =" + operator);
+			System.out.println("Operator=" + operator);
 		}
 		System.out.println("\n=======================================\n");
 	}
@@ -230,7 +231,7 @@ public class Test {
 		System.out.println("Products\n----------------------------");
 		Page<ApiResponse<List<Product>>> pageableAllProductsApiResponse = dvsClient.getProducts();
 
-		System.out.println("Page Info = " + pageableAllProductsApiResponse.getPageInfo());
+		System.out.println("Page Info=" + pageableAllProductsApiResponse.getPageInfo());
 
 		ApiResponse<List<Product>> allProductsApiResponse = pageableAllProductsApiResponse.first();
 		List<Product> productList = allProductsApiResponse.getResult();
@@ -261,7 +262,7 @@ public class Test {
 		System.out.println("Transactions\n----------------------------");
 		Page<ApiResponse<List<Transaction>>> pageableAllTransactionsApiResponse = dvsClient.getTransactions();
 
-		System.out.println("Page Info = " + pageableAllTransactionsApiResponse.getPageInfo());
+		System.out.println("Page Info=" + pageableAllTransactionsApiResponse.getPageInfo());
 
 		ApiResponse<List<Transaction>> allTransactionsApiResponse = pageableAllTransactionsApiResponse.first();
 		List<Transaction> transactionList = allTransactionsApiResponse.getResult();
@@ -286,34 +287,40 @@ public class Test {
 			System.out.println("Transaction=" + transactionByFilter);
 		}
 
+		System.out.println("\nTransaction By Filter and Paging\n----------------------------");
+		TransactionFilter transactionFilterPaging = new TransactionFilter();
+		transactionFilter.setFromDate("2022-11-12T00:00:00Z");
+		transactionFilter.setFromDate("2022-11-13T00:00:00Z");
+		transactionFilter.setProductType(ProductType.FIXED_VALUE_RECHARGE.toString());
+		ApiResponse<List<Transaction>> allTransactionsApiResponseByFilterPaging = dvsClient
+				.getTransactions(transactionFilterPaging, 1, 100);
+		List<Transaction> transactionListByFilterPaging = allTransactionsApiResponseByFilterPaging.getResult();
+
+		System.out.println("Page Info=" + allTransactionsApiResponseByFilterPaging.getPageInfo());
+
+		for (Transaction transactionByFilterPaging : transactionListByFilterPaging) {
+			System.out.println("Transaction=" + transactionByFilterPaging);
+		}
+
 		System.out.println("\n=======================================\n");
 	}
 
 	private static void getProducts(DvsApiClient dvsApiClient) throws DvsApiException {
+		System.out.println("Get Products\n----------------------------");
 		Page<ApiResponse<List<Product>>> pagedProductsResponse = dvsApiClient.getProducts();
 
 		ApiResponse<List<Product>> productsResponse = pagedProductsResponse.first();
 
 		printProductResponse(productsResponse);
+
+		System.out.println("\n=======================================\n");
 	}
 
 	private static void productsNextAndPrevious(DvsApiClient dvsApiClient) throws DvsApiException {
+		System.out.println("ProductsNextAndPrevious\n----------------------------");
 		Page<ApiResponse<List<Product>>> pagedProductsResponse = dvsApiClient.getProducts();
 
-		int totalPages = pagedProductsResponse.getTotalPages();
-		int totalRecords = pagedProductsResponse.getTotalRecords();
-		int CurrentPage = pagedProductsResponse.getCurrentPage();
-		int recordsPerPage = pagedProductsResponse.getRecordsPerPage();
-		int nextPage = pagedProductsResponse.getNextPage();
-		int previousPage = pagedProductsResponse.getPreviousPage();
-
-		System.out.println(totalPages);
-		System.out.println(totalRecords);
-		System.out.println(CurrentPage);
-		System.out.println(recordsPerPage);
-		System.out.println(nextPage);
-		System.out.println(previousPage);
-		System.out.println("=================");
+		System.out.println("PageInfo=" + pagedProductsResponse.getPageInfo());
 
 		ApiResponse<List<Product>> productsResponse = pagedProductsResponse.first();
 
@@ -322,21 +329,7 @@ public class Test {
 
 			List<Product> productListNext = productsApiResponse.getResult();
 			System.out.println("productListNext=" + productListNext);
-
-			int totalPages2 = pagedProductsResponse.getTotalPages();
-			int totalRecords2 = pagedProductsResponse.getTotalRecords();
-			int CurrentPage2 = pagedProductsResponse.getCurrentPage();
-			int recordsPerPage2 = pagedProductsResponse.getRecordsPerPage();
-			int nextPage2 = pagedProductsResponse.getNextPage();
-			int previousPage2 = pagedProductsResponse.getPreviousPage();
-
-			System.out.println(totalPages2);
-			System.out.println(totalRecords2);
-			System.out.println(CurrentPage2);
-			System.out.println(recordsPerPage2);
-			System.out.println(nextPage2);
-			System.out.println(previousPage2);
-			System.out.println("=================");
+			System.out.println("PageInfo=" + pagedProductsResponse.getPageInfo());
 
 			break;
 		}
@@ -345,35 +338,21 @@ public class Test {
 			ApiResponse<List<Product>> productsApiResponse = pagedProductsResponse.previous();
 
 			List<Product> productListNext = productsApiResponse.getResult();
-			System.out.println("productListNext=" + productListNext);
-
-			int totalPages2 = pagedProductsResponse.getTotalPages();
-			int totalRecords2 = pagedProductsResponse.getTotalRecords();
-			int CurrentPage2 = pagedProductsResponse.getCurrentPage();
-			int recordsPerPage2 = pagedProductsResponse.getRecordsPerPage();
-			int nextPage2 = pagedProductsResponse.getNextPage();
-			int previousPage2 = pagedProductsResponse.getPreviousPage();
-
-			System.out.println(totalPages2);
-			System.out.println(totalRecords2);
-			System.out.println(CurrentPage2);
-			System.out.println(recordsPerPage2);
-			System.out.println(nextPage2);
-			System.out.println(previousPage2);
-			System.out.println("=================");
-
+			System.out.println("productListPrevious=" + productListNext);
+			System.out.println("PageInfo=" + pagedProductsResponse.getPageInfo());
 			break;
 		}
+
+		System.out.println("\n=======================================\n");
 
 	}
 
 	private static void productsLast(DvsApiClient dvsApiClient) throws DvsApiException {
+		System.out.println("ProductsLast\n----------------------------");
 		Page<ApiResponse<List<Product>>> pagedProductsResponse = dvsApiClient.getProducts();
 
 		ApiResponse<List<Product>> productsApiResponseFirst = pagedProductsResponse.first();
 		System.out.println("Firstpage =" + productsApiResponseFirst.getPageInfo());
-
-		System.out.println("=================");
 
 		ApiResponse<List<Product>> productsApiResponse = pagedProductsResponse.last();
 
@@ -382,33 +361,22 @@ public class Test {
 		System.out.println(productListLast);
 
 		System.out.println("Lastpage =" + productsApiResponse.getPageInfo());
-		System.out.println("=================");
+		System.out.println("\n=======================================\n");
 
 	}
 
 	private static void productsCustomPagination(DvsApiClient dvsApiClient) throws DvsApiException {
+		System.out.println("ProductsCustomPagination\n----------------------------");
 		ApiResponse<List<Product>> productsApiResponse = dvsApiClient.getProducts(1, 3);
-
-		boolean success = productsApiResponse.isSuccess();
-		int code = productsApiResponse.getCode();
-
-		List<ApiError> errorList = productsApiResponse.getErrors();// (Error(String code, String message))
-
-		List<Product> productList = productsApiResponse.getResult();
-
-		int totalPages = productsApiResponse.getTotalPages();
-		int totalRecords = productsApiResponse.getTotalRecords();
-		int CurrentPage = productsApiResponse.getCurrentPage();
-		int recordsPerPage = productsApiResponse.getRecordsPerPage();
-		int nextPage = productsApiResponse.getNextPage();
-		int previousPage = productsApiResponse.getPreviousPage();
 
 		System.out.println(productsApiResponse.getPageInfo());
 		printProductResponse(productsApiResponse);
+		System.out.println("\n=======================================\n");
 
 	}
 
 	private static void createTransactionsAutoTrue(DvsApiClient dvsApiClient) throws DvsApiException {
+		System.out.println("CreateTransactionsAutoTrue\n----------------------------");
 		TransactionRequest transactionRequest = new TransactionRequest();
 		transactionRequest.setExternalId("DVSSDK130" + System.currentTimeMillis());
 		transactionRequest.setProductId(20153L);
@@ -421,10 +389,12 @@ public class Test {
 		ApiResponse<Transaction> transactionSyncResponse = dvsApiClient.createTransaction(transactionRequest);
 
 		System.out.println(transactionSyncResponse);
+		System.out.println("\n=======================================\n");
 
 	}
 
 	private static void createTransactionsAutoFalse(DvsApiClient dvsApiClient) throws DvsApiException {
+		System.out.println("CreateTransactionsAutoFalse\n----------------------------");
 		TransactionRequest transactionRequest = new TransactionRequest();
 		transactionRequest.setExternalId("DVSSDK130" + System.currentTimeMillis());
 		transactionRequest.setProductId(20153L);
@@ -437,20 +407,25 @@ public class Test {
 		ApiResponse<Transaction> transactionSyncResponse = dvsApiClient.createTransaction(transactionRequest);
 
 		System.out.println(transactionSyncResponse);
+		System.out.println("\n=======================================\n");
 
 	}
 
 	private static void confirmTransactions(DvsApiClient dvsApiClient) throws DvsApiException {
+		System.out.println("ConfirmTransactions\n----------------------------");
 		ApiResponse<Transaction> confirmTransactionResponse = dvsApiClient.confirmTransaction(44703L);
 
 		System.out.println(confirmTransactionResponse);
+		System.out.println("\n=======================================\n");
 
 	}
 
 	private static void cancelTransactions(DvsApiClient dvsApiClient) throws DvsApiException {
+		System.out.println("CancelTransactions\n----------------------------");
 		ApiResponse<Transaction> cancelTransactionResponse = dvsApiClient.cancelTransaction(44704L);
 
 		System.out.println(cancelTransactionResponse);
+		System.out.println("\n=======================================\n");
 
 	}
 

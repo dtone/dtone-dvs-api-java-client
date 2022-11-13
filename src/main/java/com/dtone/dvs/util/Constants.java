@@ -60,4 +60,10 @@ public class Constants {
 	public static final String UNIT = "unit";
 	public static final String EXTERNAL_ID = "external_id";
 	public static final String ACCOUNT_QUALIFIER = "account_qualifier";
+	public static final String PRODUCT_TYPE = "product_type";
+	public static final String STATUS_ID = "status_id";
+	public static final String CREDIT_PARTY_MOBILE_NUMBER = "credit_party_mobile_number";
+	public static final String CREDIT_PARTY_ACCOUNT_NUMBER = "credit_party_account_number";
+	public static final String FROM_DATE = "from_date";
+	public static final String TO_DATE = "to_date";
 }
