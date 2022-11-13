@@ -10,6 +10,14 @@ public class ProductSource {
 	@JsonProperty(value = "unit")
 	private String unit;
 
+	public ProductSource() {
+	}
+
+	public ProductSource(String unitType, String unit) {
+		this.unitType = unitType;
+		this.unit = unit;
+	}
+
 	public String getUnitType() {
 		return unitType;
 	}

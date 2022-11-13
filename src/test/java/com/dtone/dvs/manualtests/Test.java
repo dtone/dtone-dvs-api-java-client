@@ -9,6 +9,7 @@ import com.dtone.dvs.dto.BalanceFilter;
 import com.dtone.dvs.dto.BenefitFixed;
 import com.dtone.dvs.dto.BenefitRanged;
 import com.dtone.dvs.dto.BenefitType;
+import com.dtone.dvs.dto.CalculationMode;
 import com.dtone.dvs.dto.Country;
 import com.dtone.dvs.dto.LookupOperatorRequest;
 import com.dtone.dvs.dto.Operator;
@@ -24,6 +25,7 @@ import com.dtone.dvs.dto.ProductType;
 import com.dtone.dvs.dto.Promotion;
 import com.dtone.dvs.dto.PromotionFilter;
 import com.dtone.dvs.dto.Service;
+import com.dtone.dvs.dto.Source;
 import com.dtone.dvs.dto.SourceFixed;
 import com.dtone.dvs.dto.SourceRanged;
 import com.dtone.dvs.dto.Transaction;
@@ -38,28 +40,30 @@ public class Test {
 		String apiKey = null;
 		String apiSecret = null;
 
-		DvsApiClient dvsClient = new DvsApiClient(baseUrl, apiKey, apiSecret);
+		DvsApiClient dvsApiClient = new DvsApiClient(baseUrl, apiKey, apiSecret);
 
-		services(dvsClient);
-		countries(dvsClient);
-		operators(dvsClient);
-		benefits(dvsClient);
-		promotions(dvsClient);
-		balances(dvsClient);
-		lookupOperatorGet(dvsClient);
-		lookupOperatorPost(dvsClient);
+		services(dvsApiClient);
+		countries(dvsApiClient);
+		operators(dvsApiClient);
+		benefits(dvsApiClient);
+		promotions(dvsApiClient);
+		balances(dvsApiClient);
+		lookupOperatorGet(dvsApiClient);
+		lookupOperatorPost(dvsApiClient);
 
-		products(dvsClient);
-		getProducts(dvsClient);
-		productsNextAndPrevious(dvsClient);
-		productsLast(dvsClient);
-		productsCustomPagination(dvsClient);
+		products(dvsApiClient);
+		getProducts(dvsApiClient);
+		productsNextAndPrevious(dvsApiClient);
+		productsLast(dvsApiClient);
+		productsCustomPagination(dvsApiClient);
 
-		transactions(dvsClient);
-		createTransactionsAutoTrue(dvsClient);
-		createTransactionsAutoFalse(dvsClient);
-		confirmTransactions(dvsClient);
-		cancelTransactions(dvsClient);
+		createTransactionsAutoTrue(dvsApiClient);
+		createTransactionsRangedDestinationAutoTrue(dvsApiClient);
+		createTransactionsRangedSourceAutoTrue(dvsApiClient);
+		createTransactionsAutoFalse(dvsApiClient);
+		confirmTransactions(dvsApiClient);
+		cancelTransactions(dvsApiClient);
+		transactions(dvsApiClient);
 
 	}
 
@@ -290,7 +294,11 @@ public class Test {
 		TransactionFilter transactionFilterPaging = new TransactionFilter();
 		transactionFilter.setFromDate("2022-11-12T00:00:00Z");
 		transactionFilter.setFromDate("2022-11-13T00:00:00Z");
+		transactionFilter.setOperatorId(2808L);
+		transactionFilter.setCountryIsoCode("IND");
+		transactionFilter.setCreditPartyMobileNumber("+919962589100");
 		transactionFilter.setProductType(ProductType.FIXED_VALUE_RECHARGE.toString());
+		transactionFilter.setStatusId(70000L);
 		ApiResponse<List<Transaction>> allTransactionsApiResponseByFilterPaging = dvsClient
 				.getTransactions(transactionFilterPaging, 1, 100);
 		List<Transaction> transactionListByFilterPaging = allTransactionsApiResponseByFilterPaging.getResult();
@@ -377,7 +385,7 @@ public class Test {
 	private static void createTransactionsAutoTrue(DvsApiClient dvsApiClient) throws DvsApiException {
 		System.out.println("CreateTransactionsAutoTrue\n----------------------------");
 		TransactionRequest transactionRequest = new TransactionRequest();
-		transactionRequest.setExternalId("DVSSDK130" + System.currentTimeMillis());
+		transactionRequest.setExternalId("DVSSDK200" + System.currentTimeMillis());
 		transactionRequest.setProductId(20153L);
 		transactionRequest.setAutoConfirm(true);
 
@@ -392,10 +400,46 @@ public class Test {
 
 	}
 
+	private static void createTransactionsRangedDestinationAutoTrue(DvsApiClient dvsApiClient) throws DvsApiException {
+		System.out.println("createTransactionsRangedDestinationAutoTrue\n----------------------------");
+		TransactionRequest transactionRequest = new TransactionRequest();
+		transactionRequest.setExternalId("DVSSDK200" + System.currentTimeMillis());
+		transactionRequest.setProductId(11187L);
+		transactionRequest.setAutoConfirm(true);
+		transactionRequest.setCalculationMode(CalculationMode.DESTINATION_AMOUNT);
+		transactionRequest.setCallbackUrl("https://callbackurl.com");
+		transactionRequest.setCreditPartyIdentifier(new PartyIdentifier("+93415151100"));
+		transactionRequest.setDestination(new Source("CURRENCY", "AFN", Double.valueOf(15.0)));
+
+		ApiResponse<Transaction> transactionSyncResponse = dvsApiClient.createTransaction(transactionRequest);
+
+		System.out.println(transactionSyncResponse);
+		System.out.println("\n=======================================\n");
+
+	}
+
+	private static void createTransactionsRangedSourceAutoTrue(DvsApiClient dvsApiClient) throws DvsApiException {
+		System.out.println("createTransactionsRangedSourceAutoTrue\n----------------------------");
+		TransactionRequest transactionRequest = new TransactionRequest();
+		transactionRequest.setExternalId("DVSSDK200" + System.currentTimeMillis());
+		transactionRequest.setProductId(11187L);
+		transactionRequest.setAutoConfirm(true);
+		transactionRequest.setCalculationMode(CalculationMode.SOURCE_AMOUNT);
+		transactionRequest.setCallbackUrl("https://callbackurl.com");
+		transactionRequest.setCreditPartyIdentifier(new PartyIdentifier("+93415151100"));
+		transactionRequest.setSource(new Source("CURRENCY", "AED", Double.valueOf(15.0)));
+
+		ApiResponse<Transaction> transactionSyncResponse = dvsApiClient.createTransaction(transactionRequest);
+
+		System.out.println(transactionSyncResponse);
+		System.out.println("\n=======================================\n");
+
+	}
+
 	private static void createTransactionsAutoFalse(DvsApiClient dvsApiClient) throws DvsApiException {
 		System.out.println("CreateTransactionsAutoFalse\n----------------------------");
 		TransactionRequest transactionRequest = new TransactionRequest();
-		transactionRequest.setExternalId("DVSSDK130" + System.currentTimeMillis());
+		transactionRequest.setExternalId("DVSSDK200" + System.currentTimeMillis());
 		transactionRequest.setProductId(20153L);
 		transactionRequest.setAutoConfirm(false);
 
