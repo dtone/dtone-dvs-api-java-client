@@ -123,15 +123,13 @@ This library deals with the following list of domain objects from the DVS API:
     `ApiResponse<List<Operator>> lookupOperators(LookupOperatorRequest lookupOperatorRequest, int pageNumber, int recordsPerPage) throws DvsApiException`
 
 - Lookup operators for a mobile number (Only GET and POST operations)
-    - GET
-        `ApiResponse<List<Operator>> lookupOperators(String mobileNumber) throws DvsApiException`
-        
-        `ApiResponse<List<Operator>> lookupOperators(String mobileNumber, int pageNumber, int recordsPerPage) throws DvsApiException`
-
-    - POST
-        `ApiResponse<List<Operator>> lookupOperators(LookupOperatorRequest lookupOperatorRequest) throws DvsApiException`
+    `GET ApiResponse<List<Operator>> lookupOperators(String mobileNumber) throws DvsApiException`
     
-        `ApiResponse<List<Operator>> lookupOperators(LookupOperatorRequest lookupOperatorRequest, int pageNumber, int recordsPerPage) throws DvsApiException`
+    `GET ApiResponse<List<Operator>> lookupOperators(String mobileNumber, int pageNumber, int recordsPerPage) throws DvsApiException`
+
+    `POST ApiResponse<List<Operator>> lookupOperators(LookupOperatorRequest lookupOperatorRequest) throws DvsApiException`
+
+    `POST ApiResponse<List<Operator>> lookupOperators(LookupOperatorRequest lookupOperatorRequest, int pageNumber, int recordsPerPage) throws DvsApiException`
 
 - Benefit Type (Only GET operations)
 
@@ -164,23 +162,22 @@ This library deals with the following list of domain objects from the DVS API:
     `ApiResponse<Product> getProduct(Long productId) throws DvsApiException`
     
 - Transaction (Only GET & POST operations)
-    - POST
-        `ApiResponse<Transaction> createTransaction(TransactionRequest transactionRequest) throws DvsApiException`
-        
-        `ApiResponse<Transaction> confirmTransaction(Long transactionId) throws DvsApiException`
-        
-        `ApiResponse<Transaction> cancelTransaction(Long transactionId) throws DvsApiException`
-    
-    - GET
-        `Page<ApiResponse<List<Transaction>>> getTransactions() throws DvsApiException`
 
-        `ApiResponse<List<Transaction>> getTransactions(int pageNumber, int recordsPerPage) throws DvsApiException`
-        
-        `ApiResponse<List<Transaction>> getTransactions(TransactionFilter transactionFilter) throws DvsApiException`
-        
-        `ApiResponse<List<Transaction>> getTransactions(TransactionFilter transactionFilter, int pageNumber, int recordsPerPage) throws DvsApiException`
+    `POST ApiResponse<Transaction> createTransaction(TransactionRequest transactionRequest) throws DvsApiException`
     
-        `ApiResponse<Transaction> getTransaction(Long transactionId) throws DvsApiException`
+    `POST ApiResponse<Transaction> confirmTransaction(Long transactionId) throws DvsApiException`
+    
+    `POST ApiResponse<Transaction> cancelTransaction(Long transactionId) throws DvsApiException`
+
+    `GET Page<ApiResponse<List<Transaction>>> getTransactions() throws DvsApiException`
+
+    `GET ApiResponse<List<Transaction>> getTransactions(int pageNumber, int recordsPerPage) throws DvsApiException`
+    
+    `GET ApiResponse<List<Transaction>> getTransactions(TransactionFilter transactionFilter) throws DvsApiException`
+    
+    `GET ApiResponse<List<Transaction>> getTransactions(TransactionFilter transactionFilter, int pageNumber, int recordsPerPage) throws DvsApiException`
+
+    `GET ApiResponse<Transaction> getTransaction(Long transactionId) throws DvsApiException`
     
 - Balance (Only GET operations)
 
