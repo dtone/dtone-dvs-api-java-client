@@ -123,6 +123,7 @@ This library deals with the following list of domain objects from the DVS API:
     `ApiResponse<List<Operator>> lookupOperators(LookupOperatorRequest lookupOperatorRequest, int pageNumber, int recordsPerPage) throws DvsApiException`
 
 - Lookup operators for a mobile number (Only GET and POST operations)
+
     `GET ApiResponse<List<Operator>> lookupOperators(String mobileNumber) throws DvsApiException`
     
     `GET ApiResponse<List<Operator>> lookupOperators(String mobileNumber, int pageNumber, int recordsPerPage) throws DvsApiException`
