@@ -57,7 +57,8 @@ public class Test {
 		productsLast(dvsApiClient);
 		productsCustomPagination(dvsApiClient);
 
-		createTransactionsAutoTrue(dvsApiClient);
+		createTransactionsFixedAutoTrue(dvsApiClient);
+		createTransactionsFixedPinAutoTrue(dvsApiClient);
 		createTransactionsRangedDestinationAutoTrue(dvsApiClient);
 		createTransactionsRangedSourceAutoTrue(dvsApiClient);
 		createTransactionsAutoFalse(dvsApiClient);
@@ -382,8 +383,8 @@ public class Test {
 
 	}
 
-	private static void createTransactionsAutoTrue(DvsApiClient dvsApiClient) throws DvsApiException {
-		System.out.println("CreateTransactionsAutoTrue\n----------------------------");
+	private static void createTransactionsFixedAutoTrue(DvsApiClient dvsApiClient) throws DvsApiException {
+		System.out.println("createTransactionsFixedAutoTrue\n----------------------------");
 		TransactionRequest transactionRequest = new TransactionRequest();
 		transactionRequest.setExternalId("DVSSDK200" + System.currentTimeMillis());
 		transactionRequest.setProductId(20153L);
@@ -392,6 +393,24 @@ public class Test {
 		transactionRequest.setCallbackUrl("https://callbackurl.com");
 
 		transactionRequest.setCreditPartyIdentifier(new PartyIdentifier("+919962589100"));
+
+		ApiResponse<Transaction> transactionSyncResponse = dvsApiClient.createTransaction(transactionRequest);
+
+		System.out.println(transactionSyncResponse);
+		System.out.println("\n=======================================\n");
+
+	}
+
+	private static void createTransactionsFixedPinAutoTrue(DvsApiClient dvsApiClient) throws DvsApiException {
+		System.out.println("createTransactionsFixedPinAutoTrue\n----------------------------");
+		TransactionRequest transactionRequest = new TransactionRequest();
+		transactionRequest.setExternalId("DVSSDK200" + System.currentTimeMillis());
+		transactionRequest.setProductId(3905L);
+		transactionRequest.setAutoConfirm(true);
+
+		transactionRequest.setCallbackUrl("https://callbackurl.com");
+
+		transactionRequest.setCreditPartyIdentifier(new PartyIdentifier("+12565235200"));
 
 		ApiResponse<Transaction> transactionSyncResponse = dvsApiClient.createTransaction(transactionRequest);
 
