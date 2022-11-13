@@ -38,8 +38,7 @@ public class Test {
 		String apiKey = null;
 		String apiSecret = null;
 
-		DvsApiClient dvsClient = new DvsApiClient("https://staging-dvs-api.transferto.dtone.com:8443",
-				"73b310ab-9a22-4a85-9060-11dde00347f7", "8d254ee2-17f5-4177-8d44-d9da72412fb1");
+		DvsApiClient dvsClient = new DvsApiClient(baseUrl, apiKey, apiSecret);
 
 		services(dvsClient);
 		countries(dvsClient);
