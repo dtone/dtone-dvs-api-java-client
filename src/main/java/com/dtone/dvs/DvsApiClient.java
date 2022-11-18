@@ -107,7 +107,7 @@ public class DvsApiClient {
 	// Countries - End
 
 	// Operators - Begin
-	
+
 	// GET operations - Begin
 
 	/**
@@ -185,23 +185,24 @@ public class DvsApiClient {
 			throws DvsApiException {
 		return this.dvsApiClientHelper.lookupOperators(mobileNumber, pageNumber, recordsPerPage);
 	}
-	
+
 	// GET operations - End
 
-	
 	// POST operations - Begin
 	/**
-	 * Get list of operators by mobile number, page number and records per page (POST)
+	 * Get list of operators by mobile number, page number and records per page
+	 * (POST)
 	 * 
 	 * @param mobileNumber
 	 * @param pageNumber     the page number
 	 * @param recordsPerPage the number of records per page
 	 * @return list of operators
 	 */
-	public ApiResponse<List<Operator>> lookupOperators(LookupOperatorRequest lookupOperatorRequest) throws DvsApiException {
+	public ApiResponse<List<Operator>> lookupOperators(LookupOperatorRequest lookupOperatorRequest)
+			throws DvsApiException {
 		return this.dvsApiClientHelper.lookupOperators(lookupOperatorRequest);
 	}
-	
+
 	// POST operations - End
 
 	// Operators - End
@@ -382,7 +383,7 @@ public class DvsApiClient {
 	public Page<ApiResponse<List<Transaction>>> getTransactions() throws DvsApiException {
 		return this.dvsApiClientHelper.getAllTransactions();
 	}
-	
+
 	/**
 	 * Get transactions by page number and records per page
 	 * 
