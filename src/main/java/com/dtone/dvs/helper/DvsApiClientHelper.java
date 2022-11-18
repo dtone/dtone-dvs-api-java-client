@@ -133,8 +133,7 @@ public class DvsApiClientHelper {
 				});
 	}
 
-	public ApiResponse<List<Operator>> lookupOperators(LookupOperatorRequest lookupOperatorRequest, int page,
-			int recordsPerPage) throws DvsApiException {
+	public ApiResponse<List<Operator>> lookupOperators(LookupOperatorRequest lookupOperatorRequest) throws DvsApiException {
 		return apiService.httpPost(getUrl(Constants.OPERATOR_LOOKUP), new ApiResponse<List<Operator>>(),
 				new TypeReference<List<Operator>>() {
 				}, lookupOperatorRequest);

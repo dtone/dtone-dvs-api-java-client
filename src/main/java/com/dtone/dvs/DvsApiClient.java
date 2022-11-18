@@ -107,6 +107,8 @@ public class DvsApiClient {
 	// Countries - End
 
 	// Operators - Begin
+	
+	// GET operations - Begin
 
 	/**
 	 * Get operators
@@ -183,30 +185,24 @@ public class DvsApiClient {
 			throws DvsApiException {
 		return this.dvsApiClientHelper.lookupOperators(mobileNumber, pageNumber, recordsPerPage);
 	}
+	
+	// GET operations - End
 
+	
+	// POST operations - Begin
 	/**
-	 * Get list of operators by mobile number
-	 * 
-	 * @param mobileNumber the mobile number
-	 * @return list of operators
-	 */
-	public ApiResponse<List<Operator>> lookupOperators(LookupOperatorRequest lookupOperatorRequest)
-			throws DvsApiException {
-		return this.dvsApiClientHelper.lookupOperators(lookupOperatorRequest, 0, 0);
-	}
-
-	/**
-	 * Get list of operators by mobile number, page number and records per page
+	 * Get list of operators by mobile number, page number and records per page (POST)
 	 * 
 	 * @param mobileNumber
 	 * @param pageNumber     the page number
 	 * @param recordsPerPage the number of records per page
 	 * @return list of operators
 	 */
-	public ApiResponse<List<Operator>> lookupOperators(LookupOperatorRequest lookupOperatorRequest, int pageNumber,
-			int recordsPerPage) throws DvsApiException {
-		return this.dvsApiClientHelper.lookupOperators(lookupOperatorRequest, pageNumber, recordsPerPage);
+	public ApiResponse<List<Operator>> lookupOperators(LookupOperatorRequest lookupOperatorRequest) throws DvsApiException {
+		return this.dvsApiClientHelper.lookupOperators(lookupOperatorRequest);
 	}
+	
+	// POST operations - End
 
 	// Operators - End
 
@@ -540,7 +536,6 @@ public class DvsApiClient {
 	 * Get campaigns by filters
 	 * 
 	 * @param campaignFilter the campaign filter object
-	 * @param recordsPerPage the number of records per page
 	 * @return list of campaigns
 	 */
 	private ApiResponse<List<Campaign>> getCampaigns(CampaignFilter campaignFilter) throws DvsApiException {
