@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.dtone.dvs.util.ProductUtils;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -26,8 +25,7 @@ public class TransactionDeserializer extends StdDeserializer<Transaction> {
 	}
 
 	@Override
-	public Transaction deserialize(JsonParser jp, DeserializationContext ctxt)
-			throws IOException, JsonProcessingException {
+	public Transaction deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
 		JsonNode node = jp.getCodec().readTree(jp);
 
 		JsonNode productNode = node.get("product");

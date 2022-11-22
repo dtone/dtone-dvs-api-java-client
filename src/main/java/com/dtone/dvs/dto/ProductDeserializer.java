@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.dtone.dvs.util.ProductUtils;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -26,11 +25,11 @@ public class ProductDeserializer extends StdDeserializer<Product> {
 	}
 
 	@Override
-	public Product deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+	public Product deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
 		JsonNode node = jp.getCodec().readTree(jp);
 		String type = node.get("type").asText();
 
-		if (ProductUtils.isFixedType(type)) {
+		if (null != type && ProductUtils.isFixedType(type)) {
 			ProductFixed productFixed = new ProductFixed();
 
 			List<BenefitFixed> benefitsFixedList = mapper.convertValue(node.get("benefits"),
@@ -39,8 +38,9 @@ public class ProductDeserializer extends StdDeserializer<Product> {
 			productFixed.setBenefits(benefitsFixedList);
 			productFixed.setType(type);
 
-			ProductPricesFixed pricesFixed = mapper.convertValue(node.get("prices"), new TypeReference<ProductPricesFixed>() {
-			});
+			ProductPricesFixed pricesFixed = mapper.convertValue(node.get("prices"),
+					new TypeReference<ProductPricesFixed>() {
+					});
 			productFixed.setPrices(pricesFixed);
 
 			SourceFixed sourceFixed = mapper.convertValue(node.get("source"), new TypeReference<SourceFixed>() {
@@ -64,8 +64,9 @@ public class ProductDeserializer extends StdDeserializer<Product> {
 			productRanged.setBenefits(benefitsRangedList);
 			productRanged.setType(type);
 
-			ProductPricesRanged pricesRanged = mapper.convertValue(node.get("prices"), new TypeReference<ProductPricesRanged>() {
-			});
+			ProductPricesRanged pricesRanged = mapper.convertValue(node.get("prices"),
+					new TypeReference<ProductPricesRanged>() {
+					});
 			productRanged.setPrices(pricesRanged);
 
 			SourceRanged sourceRanged = mapper.convertValue(node.get("source"), new TypeReference<SourceRanged>() {
@@ -129,10 +130,10 @@ public class ProductDeserializer extends StdDeserializer<Product> {
 
 		Validity validity = mapper.convertValue(node.get("validity"), new TypeReference<Validity>() {
 		});
-		
+
 		PinInfo pin = mapper.convertValue(node.get("pin"), new TypeReference<PinInfo>() {
 		});
-		
+
 		product.setId(id);
 		product.setName(name);
 		product.setType(type);
