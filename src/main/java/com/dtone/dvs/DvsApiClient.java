@@ -6,8 +6,6 @@ import com.dtone.dvs.dto.ApiResponse;
 import com.dtone.dvs.dto.Balance;
 import com.dtone.dvs.dto.BalanceFilter;
 import com.dtone.dvs.dto.BenefitType;
-import com.dtone.dvs.dto.Campaign;
-import com.dtone.dvs.dto.CampaignFilter;
 import com.dtone.dvs.dto.Country;
 import com.dtone.dvs.dto.LookupOperatorRequest;
 import com.dtone.dvs.dto.Operator;
@@ -17,8 +15,6 @@ import com.dtone.dvs.dto.ProductFilter;
 import com.dtone.dvs.dto.Promotion;
 import com.dtone.dvs.dto.PromotionFilter;
 import com.dtone.dvs.dto.Service;
-import com.dtone.dvs.dto.StatementDetail;
-import com.dtone.dvs.dto.StatementFilter;
 import com.dtone.dvs.dto.Transaction;
 import com.dtone.dvs.dto.TransactionFilter;
 import com.dtone.dvs.dto.TransactionRequest;
@@ -464,107 +460,5 @@ public class DvsApiClient {
 	}
 
 	// Balances - End
-
-	// Statement Inquiry - Begin
-
-	/**
-	 * Get statement
-	 * 
-	 * @return paginated list of statement
-	 */
-	private Page<ApiResponse<List<StatementDetail>>> getStatements() throws DvsApiException {
-		return this.dvsApiClientHelper.getAllStatements();
-	}
-
-	/**
-	 * Get statements by page number and records per page
-	 * 
-	 * @param pageNumber     the page number
-	 * @param recordsPerPage the number of records per page
-	 * @return list of statements
-	 */
-	private ApiResponse<List<StatementDetail>> getStatements(int pageNumber, int recordsPerPage)
-			throws DvsApiException {
-		return this.dvsApiClientHelper.getStatements(new StatementFilter(), pageNumber, recordsPerPage);
-	}
-
-	/**
-	 * Get statements by filters
-	 * 
-	 * @return statements details
-	 */
-	private ApiResponse<List<StatementDetail>> getStatements(StatementFilter statementFilter) throws DvsApiException {
-		return this.dvsApiClientHelper.getStatements(statementFilter);
-	}
-
-	/**
-	 * Get statements by filters, page number and records per page
-	 * 
-	 * @param statementFilter the statement filter object
-	 * @param recordsPerPage  the number of records per page
-	 * @return list of statements
-	 */
-	private ApiResponse<List<StatementDetail>> getStatements(StatementFilter statementFilter, int pageNumber,
-			int recordsPerPage) throws DvsApiException {
-		return this.dvsApiClientHelper.getStatements(statementFilter, pageNumber, recordsPerPage);
-	}
-
-	// Statement Inquiry - End
-
-	// Campaigns - Begin
-
-	/**
-	 * Get campaigns
-	 * 
-	 * @return paginated list of campaigns
-	 */
-	private Page<ApiResponse<List<Campaign>>> getCampaigns() throws DvsApiException {
-		return this.dvsApiClientHelper.getAllCampaigns();
-	}
-
-	/**
-	 * Get campaigns by page number and records per page
-	 * 
-	 * @param pageNumber     the page number
-	 * @param recordsPerPage the number of records per page
-	 * @return list of campaigns
-	 */
-	private ApiResponse<List<Campaign>> getCampaigns(int pageNumber, int recordsPerPage) throws DvsApiException {
-		return this.dvsApiClientHelper.getCampaigns(new CampaignFilter(), pageNumber, recordsPerPage);
-	}
-
-	/**
-	 * Get campaigns by filters
-	 * 
-	 * @param campaignFilter the campaign filter object
-	 * @return list of campaigns
-	 */
-	private ApiResponse<List<Campaign>> getCampaigns(CampaignFilter campaignFilter) throws DvsApiException {
-		return this.dvsApiClientHelper.getCampaigns(campaignFilter, 0, 0);
-	}
-
-	/**
-	 * Get campaigns by filters, page number and records per page
-	 * 
-	 * @param campaignFilter the campaign filter object
-	 * @param recordsPerPage the number of records per page
-	 * @return list of campaigns
-	 */
-	private ApiResponse<List<Campaign>> getCampaigns(CampaignFilter campaignFilter, int pageNumber, int recordsPerPage)
-			throws DvsApiException {
-		return this.dvsApiClientHelper.getCampaigns(campaignFilter, pageNumber, recordsPerPage);
-	}
-
-	/**
-	 * Get campaign by id
-	 * 
-	 * @param campaignId the campaign id
-	 * @return campaign
-	 */
-	private ApiResponse<Campaign> getCampaign(Long campaignId) throws DvsApiException {
-		return this.dvsApiClientHelper.getCampaign(campaignId);
-	}
-
-	// Campaigns - End
 
 }

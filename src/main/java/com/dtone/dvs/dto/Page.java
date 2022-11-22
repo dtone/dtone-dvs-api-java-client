@@ -123,12 +123,6 @@ public class Page<T> {
 		case Constants.COUNTRIES:
 			t = (T) dvsClient.getCountries(getCurrentPage(), getRecordsPerPage());
 			break;
-		/*
-		 * case Constants.STATEMENT_INQUIRY: t = (T)
-		 * dvsClient.getStatement(getCurrentPage(), getRecordsPerPage()); break; case
-		 * Constants.CAMPAIGNS: t = (T) dvsClient.getCampaigns(getCurrentPage(),
-		 * getRecordsPerPage()); break;
-		 */
 		default:
 
 		}
