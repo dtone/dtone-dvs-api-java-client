@@ -2,10 +2,10 @@ package com.dtone.dvs.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Amount {
+public class BenefitAmountFixed {
 
 	@JsonProperty(value = "base")
-	private String base;
+	private Double base;
 
 	@JsonProperty(value = "promotion_bonus")
 	private Double promotionBonus;
@@ -13,11 +13,14 @@ public class Amount {
 	@JsonProperty(value = "total_excluding_tax")
 	private Double totalExcludingTax;
 
-	public String getBase() {
+	@JsonProperty(value = "total_including_tax")
+	private Double totalIncludingTax;
+
+	public Double getBase() {
 		return base;
 	}
 
-	public void setBase(String base) {
+	public void setBase(Double base) {
 		this.base = base;
 	}
 
@@ -37,10 +40,18 @@ public class Amount {
 		this.totalExcludingTax = totalExcludingTax;
 	}
 
+	public Double getTotalIncludingTax() {
+		return totalIncludingTax;
+	}
+
+	public void setTotalIncludingTax(Double totalIncludingTax) {
+		this.totalIncludingTax = totalIncludingTax;
+	}
+
 	@Override
 	public String toString() {
-		return "Amount [base=" + base + ", promotionBonus=" + promotionBonus + ", totalExcludingTax="
-				+ totalExcludingTax + "]";
+		return "BenefitAmountFixed [base=" + base + ", promotionBonus=" + promotionBonus + ", totalExcludingTax="
+				+ totalExcludingTax + ", totalIncludingTax=" + totalIncludingTax + "]";
 	}
 
 }

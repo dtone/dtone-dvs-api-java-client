@@ -2,6 +2,8 @@ package com.dtone.dvs.dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Operator {
 	private Long id;
 
@@ -11,6 +13,7 @@ public class Operator {
 
 	private Country country;
 
+	@JsonProperty(value = "identified", required = false)
 	private Boolean identified;
 
 	public Long getId() {

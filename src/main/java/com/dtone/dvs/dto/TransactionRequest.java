@@ -128,4 +128,13 @@ public class TransactionRequest extends ApiRequest {
 		this.callbackUrl = callbackUrl;
 	}
 
+	@Override
+	public String toString() {
+		return "TransactionRequest [externalId=" + externalId + ", productId=" + productId + ", calculationMode="
+				+ calculationMode + ", source=" + source + ", destination=" + destination + ", autoConfirm="
+				+ autoConfirm + ", sender=" + sender + ", beneficiary=" + beneficiary + ", debitPartyIdentifier="
+				+ debitPartyIdentifier + ", creditPartyIdentifier=" + creditPartyIdentifier + ", callbackUrl="
+				+ callbackUrl + "]";
+	}
+
 }

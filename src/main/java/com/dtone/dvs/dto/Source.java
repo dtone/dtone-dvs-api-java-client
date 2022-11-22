@@ -1,33 +1,21 @@
 package com.dtone.dvs.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Source {
+@JsonInclude(Include.NON_NULL)
+public class Source extends ProductSource {
+	public Source() {
+	}
 
-	@JsonProperty(value = "unit_type")
-	private String unitType;
-
-	@JsonProperty(value = "unit")
-	private String unit;
+	public Source(String unitType, String unit, Double amount) {
+		super(unitType, unit);
+		this.amount = amount;
+	}
 
 	@JsonProperty(value = "amount")
 	private Double amount;
-
-	public String getUnitType() {
-		return unitType;
-	}
-
-	public void setUnitType(String unitType) {
-		this.unitType = unitType;
-	}
-
-	public String getUnit() {
-		return unit;
-	}
-
-	public void setUnit(String unit) {
-		this.unit = unit;
-	}
 
 	public Double getAmount() {
 		return amount;
@@ -39,7 +27,7 @@ public class Source {
 
 	@Override
 	public String toString() {
-		return "Source [unitType=" + unitType + ", unit=" + unit + ", amount=" + amount + "]";
+		return "Source [amount=" + amount + ", unitType=" + getUnitType() + ", unit=" + getUnit() + "]";
 	}
 
 }

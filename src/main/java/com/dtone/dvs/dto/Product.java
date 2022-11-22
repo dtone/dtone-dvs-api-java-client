@@ -3,7 +3,9 @@ package com.dtone.dvs.dto;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+@JsonDeserialize(using = ProductDeserializer.class)
 public class Product {
 
 	@JsonProperty(value = "id")
@@ -15,8 +17,8 @@ public class Product {
 	@JsonProperty(value = "description")
 	private String description;
 
-	@JsonProperty(value = "type")
-	private String type;
+	@JsonProperty(value = "tags")
+	private List<String> tags;
 
 	@JsonProperty(value = "service")
 	private Service service;
@@ -26,6 +28,15 @@ public class Product {
 
 	@JsonProperty(value = "regions")
 	private List<Region> regions;
+
+	@JsonProperty(value = "pin", required = false)
+	private PinInfo pin;
+
+	@JsonProperty(value = "type")
+	private String type;
+
+	@JsonProperty(value = "validity", required = false)
+	private Validity validity;
 
 	@JsonProperty(value = "required_debit_party_identifier_fields")
 	private List<List<String>> requiredDebitPartyIdentifierFields;
@@ -45,26 +56,11 @@ public class Product {
 	@JsonProperty(value = "availability_zones")
 	private List<String> availabilityZones;
 
-	@JsonProperty(value = "source")
-	private Source source;
-
-	@JsonProperty(value = "destination")
-	private Source destination;
-
-	@JsonProperty(value = "prices")
-	private Prices prices;
-
 	@JsonProperty(value = "rates")
 	private Rates rates;
 
-	@JsonProperty(value = "benefits")
-	private List<Benefit> benefits;
-
 	@JsonProperty(value = "promotions")
 	private List<Promotion> promotions;
-
-	@JsonProperty(value = "validity", required = false)
-	private Validity validity;
 
 	public Long getId() {
 		return id;
@@ -90,12 +86,12 @@ public class Product {
 		this.description = description;
 	}
 
-	public String getType() {
-		return type;
+	public List<String> getTags() {
+		return tags;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setTags(List<String> tags) {
+		this.tags = tags;
 	}
 
 	public Service getService() {
@@ -120,6 +116,22 @@ public class Product {
 
 	public void setRegions(List<Region> regions) {
 		this.regions = regions;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Validity getValidity() {
+		return validity;
+	}
+
+	public void setValidity(Validity validity) {
+		this.validity = validity;
 	}
 
 	public List<List<String>> getRequiredDebitPartyIdentifierFields() {
@@ -170,44 +182,12 @@ public class Product {
 		this.availabilityZones = availabilityZones;
 	}
 
-	public Source getSource() {
-		return source;
-	}
-
-	public void setSource(Source source) {
-		this.source = source;
-	}
-
-	public Source getDestination() {
-		return destination;
-	}
-
-	public void setDestination(Source destination) {
-		this.destination = destination;
-	}
-
-	public Prices getPrices() {
-		return prices;
-	}
-
-	public void setPrices(Prices prices) {
-		this.prices = prices;
-	}
-
 	public Rates getRates() {
 		return rates;
 	}
 
 	public void setRates(Rates rates) {
 		this.rates = rates;
-	}
-
-	public List<Benefit> getBenefits() {
-		return benefits;
-	}
-
-	public void setBenefits(List<Benefit> benefits) {
-		this.benefits = benefits;
 	}
 
 	public List<Promotion> getPromotions() {
@@ -217,24 +197,25 @@ public class Product {
 	public void setPromotions(List<Promotion> promotions) {
 		this.promotions = promotions;
 	}
-	
-	public Validity getValidity() {
-		return validity;
+
+	public PinInfo getPin() {
+		return pin;
 	}
 
-	public void setValidity(Validity validity) {
-		this.validity = validity;
+	public void setPin(PinInfo pin) {
+		this.pin = pin;
 	}
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", type=" + type + ", service="
-				+ service + ", operator=" + operator + ", regions=" + regions + ", requiredDebitPartyIdentifierFields="
+		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", tags=" + tags + ", service="
+				+ service + ", operator=" + operator + ", regions=" + regions + ", pin=" + pin + ", type=" + type
+				+ ", validity=" + validity + ", requiredDebitPartyIdentifierFields="
 				+ requiredDebitPartyIdentifierFields + ", requiredCreditPartyIdentifierFields="
 				+ requiredCreditPartyIdentifierFields + ", requiredSenderFields=" + requiredSenderFields
-				+ ", requiredBeneficiaryFields=" + requiredBeneficiaryFields + ", availabilityZones="
-				+ availabilityZones + ", source=" + source + ", destination=" + destination + ", prices=" + prices
-				+ ", rates=" + rates + ", benefits=" + benefits + ", promotions=" + promotions + "]";
+				+ ", requiredBeneficiaryFields=" + requiredBeneficiaryFields + ", requiredStatementIdentifierFields="
+				+ requiredStatementIdentifierFields + ", availabilityZones=" + availabilityZones + ", rates=" + rates
+				+ ", promotions=" + promotions + "]";
 	}
 
 }

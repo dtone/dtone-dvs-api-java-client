@@ -7,6 +7,7 @@ import com.dtone.dvs.dto.Balance;
 import com.dtone.dvs.dto.BalanceFilter;
 import com.dtone.dvs.dto.BenefitType;
 import com.dtone.dvs.dto.Country;
+import com.dtone.dvs.dto.LookupOperatorRequest;
 import com.dtone.dvs.dto.Operator;
 import com.dtone.dvs.dto.Page;
 import com.dtone.dvs.dto.Product;
@@ -14,11 +15,9 @@ import com.dtone.dvs.dto.ProductFilter;
 import com.dtone.dvs.dto.Promotion;
 import com.dtone.dvs.dto.PromotionFilter;
 import com.dtone.dvs.dto.Service;
-import com.dtone.dvs.dto.StatementDetail;
-import com.dtone.dvs.dto.StatementFilter;
+import com.dtone.dvs.dto.Transaction;
 import com.dtone.dvs.dto.TransactionFilter;
 import com.dtone.dvs.dto.TransactionRequest;
-import com.dtone.dvs.dto.TransactionResponse;
 import com.dtone.dvs.exception.DvsApiException;
 import com.dtone.dvs.helper.DvsApiClientHelper;
 
@@ -29,11 +28,11 @@ public class DvsApiClient {
 	public DvsApiClient(String baseUrl, String apiKey, String apiSecret) {
 		this.dvsApiClientHelper = new DvsApiClientHelper(baseUrl, apiKey, apiSecret);
 	}
-	
+
 	public DvsApiClient(DvsApiClientHelper dvsClientHelper) {
 		this.dvsApiClientHelper = dvsClientHelper;
 	}
-	
+
 	// Services - Begin
 
 	/**
@@ -44,13 +43,13 @@ public class DvsApiClient {
 	public Page<ApiResponse<List<Service>>> getServices() throws DvsApiException {
 		return this.dvsApiClientHelper.getAllServices();
 	}
-	
 
 	/**
 	 * Get services by page number and records per page
 	 * 
-	 * @param pageNumber the page number the page number
-	 * @param recordsPerPage the number of records per page the number of records per page
+	 * @param pageNumber     the page number the page number
+	 * @param recordsPerPage the number of records per page the number of records
+	 *                       per page
 	 * @return list of services
 	 */
 	public ApiResponse<List<Service>> getServices(int pageNumber, int recordsPerPage) throws DvsApiException {
@@ -66,12 +65,11 @@ public class DvsApiClient {
 	public ApiResponse<Service> getService(Long serviceId) throws DvsApiException {
 		return this.dvsApiClientHelper.getService(String.valueOf(serviceId));
 	}
-	
+
 	// Services - End
-	
-	
+
 	// Countries - Begin
-	
+
 	/**
 	 * Get countries
 	 * 
@@ -84,7 +82,7 @@ public class DvsApiClient {
 	/**
 	 * Get countries by page number and records per page
 	 * 
-	 * @param pageNumber the page number
+	 * @param pageNumber     the page number
 	 * @param recordsPerPage the number of records per page
 	 * @return
 	 */
@@ -101,10 +99,12 @@ public class DvsApiClient {
 	public ApiResponse<Country> getCountry(String countryIsoCode) throws DvsApiException {
 		return this.dvsApiClientHelper.getCountry(countryIsoCode);
 	}
-	
+
 	// Countries - End
-	
+
 	// Operators - Begin
+
+	// GET operations - Begin
 
 	/**
 	 * Get operators
@@ -118,7 +118,7 @@ public class DvsApiClient {
 	/**
 	 * Get operators by page number and records per page
 	 * 
-	 * @param pageNumber the page number
+	 * @param pageNumber     the page number
 	 * @param recordsPerPage the number of records per page
 	 * @return list of operators
 	 */
@@ -140,11 +140,12 @@ public class DvsApiClient {
 	 * Get operators by country ISO code, page number and records per page
 	 * 
 	 * @param countryIsoCode the country ISO code
-	 * @param pageNumber the page number
+	 * @param pageNumber     the page number
 	 * @param recordsPerPage the number of records per page
 	 * @return list of operators
 	 */
-	public ApiResponse<List<Operator>> getOperators(String countryIsoCode, int pageNumber, int recordsPerPage) throws DvsApiException {
+	public ApiResponse<List<Operator>> getOperators(String countryIsoCode, int pageNumber, int recordsPerPage)
+			throws DvsApiException {
 		return this.dvsApiClientHelper.getOperators(countryIsoCode, pageNumber, recordsPerPage);
 	}
 
@@ -157,7 +158,7 @@ public class DvsApiClient {
 	public ApiResponse<Operator> getOperator(Long operatorId) throws DvsApiException {
 		return this.dvsApiClientHelper.getOperator(operatorId);
 	}
-	
+
 	/**
 	 * Get list of operators by mobile number
 	 * 
@@ -172,16 +173,36 @@ public class DvsApiClient {
 	 * Get list of operators by mobile number, page number and records per page
 	 * 
 	 * @param mobileNumber
-	 * @param pageNumber the page number
+	 * @param pageNumber     the page number
 	 * @param recordsPerPage the number of records per page
 	 * @return list of operators
 	 */
-	public ApiResponse<List<Operator>> lookupOperators(String mobileNumber, int pageNumber, int recordsPerPage) throws DvsApiException {
+	public ApiResponse<List<Operator>> lookupOperators(String mobileNumber, int pageNumber, int recordsPerPage)
+			throws DvsApiException {
 		return this.dvsApiClientHelper.lookupOperators(mobileNumber, pageNumber, recordsPerPage);
 	}
-	
+
+	// GET operations - End
+
+	// POST operations - Begin
+	/**
+	 * Get list of operators by mobile number, page number and records per page
+	 * (POST)
+	 * 
+	 * @param mobileNumber
+	 * @param pageNumber     the page number
+	 * @param recordsPerPage the number of records per page
+	 * @return list of operators
+	 */
+	public ApiResponse<List<Operator>> lookupOperators(LookupOperatorRequest lookupOperatorRequest)
+			throws DvsApiException {
+		return this.dvsApiClientHelper.lookupOperators(lookupOperatorRequest);
+	}
+
+	// POST operations - End
+
 	// Operators - End
-	
+
 	// Benefit Types - Begin
 
 	/**
@@ -196,19 +217,19 @@ public class DvsApiClient {
 	/**
 	 * Get benefit types by page number and records per page
 	 * 
-	 * @param pageNumber the page number
+	 * @param pageNumber     the page number
 	 * @param recordsPerPage the number of records per page
 	 * @return list of benefit types
 	 */
 	public ApiResponse<List<BenefitType>> getBenefitTypes(int pageNumber, int recordsPerPage) throws DvsApiException {
 		return this.dvsApiClientHelper.getBenefitTypes(pageNumber, recordsPerPage);
 	}
-	
+
 	// Benefit Types - End
-	
+
 	// Promotions - Begin
 
-	/**x
+	/**
 	 * Get promotions
 	 * 
 	 * @return paginated list of promotions
@@ -216,11 +237,11 @@ public class DvsApiClient {
 	public Page<ApiResponse<List<Promotion>>> getPromotions() throws DvsApiException {
 		return this.dvsApiClientHelper.getAllPromotions();
 	}
-	
+
 	/**
 	 * Get promotions by page number and records per page
 	 * 
-	 * @param pageNumber the page number
+	 * @param pageNumber     the page number
 	 * @param recordsPerPage the number of records per page
 	 * @return list of promotions
 	 */
@@ -242,12 +263,12 @@ public class DvsApiClient {
 	 * Get promotions by filters, page number and records per page
 	 * 
 	 * @param promotionFilter the promotionFilter instance
-	 * @param pageNumber he page number
-	 * @param recordsPerPage the number of records per page
+	 * @param pageNumber      he page number
+	 * @param recordsPerPage  the number of records per page
 	 * @return list of promotions
 	 */
-	public ApiResponse<List<Promotion>> getPromotions(PromotionFilter promotionFilter,
-			int pageNumber, int recordsPerPage) throws DvsApiException {
+	public ApiResponse<List<Promotion>> getPromotions(PromotionFilter promotionFilter, int pageNumber,
+			int recordsPerPage) throws DvsApiException {
 		return this.dvsApiClientHelper.getPromotions(promotionFilter, pageNumber, recordsPerPage);
 	}
 
@@ -260,9 +281,8 @@ public class DvsApiClient {
 	public ApiResponse<Promotion> getPromotion(Long promotionId) throws DvsApiException {
 		return this.dvsApiClientHelper.getPromotion(promotionId);
 	}
-	
+
 	// Promotions - End
-	
 
 	/**
 	 * Get products
@@ -276,33 +296,34 @@ public class DvsApiClient {
 	/**
 	 * Get products by page number and records per page
 	 * 
-	 * @param pageNumber the page number
+	 * @param pageNumber     the page number
 	 * @param recordsPerPage the number of records per page
 	 * @return list of products
 	 */
 	public ApiResponse<List<Product>> getProducts(int pageNumber, int recordsPerPage) throws DvsApiException {
 		return this.dvsApiClientHelper.getProducts(new ProductFilter(), pageNumber, recordsPerPage);
 	}
-	
+
 	/**
 	 * Get products by filters
 	 * 
-	 * @param productFilter the product filter object
+	 * @param productFilter  the product filter object
 	 * @param recordsPerPage the number of records per page
 	 * @return list of products
 	 */
 	public ApiResponse<List<Product>> getProducts(ProductFilter productFilter) throws DvsApiException {
 		return this.dvsApiClientHelper.getProducts(productFilter, 0, 0);
 	}
-	
+
 	/**
 	 * Get products by filters, page number and records per page
 	 * 
-	 * @param productFilter the product filter object
+	 * @param productFilter  the product filter object
 	 * @param recordsPerPage the number of records per page
 	 * @return list of products
 	 */
-	public ApiResponse<List<Product>> getProducts(ProductFilter productFilter, int pageNumber, int recordsPerPage) throws DvsApiException {
+	public ApiResponse<List<Product>> getProducts(ProductFilter productFilter, int pageNumber, int recordsPerPage)
+			throws DvsApiException {
 		return this.dvsApiClientHelper.getProducts(productFilter, pageNumber, recordsPerPage);
 	}
 
@@ -315,64 +336,29 @@ public class DvsApiClient {
 	public ApiResponse<Product> getProduct(Long productId) throws DvsApiException {
 		return this.dvsApiClientHelper.getProduct(productId);
 	}
-	
+
 	// Products - End
-	
+
 	// Transactions - Begin
 
 	/**
-	 * Create a new synchronous/asynchronous transaction
+	 * Create a new transaction asynchronously
 	 * 
 	 * @param transactionRequest the transaction request
-	 * @param synchronous the synchronous/asynchronous flag
 	 * @return transaction
 	 */
-	public ApiResponse<TransactionResponse> createTransaction(TransactionRequest transactionRequest,
-			boolean synchronous) throws DvsApiException {
-		return this.dvsApiClientHelper.postTransaction(transactionRequest, synchronous);
+	public ApiResponse<Transaction> createTransaction(TransactionRequest transactionRequest) throws DvsApiException {
+		return this.dvsApiClientHelper.postTransaction(transactionRequest);
 	}
 
 	/**
-	 * Get transaction by id
+	 * Confirm a transaction asynchronously
 	 * 
 	 * @param transactionId the transaction id
 	 * @return transaction
 	 */
-	public ApiResponse<TransactionResponse> getTransaction(Long transactionId) throws DvsApiException {
-		return this.dvsApiClientHelper.getTransaction(transactionId);
-	}
-
-	/**
-	 * Get transactions by external id
-	 * 
-	 * transactionFilter the TransactionFilter instance
-	 * @return list of transactions
-	 */
-	public ApiResponse<List<TransactionResponse>> getTransactions(TransactionFilter transactionFilter) throws DvsApiException {
-		return this.dvsApiClientHelper.getTransactions(transactionFilter, 0, 0);
-	}
-
-	/**
-	 * Get transactions by external id, page number and records per page
-	 *  
-	 * transactionFilter the TransactionFilter instance
-	 * @param pageNUmber
-	 * @param recordsPerPage the number of records per page
-	 * @return list of transactions
-	 */
-	public ApiResponse<List<TransactionResponse>> getTransactions(TransactionFilter transactionFilter, int pageNumber, int recordsPerPage) throws DvsApiException {
-		return this.dvsApiClientHelper.getTransactions(transactionFilter, pageNumber, recordsPerPage);
-	}
-
-	/**
-	 * Confirm a transaction
-	 * 
-	 * @param transactionId the transaction id
-	 * @param synchronous the synchronous/asynchronous flag
-	 * @return transaction
-	 */
-	public ApiResponse<TransactionResponse> confirmTransaction(Long transactionId, boolean synchronous) throws DvsApiException {
-		return this.dvsApiClientHelper.confirmTransaction(transactionId, synchronous);
+	public ApiResponse<Transaction> confirmTransaction(Long transactionId) throws DvsApiException {
+		return this.dvsApiClientHelper.confirmTransaction(transactionId);
 	}
 
 	/**
@@ -381,12 +367,67 @@ public class DvsApiClient {
 	 * @param transactionId the transaction id
 	 * @return transaction
 	 */
-	public ApiResponse<TransactionResponse> cancelTransaction(Long transactionId) throws DvsApiException {
+	public ApiResponse<Transaction> cancelTransaction(Long transactionId) throws DvsApiException {
 		return this.dvsApiClientHelper.cancelTransaction(transactionId);
 	}
-	
+
+	/**
+	 * Get transactions
+	 * 
+	 * @return paginated list of transactions
+	 */
+	public Page<ApiResponse<List<Transaction>>> getTransactions() throws DvsApiException {
+		return this.dvsApiClientHelper.getAllTransactions();
+	}
+
+	/**
+	 * Get transactions by page number and records per page
+	 * 
+	 * @param pageNumber     the page number
+	 * @param recordsPerPage the number of records per page
+	 * @return list of transactions
+	 */
+	public ApiResponse<List<Transaction>> getTransactions(int pageNumber, int recordsPerPage) throws DvsApiException {
+		return this.dvsApiClientHelper.getTransactions(new TransactionFilter(), pageNumber, recordsPerPage);
+	}
+
+	/**
+	 * Get transactions by filters
+	 * 
+	 * transactionFilter the TransactionFilter instance
+	 * 
+	 * @return list of transactions
+	 */
+	public ApiResponse<List<Transaction>> getTransactions(TransactionFilter transactionFilter) throws DvsApiException {
+		return this.dvsApiClientHelper.getTransactions(transactionFilter, 0, 0);
+	}
+
+	/**
+	 * Get transactions by filters, page number and records per page
+	 * 
+	 * transactionFilter the TransactionFilter instance
+	 * 
+	 * @param pageNUmber
+	 * @param recordsPerPage the number of records per page
+	 * @return list of transactions
+	 */
+	public ApiResponse<List<Transaction>> getTransactions(TransactionFilter transactionFilter, int pageNumber,
+			int recordsPerPage) throws DvsApiException {
+		return this.dvsApiClientHelper.getTransactions(transactionFilter, pageNumber, recordsPerPage);
+	}
+
+	/**
+	 * Get transaction by id
+	 * 
+	 * @param transactionId the transaction id
+	 * @return transaction
+	 */
+	public ApiResponse<Transaction> getTransaction(Long transactionId) throws DvsApiException {
+		return this.dvsApiClientHelper.getTransaction(transactionId);
+	}
+
 	// Transactions - End
-	
+
 	// Balances - Begin
 
 	/**
@@ -397,18 +438,18 @@ public class DvsApiClient {
 	public Page<ApiResponse<List<Balance>>> getBalances() throws DvsApiException {
 		return this.dvsApiClientHelper.getAllBalances();
 	}
-	
+
 	/**
 	 * Get balances by page number and records per page
 	 * 
-	 * @param pageNumber the page number
+	 * @param pageNumber     the page number
 	 * @param recordsPerPage the number of records per page
 	 * @return list of balances
 	 */
 	public ApiResponse<List<Balance>> getBalances(int pageNumber, int recordsPerPage) throws DvsApiException {
 		return this.dvsApiClientHelper.getBalances(pageNumber, recordsPerPage);
 	}
-	
+
 	/**
 	 * Get balances by unit and unit type
 	 * 
@@ -418,20 +459,6 @@ public class DvsApiClient {
 		return this.dvsApiClientHelper.getBalances(balanceFilter);
 	}
 
-	
 	// Balances - End
-	
-	// Statement Inquiry - Begin
-	
-	/**
-	 * Get statement for an account number
-	 * 
-	 * @return statement details
-	 */
-	private ApiResponse<List<StatementDetail>> getStatement(StatementFilter statementFilter) throws DvsApiException {
-		return this.dvsApiClientHelper.getStatement(statementFilter);
-	}
-	
-	// Statement Inquiry - End
-	
+
 }

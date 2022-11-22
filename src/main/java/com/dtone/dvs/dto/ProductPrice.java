@@ -2,16 +2,13 @@ package com.dtone.dvs.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Price {
+public class ProductPrice {
 
 	@JsonProperty(value = "unit_type")
 	private String unitType;
 
 	@JsonProperty(value = "unit")
 	private String unit;
-
-	@JsonProperty(value = "amount")
-	private Double amount;
 
 	@JsonProperty(value = "fee")
 	private Double fee;
@@ -32,25 +29,12 @@ public class Price {
 		this.unit = unit;
 	}
 
-	public Double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
-
 	public Double getFee() {
 		return fee;
 	}
 
 	public void setFee(Double fee) {
 		this.fee = fee;
-	}
-
-	@Override
-	public String toString() {
-		return "Price [unitType=" + unitType + ", unit=" + unit + ", amount=" + amount + ", fee=" + fee + "]";
 	}
 
 }

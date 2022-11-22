@@ -18,7 +18,7 @@ import com.dtone.dvs.dto.ApiResponse;
 import com.dtone.dvs.dto.Page;
 import com.dtone.dvs.dto.Service;
 import com.dtone.dvs.dto.TransactionRequest;
-import com.dtone.dvs.dto.TransactionResponse;
+import com.dtone.dvs.dto.Transaction;
 import com.dtone.dvs.exception.DvsApiException;
 import com.dtone.dvs.service.ApiService;
 import com.dtone.dvs.service.RestApiInvokeService;
@@ -89,8 +89,8 @@ public class ApiServiceMockTest {
 		when(mockApiResponseBuilder.prepareResponse(Mockito.any(ApiResponse.class), Mockito.any(), Mockito.any()))
 				.thenReturn(MockTestUtils.getServices());
 
-		ApiResponse<TransactionResponse> services = apiService.httpPost("", new ApiResponse<TransactionResponse>(),
-				new TypeReference<TransactionResponse>() {
+		ApiResponse<Transaction> services = apiService.httpPost("", new ApiResponse<Transaction>(),
+				new TypeReference<Transaction>() {
 				}, new TransactionRequest());
 
 		assertNotNull(services.getResult());
@@ -100,8 +100,8 @@ public class ApiServiceMockTest {
 	public void testHttpPostException() throws Exception {
 		when(mockRestApiInvokeService.executePost(Mockito.anyString(), Mockito.any())).thenThrow(new IOException());
 
-		apiService.httpPost("", new ApiResponse<TransactionResponse>(),
-				new TypeReference<TransactionResponse>() {
+		apiService.httpPost("", new ApiResponse<Transaction>(),
+				new TypeReference<Transaction>() {
 				}, new TransactionRequest());
 	}
 
