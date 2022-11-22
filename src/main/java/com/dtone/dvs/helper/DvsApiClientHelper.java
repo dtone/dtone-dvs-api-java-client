@@ -12,8 +12,6 @@ import com.dtone.dvs.dto.ApiResponse;
 import com.dtone.dvs.dto.Balance;
 import com.dtone.dvs.dto.BalanceFilter;
 import com.dtone.dvs.dto.BenefitType;
-import com.dtone.dvs.dto.Campaign;
-import com.dtone.dvs.dto.CampaignFilter;
 import com.dtone.dvs.dto.Country;
 import com.dtone.dvs.dto.LookupOperatorRequest;
 import com.dtone.dvs.dto.Operator;
@@ -23,8 +21,6 @@ import com.dtone.dvs.dto.ProductFilter;
 import com.dtone.dvs.dto.Promotion;
 import com.dtone.dvs.dto.PromotionFilter;
 import com.dtone.dvs.dto.Service;
-import com.dtone.dvs.dto.StatementDetail;
-import com.dtone.dvs.dto.StatementFilter;
 import com.dtone.dvs.dto.Transaction;
 import com.dtone.dvs.dto.TransactionFilter;
 import com.dtone.dvs.dto.TransactionRequest;
@@ -133,7 +129,8 @@ public class DvsApiClientHelper {
 				});
 	}
 
-	public ApiResponse<List<Operator>> lookupOperators(LookupOperatorRequest lookupOperatorRequest) throws DvsApiException {
+	public ApiResponse<List<Operator>> lookupOperators(LookupOperatorRequest lookupOperatorRequest)
+			throws DvsApiException {
 		return apiService.httpPost(getUrl(Constants.OPERATOR_LOOKUP), new ApiResponse<List<Operator>>(),
 				new TypeReference<List<Operator>>() {
 				}, lookupOperatorRequest);
@@ -194,10 +191,11 @@ public class DvsApiClientHelper {
 				new ApiResponse<List<Product>>(), new TypeReference<List<Product>>() {
 				});
 	}
-	
+
 	public Page<ApiResponse<List<Product>>> getProducts(int page, int recordsPerPage) throws DvsApiException {
-		return apiService.httpGetPageable(Constants.PRODUCTS, getUrl(Constants.PRODUCTS, null, page, recordsPerPage, null),
-				new ApiResponse<List<Product>>(), new TypeReference<List<Product>>() {
+		return apiService.httpGetPageable(Constants.PRODUCTS,
+				getUrl(Constants.PRODUCTS, null, page, recordsPerPage, null), new ApiResponse<List<Product>>(),
+				new TypeReference<List<Product>>() {
 				});
 	}
 
@@ -285,56 +283,6 @@ public class DvsApiClientHelper {
 	}
 
 	// Balances - End
-
-	// Statements - Start
-
-	public Page<ApiResponse<List<StatementDetail>>> getAllStatements() throws DvsApiException {
-		return apiService.httpGetPageable(Constants.STATEMENT_INQUIRY, getUrl(Constants.STATEMENT_INQUIRY),
-				new ApiResponse<List<StatementDetail>>(), new TypeReference<List<StatementDetail>>() {
-				});
-	}
-
-	public ApiResponse<List<StatementDetail>> getStatements(StatementFilter statementFilter, int page,
-			int recordsPerPage) throws DvsApiException {
-		return apiService.httpGet(
-				getUrl(Constants.STATEMENT_INQUIRY, null, page, recordsPerPage, statementFilter.getQueryParameterMap()),
-				new ApiResponse<List<StatementDetail>>(), new TypeReference<List<StatementDetail>>() {
-				});
-	}
-
-	public ApiResponse<List<StatementDetail>> getStatements(StatementFilter statementFilter) throws DvsApiException {
-		return apiService.httpGet(
-				getUrl(Constants.STATEMENT_INQUIRY, statementFilter.getAccountNumber(), 0, 0,
-						statementFilter.getQueryParameterMap()),
-				new ApiResponse<List<StatementDetail>>(), new TypeReference<List<StatementDetail>>() {
-				});
-	}
-
-	// Statements - End
-
-	// Campaigns - Start
-
-	public Page<ApiResponse<List<Campaign>>> getAllCampaigns() throws DvsApiException {
-		return apiService.httpGetPageable(Constants.CAMPAIGNS, getUrl(Constants.CAMPAIGNS),
-				new ApiResponse<List<Campaign>>(), new TypeReference<List<Campaign>>() {
-				});
-	}
-
-	public ApiResponse<List<Campaign>> getCampaigns(CampaignFilter campaignFilter, int page, int recordsPerPage)
-			throws DvsApiException {
-		return apiService.httpGet(
-				getUrl(Constants.CAMPAIGNS, null, page, recordsPerPage, campaignFilter.getQueryParameterMap()),
-				new ApiResponse<List<Campaign>>(), new TypeReference<List<Campaign>>() {
-				});
-	}
-
-	public ApiResponse<Campaign> getCampaign(Long campaignId) throws DvsApiException {
-		return apiService.httpGet(getUrl(Constants.CAMPAIGNS, String.valueOf(campaignId)), new ApiResponse<Campaign>(),
-				new TypeReference<Campaign>() {
-				});
-	}
-
-	// Campaigns - End
 
 	public String getUrl(String uri) {
 		return getUrl(uri, null, 0, 0, null);
