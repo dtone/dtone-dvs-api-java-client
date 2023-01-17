@@ -3,6 +3,9 @@ package com.dtone.dvs.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ApiResponse<T> {
 	private boolean success;
 	private int code;

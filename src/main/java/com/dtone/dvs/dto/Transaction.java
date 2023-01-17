@@ -2,10 +2,12 @@ package com.dtone.dvs.dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @JsonDeserialize(using = TransactionDeserializer.class)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Transaction {
 
 	@JsonProperty(value = "id")
