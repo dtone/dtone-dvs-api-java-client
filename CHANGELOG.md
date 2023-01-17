@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.0.1] - 2023-01-17
+### Fixed
+- Enables ignoring unknown properties when deserializing JSON
+
 ## [2.0.0] - 2022-11-13
 ### Added
 - New POST API to lookup operators.
