@@ -50,7 +50,7 @@ public class ProductDeserializer extends StdDeserializer<Product> {
 			SourceFixed destinationFixed = mapper.convertValue(node.get("destination"),
 					new TypeReference<SourceFixed>() {
 					});
-			productFixed.setSource(destinationFixed);
+			productFixed.setDestination(destinationFixed);
 
 			setCommonProperties(node, productFixed);
 
@@ -76,7 +76,7 @@ public class ProductDeserializer extends StdDeserializer<Product> {
 			SourceRanged destinationRanged = mapper.convertValue(node.get("destination"),
 					new TypeReference<SourceRanged>() {
 					});
-			productRanged.setSource(destinationRanged);
+			productRanged.setDestination(destinationRanged);
 
 			setCommonProperties(node, productRanged);
 
