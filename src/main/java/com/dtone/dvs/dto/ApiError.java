@@ -1,5 +1,8 @@
 package com.dtone.dvs.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ApiError {
 	private String code;
 	private String message;
