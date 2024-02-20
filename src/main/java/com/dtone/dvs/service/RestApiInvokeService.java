@@ -60,7 +60,7 @@ public class RestApiInvokeService {
 		}
 
 		httpPost.addHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.getMimeType());
-		httpPost.addHeader(HttpHeaders.USER_AGENT, "DVS-APICLIENT-SDK/2.0.0 JAVA");
+		httpPost.addHeader(HttpHeaders.USER_AGENT, "DVS-APICLIENT-SDK/2.0.2 JAVA");
 
 		return httpPost;
 	}
