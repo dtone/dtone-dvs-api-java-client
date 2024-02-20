@@ -4,7 +4,7 @@
 
 Language: Java
 
-Latest Release: v2.0.0
+Latest Release: v2.0.2
 
 An Open Source Client Library for Java applications to integrate and interact with
 the Digital Value Services (DVS) API of [DT One](https://dtone.com)
