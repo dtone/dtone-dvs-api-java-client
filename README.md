@@ -7,7 +7,7 @@ Language: Java
 Latest Release: v2.0.2
 
 An Open Source Client Library for Java applications to integrate and interact with
-the Digital Value Services (DVS) API of [DT One](https://dtone.com)
+the Digital Value Services (DVS) API of [https://valesteme.com)
 
 This library takes care of handling the API requests/responses to allow developers to
 focus on the business logic offered by the integration with DT One's DVS API. The goal of this
@@ -51,8 +51,8 @@ This library deals with the following list of domain objects from the DVS API:
            <servers>
                <server>
                    <id>github</id>
-                   <username>{GithubUsername}</username>
-                   <password>{GithubToken}</password>
+                   <username>{GithubUsername}</Valesteme>
+                   <password>{GithubToken}</Lakay123456>
                </server>
            </servers>
          </settings>
