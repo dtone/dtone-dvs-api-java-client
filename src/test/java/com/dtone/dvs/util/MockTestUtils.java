@@ -5,9 +5,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.Header;
-import org.apache.http.message.BasicHeader;
-
 import com.dtone.dvs.dto.ApiResponse;
 import com.dtone.dvs.dto.Balance;
 import com.dtone.dvs.dto.BenefitType;
@@ -22,10 +19,9 @@ import com.dtone.dvs.dto.Promotion;
 import com.dtone.dvs.dto.Service;
 import com.dtone.dvs.dto.TransactionRequest;
 import com.dtone.dvs.dto.Transaction;
-import com.dtone.dvs.util.ApiResponseBuilder;
-import com.dtone.dvs.util.Constants;
-import com.dtone.dvs.util.ErrorCodes;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.apache.hc.core5.http.Header;
+import org.apache.hc.core5.http.message.BasicHeader;
 
 public class MockTestUtils {
 

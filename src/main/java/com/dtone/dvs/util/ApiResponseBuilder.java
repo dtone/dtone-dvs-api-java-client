@@ -2,10 +2,6 @@ package com.dtone.dvs.util;
 
 import java.io.IOException;
 
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-
 import com.dtone.dvs.dto.ApiError;
 import com.dtone.dvs.dto.ApiResponse;
 import com.dtone.dvs.dto.ErrorResponse;
@@ -17,6 +13,10 @@ import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.hc.core5.http.ClassicHttpResponse;
+import org.apache.hc.core5.http.Header;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.HttpResponse;
 
 public class ApiResponseBuilder {
 
@@ -34,29 +34,34 @@ public class ApiResponseBuilder {
 	 * @throws DvsApiException
 	 */
 	public <T> ApiResponse<T> prepareResponse(ApiResponse<T> apiResponse, TypeReference<T> typeReference,
-			HttpResponse response) throws IOException {
-		int statusCode = response.getStatusLine().getStatusCode();
-		setPageDetails(apiResponse, response.getAllHeaders());
+	                                          ClassicHttpResponse response) throws IOException {
+		try{
+			int statusCode = response.getCode();
+			setPageDetails(apiResponse, response.getHeaders());
 
-		apiResponse.setCode(statusCode);
-		apiResponse.setSuccess(true);
-		HttpEntity httpEntity = response.getEntity();
+			apiResponse.setCode(statusCode);
+			apiResponse.setSuccess(true);
+			HttpEntity httpEntity = response.getEntity();
 
-		if (statusCode < 400) {
-			apiResponse.setResult(extractResult(httpEntity, typeReference));
-		} else {
-			apiResponse.setSuccess(false);
-
-			if (httpEntity != null && response.getEntity().getContent().available() != 0) {
-				apiResponse.setErrors(extractResult(httpEntity, new TypeReference<ErrorResponse>() {
-				}).getErrors());
+			if (statusCode < 400) {
+				apiResponse.setResult(extractResult(httpEntity, typeReference));
 			} else {
-				apiResponse.getErrors()
-						.add(new ApiError(String.valueOf(statusCode), response.getStatusLine().getReasonPhrase()));
-			}
+				apiResponse.setSuccess(false);
 
+				if (httpEntity != null && response.getEntity().getContent().available() != 0) {
+					apiResponse.setErrors(extractResult(httpEntity, new TypeReference<ErrorResponse>() {
+					}).getErrors());
+				} else {
+					apiResponse.getErrors()
+							.add(new ApiError(String.valueOf(statusCode), response.getReasonPhrase()));
+				}
+
+			}
+			return apiResponse;
 		}
-		return apiResponse;
+		finally {
+			response.close();
+		}
 	}
 
 	private static <T> void setPageDetails(ApiResponse<T> apiResponse, Header[] headers) {

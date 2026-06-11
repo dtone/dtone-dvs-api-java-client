@@ -3,22 +3,19 @@ package com.dtone.dvs.service;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-import org.apache.http.HttpHeaders;
-import org.apache.http.HttpResponse;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.impl.client.HttpClientBuilder;
-
 import com.dtone.dvs.dto.ApiRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.hc.client5.http.auth.AuthScope;
+import org.apache.hc.client5.http.auth.CredentialsProvider;
+import org.apache.hc.client5.http.auth.UsernamePasswordCredentials;
+import org.apache.hc.client5.http.classic.HttpClient;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.impl.auth.BasicCredentialsProvider;
+import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
+import org.apache.hc.core5.http.*;
+import org.apache.hc.core5.http.io.entity.StringEntity;
 
 public class RestApiInvokeService {
 
@@ -30,9 +27,8 @@ public class RestApiInvokeService {
 	public RestApiInvokeService(String apiKey, String apiSecret) {
 		this.apiKey = apiKey;
 		this.apiSecret = apiSecret;
-
-		CredentialsProvider provider = new BasicCredentialsProvider();
-		provider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(this.getApiKey(), this.getApiSecret()));
+		BasicCredentialsProvider provider = new BasicCredentialsProvider();
+		provider.setCredentials(new AuthScope(null, null, -1,null, null), new UsernamePasswordCredentials(this.getApiKey(), this.getApiSecret().toCharArray()));
 		final HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 		httpClientBuilder.setDefaultCredentialsProvider(provider);
 		httpClient = httpClientBuilder.build();
@@ -44,12 +40,12 @@ public class RestApiInvokeService {
 		this.httpClient = httpClient;
 	}
 
-	public HttpResponse executeGet(String url) throws IOException {
-		return httpClient.execute(getHttpGet(url));
+	public ClassicHttpResponse executeGet(String url) throws IOException {
+		return (ClassicHttpResponse) httpClient.execute(getHttpGet(url));
 	}
 
-	public HttpResponse executePost(String url, ApiRequest apiRequest) throws IOException {
-		return httpClient.execute(getHttpPost(url, apiRequest));
+	public ClassicHttpResponse executePost(String url, ApiRequest apiRequest) throws IOException {
+		return (ClassicHttpResponse) httpClient.execute(getHttpPost(url, apiRequest));
 	}
 
 	private static HttpPost getHttpPost(String url, ApiRequest apiRequest)
@@ -65,7 +61,7 @@ public class RestApiInvokeService {
 		return httpPost;
 	}
 
-	private static HttpGet getHttpGet(String url) {
+	private static ClassicHttpRequest getHttpGet(String url) {
 		return new HttpGet(url);
 	}
 
